@@ -125,5 +125,8 @@
       }
     }
   },
-  "defaultProject": "TellybuddyAngular"
+  "defaultProject": "TellybuddyAngular",
+  "cli": {
+    "analytics": "4a1f4bf7-4fa0-49e8-a2a6-a7e6cf5b184d"
+  }
 }
