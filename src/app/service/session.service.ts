@@ -19,12 +19,12 @@ export class SessionService {
         sessionStorage.isLogin = isLogin;
     }
 
-    getCurrentStaff(): Customer {
-        return JSON.parse(sessionStorage.currentStaff);
+    getCurrentCustomer(): Customer {
+        return JSON.parse(sessionStorage.currentCustomer);
     }
 
-    setCurrentStaff(currentStaff: Customer): void {
-        sessionStorage.currentStaff = JSON.stringify(currentStaff);
+    setCurrentCustomer(currentCustomer: Customer): void {
+        sessionStorage.currentCustomer = JSON.stringify(currentCustomer);
     }
 
     getUsername(): string {
