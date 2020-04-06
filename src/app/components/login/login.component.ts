@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SessionService } from 'src/app/service/session.service';
 import { CustomerService } from 'src/app/service/customer.service';
 import { Customer } from 'src/app/classes/customer';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-forgot-password.component';
 
 @Component({
     selector: 'app-login',
@@ -16,13 +18,15 @@ export class LoginComponent implements OnInit {
     password: string;
     loginError: boolean;
     errorMessage: string;
+    email: string;
 
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         public sessionService: SessionService,
         private customerService: CustomerService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        public dialog: MatDialog
     ) {
         this.loginError = false;
     }
@@ -56,5 +60,36 @@ export class LoginComponent implements OnInit {
                     });
                 }
             );
+    }
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(DialogForgotPasswordComponent, {
+            data: { email: this.email }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.customerService.retrieveCustomerByEmail(result).subscribe(
+                    response => {
+                        this.snackBar.open(
+                            'Reset Email has been sent successfully! Please check your inbox.',
+                            'Close',
+                            {
+                                duration: 4500
+                            }
+                        );
+                        this.customerService
+                            .requestPasswordReset(result)
+                            .subscribe();
+                    },
+                    error => {
+                        this.errorMessage = error;
+                        this.snackBar.open(this.errorMessage, 'Close', {
+                            duration: 4500
+                        });
+                    }
+                );
+            }
+        });
     }
 }

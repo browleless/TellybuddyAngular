@@ -33,6 +33,24 @@ export class CustomerService {
             .pipe(catchError(this.handleError));
     }
 
+    requestPasswordReset(email: string): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/resetPasswordRequest?email=' + email)
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveCustomer(customerId: number): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/retrieveCustomer/' + customerId)
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveCustomerByEmail(email: string): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/retrieveCustomerByEmail?email=' + email)
+            .pipe(catchError(this.handleError));
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 

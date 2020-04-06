@@ -11,19 +11,24 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { IndexComponent } from './components/index/index.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
+import { DialogForgotPasswordComponent } from './components/dialog-forgot-password/dialog-forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         IndexComponent,
         NavbarComponent,
-        LoginComponent
+        LoginComponent,
+        DialogForgotPasswordComponent,
+        ResetPasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -37,8 +42,10 @@ import { LoginComponent } from './components/login/login.component';
         MatIconModule,
         MatCardModule,
         MatInputModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatDialogModule
     ],
+    entryComponents: [DialogForgotPasswordComponent],
     providers: [],
     bootstrap: [AppComponent]
 })
