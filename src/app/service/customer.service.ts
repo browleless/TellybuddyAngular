@@ -40,7 +40,13 @@ export class CustomerService {
             errorMessage =
                 'An unknown error has occurred: ' + error.error.message;
         } else {
-            errorMessage = error.error.message;
+            if (error.error.message) {
+                errorMessage = error.error.message;
+            } else {
+                errorMessage =
+                    'A HTTP error has occurred: ' +
+                    `HTTP ${error.status} (${error.statusText})`;
+            }
         }
 
         console.error(errorMessage);
