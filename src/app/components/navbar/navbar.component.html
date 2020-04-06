@@ -1,0 +1,49 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <a style="font-size: large;" mat-button routerLink="/index"
+            >Tellybuddy</a
+        >
+
+        <button mat-button [matMenuTriggerFor]="firstMenu">
+            Products
+        </button>
+        <mat-menu #firstMenu="matMenu">
+            <button mat-menu-item>Phones</button>
+            <button mat-menu-item>Accessories</button>
+            <button mat-menu-item>Plans</button>
+        </mat-menu>
+
+        <button
+            *ngIf="sessionService.getIsLogin() == true"
+            mat-button
+            [matMenuTriggerFor]="secondMenu"
+        >
+            My Account
+        </button>
+        <mat-menu #secondMenu="matMenu">
+            <button mat-menu-item>View My Bills</button>
+            <button mat-menu-item>View My Family Group</button>
+        </mat-menu>
+
+        <button mat-button>Promotions</button>
+
+        <div class="flex-spacer"></div>
+
+        <button mat-button>Shop</button>
+
+        <a
+            *ngIf="sessionService.getIsLogin() == false"
+            mat-button
+            routerLink="/login"
+            >Login</a
+        >
+
+        <button
+            *ngIf="sessionService.getIsLogin() == true"
+            (click)="customerLogout()"
+            mat-button
+        >
+            Logout
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
