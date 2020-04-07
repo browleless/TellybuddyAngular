@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
     HttpClient,
     HttpHeaders,
-    HttpErrorResponse
+    HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -10,11 +10,11 @@ import { catchError } from 'rxjs/operators';
 import { Customer } from '../classes/customer';
 
 const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 };
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class CustomerService {
     baseUrl: string = '/api/Customer';
@@ -39,15 +39,28 @@ export class CustomerService {
             .pipe(catchError(this.handleError));
     }
 
-    retrieveCustomer(customerId: number): Observable<any> {
+    retrieveCustomerBySalt(salt: string): Observable<any> {
         return this.httpClient
-            .get<any>(this.baseUrl + '/retrieveCustomer/' + customerId)
+            .get<any>(this.baseUrl + '/retrieveCustomerBySalt/' + salt)
             .pipe(catchError(this.handleError));
     }
 
     retrieveCustomerByEmail(email: string): Observable<any> {
         return this.httpClient
             .get<any>(this.baseUrl + '/retrieveCustomerByEmail?email=' + email)
+            .pipe(catchError(this.handleError));
+    }
+
+    changePassword(customer: Customer): Observable<any> {
+        let changePasswordReq = {
+            customer: customer,
+        };
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/changePassword',
+                changePasswordReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
 

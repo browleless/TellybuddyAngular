@@ -8,15 +8,15 @@ const routes: Routes = [
     {
         path: '',
         redirectTo: '/index',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     { path: 'index', component: IndexComponent },
     { path: 'login', component: LoginComponent },
-    { path: 'resetPassword/:customerId', component: ResetPasswordComponent }
+    { path: 'resetPassword/:salt', component: ResetPasswordComponent },
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}
