@@ -11,7 +11,7 @@ import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
     username: string;
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.customerService
             .customerLogin(this.username, this.password)
             .subscribe(
-                response => {
+                (response) => {
                     let customer: Customer = response.customer;
                     if (customer != null) {
                         this.sessionService.setIsLogin(true);
@@ -48,15 +48,25 @@ export class LoginComponent implements OnInit {
                         this.loginError = false;
 
                         this.router.navigate(['/index']);
+                        this.snackBar.open(
+                            'Welcome to Tellybuddy ' +
+                                this.sessionService.getCurrentCustomer()
+                                    .firstName +
+                                '!',
+                            'Close',
+                            {
+                                duration: 4500,
+                            }
+                        );
                     } else {
                         this.loginError = true;
                     }
                 },
-                error => {
+                (error) => {
                     this.loginError = true;
                     this.errorMessage = error;
                     this.snackBar.open(this.errorMessage, 'Close', {
-                        duration: 4500
+                        duration: 4500,
                     });
                 }
             );
@@ -64,28 +74,28 @@ export class LoginComponent implements OnInit {
 
     openDialog(): void {
         const dialogRef = this.dialog.open(DialogForgotPasswordComponent, {
-            data: { email: this.email }
+            data: { email: this.email },
         });
 
-        dialogRef.afterClosed().subscribe(result => {
+        dialogRef.afterClosed().subscribe((result) => {
             if (result) {
                 this.customerService.retrieveCustomerByEmail(result).subscribe(
-                    response => {
+                    (response) => {
                         this.snackBar.open(
                             'Reset Email has been sent successfully! Please check your inbox.',
                             'Close',
                             {
-                                duration: 4500
+                                duration: 4500,
                             }
                         );
                         this.customerService
                             .requestPasswordReset(result)
                             .subscribe();
                     },
-                    error => {
+                    (error) => {
                         this.errorMessage = error;
                         this.snackBar.open(this.errorMessage, 'Close', {
-                            duration: 4500
+                            duration: 4500,
                         });
                     }
                 );
