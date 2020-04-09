@@ -1,5 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SessionService } from 'src/app/service/session.service';
 
@@ -16,7 +17,8 @@ export class NavbarComponent implements OnInit {
     constructor(
         private router: Router,
         public sessionService: SessionService,
-        private ren: Renderer2
+        private ren: Renderer2,
+        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {}
@@ -112,5 +114,9 @@ export class NavbarComponent implements OnInit {
         this.sessionService.setCurrentCustomer(null);
 
         this.router.navigate(['/index']);
+
+        this.snackBar.open('Logout successful! See you again!', 'Close', {
+            duration: 4500,
+        });
     }
 }
