@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
 
                         this.router.navigate(['/index']);
                         this.snackBar.open(
-                            'Welcome to Tellybuddy ' +
+                            'Welcome to Tellybuddy, ' +
                                 this.sessionService.getCurrentCustomer()
                                     .firstName +
                                 '!',
