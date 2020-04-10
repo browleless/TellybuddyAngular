@@ -1,0 +1,70 @@
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div style="text-align: center;">
+            <h1>Tellybuddy Plans</h1>
+            <p style="margin-bottom: 30px;">
+                Choose one to being your Telco experience with us today!
+            </p>
+        </div>
+        <mat-grid-list cols="3" rowHeight="420px">
+            <mat-grid-tile *ngFor="let plan of plans; let i = index">
+                <mat-card
+                    mat-ripple
+                    style="
+                        text-align: center;
+                        border-top: 5px solid #f04393;
+                        cursor: pointer;
+                    "
+                    (click)="addPlanToCart(i)"
+                >
+                    <mat-card-title>
+                        ${{ plan.price }} SIM plan
+                    </mat-card-title>
+                    <mat-card-content>
+                        <div style="padding: 10px 0 10px 0;">
+                            Known as the "{{ plan.name }}"
+                        </div>
+                        <div
+                            style="
+                                margin: 15px 0 25px 0;
+                                display: inline-block;
+                                font-size: 350%;
+                                font-weight: bold;
+                                border-radius: 50%;
+                                padding: 15px 25px 15px 25px;
+                                background-color: #f04393;
+                                color: white;
+                            "
+                        >
+                            {{ plan.totalBasicUnits }}
+                            <div
+                                style="
+                                    padding: 0;
+                                    font-size: initial;
+                                    font-weight: normal;
+                                "
+                            >
+                                Units
+                            </div>
+                        </div>
+                        <div style="padding-bottom: 10px;">
+                            Plan Conversion Rates:
+                        </div>
+                        <div style="padding: 10px 0 10px 0;">
+                            Data: {{ plan.dataConversionRate / 1000 }} GB / unit
+                        </div>
+                        <div style="padding: 10px 0 10px 0;">
+                            SMS: {{ plan.talktimeConversionRate }} min / unit
+                        </div>
+                        <div style="padding: 10px 0 10px 0;">
+                            Talktime: {{ plan.smsConversionRate }} SMS / unit
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

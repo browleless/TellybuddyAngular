@@ -12,6 +12,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatRippleModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
 import { DialogForgotPasswordComponent } from './components/dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { PlansComponent } from './components/plans/plans.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +32,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
         NavbarComponent,
         LoginComponent,
         DialogForgotPasswordComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        PlansComponent,
     ],
     imports: [
         BrowserModule,
@@ -43,10 +48,13 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
         MatCardModule,
         MatInputModule,
         MatSnackBarModule,
-        MatDialogModule
+        MatDialogModule,
+        MatGridListModule,
+        MatRippleModule,
+        MatProgressSpinnerModule,
     ],
     entryComponents: [DialogForgotPasswordComponent],
     providers: [],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {}

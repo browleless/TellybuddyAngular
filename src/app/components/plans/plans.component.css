@@ -1,0 +1,10 @@
+.mat-card {
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+    border-radius: 0;
+}
+
+.mat-card-title {
+    margin: 0;
+    text-align: center;
+}
