@@ -9,15 +9,14 @@
                 Choose one to being your Telco experience with us today!
             </p>
         </div>
-        <mat-grid-list cols="3" rowHeight="420px">
+        <mat-grid-list
+            [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+            rowHeight="420px"
+        >
             <mat-grid-tile *ngFor="let plan of plans; let i = index">
                 <mat-card
                     mat-ripple
-                    style="
-                        text-align: center;
-                        border-top: 5px solid #f04393;
-                        cursor: pointer;
-                    "
+                    class="mat-elevation-z8"
                     (click)="addPlanToCart(i)"
                 >
                     <mat-card-title>

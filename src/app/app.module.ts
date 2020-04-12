@@ -15,6 +15,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatTableModule } from '@angular/material/table';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +26,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DialogForgotPasswordComponent } from './components/dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PlansComponent } from './components/plans/plans.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
     declarations: [
@@ -34,6 +37,7 @@ import { PlansComponent } from './components/plans/plans.component';
         DialogForgotPasswordComponent,
         ResetPasswordComponent,
         PlansComponent,
+        CartComponent,
     ],
     imports: [
         BrowserModule,
@@ -52,6 +56,8 @@ import { PlansComponent } from './components/plans/plans.component';
         MatGridListModule,
         MatRippleModule,
         MatProgressSpinnerModule,
+        MatBadgeModule,
+        MatTableModule,
     ],
     entryComponents: [DialogForgotPasswordComponent],
     providers: [],
