@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Customer } from '../classes/customer';
 import { Transaction } from '../classes/transaction';
 import { TransactionLineItem } from '../classes/transaction-line-item';
@@ -6,26 +6,10 @@ import { TransactionLineItem } from '../classes/transaction-line-item';
 @Injectable({
     providedIn: 'root',
 })
-export class SessionService implements OnInit {
+export class SessionService {
     currentCart: Transaction;
 
     constructor() {}
-
-    ngOnInit() {
-        if (!sessionStorage.length) {
-            let newTransaction: Transaction = {
-                transactionId: undefined,
-                totalPrice: undefined,
-                voidRefund: false,
-                transactionDateTime: undefined,
-                payment: undefined,
-                customer: undefined,
-                discountCode: undefined,
-                transactionLineItems: [],
-            };
-            this.setCart(newTransaction);
-        }
-    }
 
     getIsLogin(): boolean {
         if (sessionStorage.isLogin == 'true') {
