@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { DialogConfigureNewPlanComponent } from '../dialog-configure-new-plan/dialog-configure-new-plan.component';
+import { MatDialog } from '@angular/material/dialog';
 
-import { SessionService } from 'src/app/service/session.service';
 import { PlanService } from 'src/app/service/plan.service';
 
 import { Plan } from 'src/app/classes/plan';
-import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 
 @Component({
     selector: 'app-plans',
@@ -24,10 +23,9 @@ export class PlansComponent implements OnInit {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        public sessionService: SessionService,
         private planService: PlanService,
-        private snackBar: MatSnackBar,
-        private breakpointObserver: BreakpointObserver
+        private breakpointObserver: BreakpointObserver,
+        public dialog: MatDialog
     ) {
         breakpointObserver
             .observe(['(max-width: 599px)'])
@@ -62,47 +60,11 @@ export class PlansComponent implements OnInit {
         );
     }
 
-    addPlanToCart(index: number): void {
-        const selectedPlan = this.plans[index];
-
-        let newLineItem: TransactionLineItem = {
-            subscription: {
-                subscriptionId: undefined,
-                dataUnits: undefined,
-                talkTimeUnits: undefined,
-                smsUnits: undefined,
-                subscriptionStatusEnum: undefined,
-                subscriptionStartDate: undefined,
-                subscriptionEndDate: undefined,
-                customer: undefined,
-                isActive: undefined,
-                usageDetails: undefined,
-                phoneNumber: undefined,
-                plan: selectedPlan,
+    openDialog(index: number): void {
+        this.dialog.open(DialogConfigureNewPlanComponent, {
+            data: {
+                selectedPlan: this.plans[index],
             },
-            transactionLineItemId: undefined,
-            transaction: this.sessionService.getCart(),
-            productItem: undefined,
-            product: undefined,
-            price: selectedPlan.price,
-            quantity: 1,
-            subtotal: selectedPlan.price,
-        };
-
-        this.sessionService.addToCart(newLineItem);
-
-        const snackBarRef = this.snackBar.open(
-            'Successfully added "' +
-                selectedPlan.name +
-                '" SIM plan to the cart!',
-            'Undo',
-            {
-                duration: 4500,
-            }
-        );
-
-        snackBarRef.onAction().subscribe(() => {
-            this.sessionService.undoAddToCart();
         });
     }
 }

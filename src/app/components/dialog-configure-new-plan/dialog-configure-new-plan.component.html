@@ -1,0 +1,132 @@
+<div mat-dialog-title>
+    <div>
+        Configure {{ data.selectedPlan.name }} Plan
+        <button
+            style="
+                border-radius: 50%;
+                min-width: 0;
+                padding: 0 6px 0 6px;
+                float: right;
+            "
+            mat-button
+            (click)="onExitClick()"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div *ngIf="!loaded">
+    <mat-spinner style="margin: 0 auto;"></mat-spinner>
+</div>
+<div *ngIf="loaded">
+    <div mat-dialog-content style="height: auto;">
+        <p>Please choose a number:</p>
+        <mat-chip-list>
+            <mat-chip
+                *ngFor="
+                    let availablePhoneNumber of availablePhoneNumbers;
+                    let i = index
+                "
+                style="cursor: pointer;"
+                [ngClass]="
+                    availablePhoneNumber.inUse ? 'mat-chip-selected' : ''
+                "
+                (click)="selectPhoneNumber(i)"
+            >
+                {{ availablePhoneNumber.phoneNumber.substring(0, 4) }}
+                {{ availablePhoneNumber.phoneNumber.substring(4) }}
+            </mat-chip>
+        </mat-chip-list>
+        <p style="padding-top: 20px;">Set your units allocations:</p>
+        <div>
+            <div style="float: left;">
+                <div>
+                    Data Units:
+                    <mat-slider
+                        min="1"
+                        [max]="
+                            data.selectedPlan.totalBasicUnits -
+                            smsUnits -
+                            talktimeUnits
+                        "
+                        thumbLabel
+                        [(ngModel)]="dataUnits"
+                    ></mat-slider>
+                    {{
+                        (data.selectedPlan.dataConversionRate * dataUnits) /
+                            1000
+                    }}
+                    GB
+                </div>
+                <div>
+                    SMS Units:
+                    <mat-slider
+                        min="1"
+                        [max]="
+                            data.selectedPlan.totalBasicUnits -
+                            dataUnits -
+                            talktimeUnits
+                        "
+                        thumbLabel
+                        [(ngModel)]="smsUnits"
+                    ></mat-slider>
+                    {{ data.selectedPlan.smsConversionRate * smsUnits }}
+                    SMS
+                </div>
+                <div>
+                    Talktime Units:
+                    <mat-slider
+                        min="1"
+                        [max]="
+                            data.selectedPlan.totalBasicUnits -
+                            dataUnits -
+                            smsUnits
+                        "
+                        thumbLabel
+                        [(ngModel)]="talktimeUnits"
+                    ></mat-slider>
+                    {{
+                        data.selectedPlan.talktimeConversionRate * talktimeUnits
+                    }}
+                    mins
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div
+                    style="
+                        align-self: center;
+                        margin: 15px 0 25px 0;
+                        display: inline-block;
+                        font-size: 350%;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        padding: 15px 25px 15px 25px;
+                        background-color: #f04393;
+                        color: white;
+                    "
+                >
+                    {{ getRemainingUnits() }}
+                    <div
+                        style="
+                            padding: 0;
+                            font-size: initial;
+                            font-weight: normal;
+                        "
+                    >
+                        units left
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; padding-top: 10px;">
+        <button
+            [disabled]="selectedPhoneNumber && !(getRemainingUnits() === 0)"
+            mat-raised-button
+            color="primary"
+            (click)="addPlanToCart()"
+        >
+            Add to Cart
+        </button>
+    </div>
+</div>

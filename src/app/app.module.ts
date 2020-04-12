@@ -1,8 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
+import 'hammerjs';
+import {
+    BrowserModule,
+    HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig } from '@angular/material';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -17,6 +22,8 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTableModule } from '@angular/material/table';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +34,7 @@ import { DialogForgotPasswordComponent } from './components/dialog-forgot-passwo
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PlansComponent } from './components/plans/plans.component';
 import { CartComponent } from './components/cart/cart.component';
+import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +46,7 @@ import { CartComponent } from './components/cart/cart.component';
         ResetPasswordComponent,
         PlansComponent,
         CartComponent,
+        DialogConfigureNewPlanComponent,
     ],
     imports: [
         BrowserModule,
@@ -58,9 +67,14 @@ import { CartComponent } from './components/cart/cart.component';
         MatProgressSpinnerModule,
         MatBadgeModule,
         MatTableModule,
+        MatChipsModule,
+        MatSliderModule,
     ],
-    entryComponents: [DialogForgotPasswordComponent],
-    providers: [],
+    entryComponents: [
+        DialogForgotPasswordComponent,
+        DialogConfigureNewPlanComponent,
+    ],
+    providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
