@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DialogConfigureNewPlanData } from './dialog-configure-new-plan-data';
 
@@ -15,6 +15,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     styleUrls: ['./dialog-configure-new-plan.component.css'],
 })
 export class DialogConfigureNewPlanComponent implements OnInit {
+    @ViewChild('dataSlider', { static: false }) dataSlider;
+    @ViewChild('smsSlider', { static: false }) smsSlider;
+    @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
+
     availablePhoneNumbers: PhoneNumber[];
     selectedPhoneNumber: PhoneNumber = {
         phoneNumberId: undefined,
@@ -22,9 +26,9 @@ export class DialogConfigureNewPlanComponent implements OnInit {
         phoneNumber: undefined,
         subscription: undefined,
     };
-    dataUnits: number = 1;
-    smsUnits: number = 1;
-    talktimeUnits: number = 1;
+    dataUnits: number = 0;
+    smsUnits: number = 0;
+    talktimeUnits: number = 0;
     loaded: boolean = false;
 
     constructor(
@@ -58,13 +62,36 @@ export class DialogConfigureNewPlanComponent implements OnInit {
         this.selectedPhoneNumber = this.availablePhoneNumbers[index];
     }
 
-    setDataUnits(value: number): void {
+    handleDataSliderChange(value: number): void {
         if (
             value - this.dataUnits <= this.getRemainingUnits() ||
             value <= this.dataUnits
         ) {
             this.dataUnits = value;
         } else {
+            this.dataSlider.value = this.dataUnits;
+        }
+    }
+
+    handleSmsSliderChange(value: number): void {
+        if (
+            value - this.smsUnits <= this.getRemainingUnits() ||
+            value <= this.smsUnits
+        ) {
+            this.smsUnits = value;
+        } else {
+            this.smsSlider.value = this.smsUnits;
+        }
+    }
+
+    handleTalktimeSliderChange(value: number): void {
+        if (
+            value - this.talktimeUnits <= this.getRemainingUnits() ||
+            value <= this.talktimeUnits
+        ) {
+            this.talktimeUnits = value;
+        } else {
+            this.talktimeSlider.value = this.talktimeUnits;
         }
     }
 
@@ -72,12 +99,15 @@ export class DialogConfigureNewPlanComponent implements OnInit {
         let newLineItem: TransactionLineItem = {
             subscription: {
                 subscriptionId: undefined,
-                dataUnits: new Map().set('allocatedUnits', this.dataUnits),
-                talkTimeUnits: new Map().set(
-                    'allocatedUnits',
-                    this.talktimeUnits
-                ),
-                smsUnits: new Map().set('allocatedUnits', this.smsUnits),
+                dataUnits: {
+                    allocated: this.dataUnits,
+                },
+                talkTimeUnits: {
+                    allocated: this.talktimeUnits,
+                },
+                smsUnits: {
+                    allocated: this.smsUnits,
+                },
                 subscriptionStatusEnum: undefined,
                 subscriptionStartDate: undefined,
                 subscriptionEndDate: undefined,
@@ -88,7 +118,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
                 plan: this.data.selectedPlan,
             },
             transactionLineItemId: undefined,
-            transaction: this.sessionService.getCart(),
+            transaction: undefined,
             productItem: undefined,
             product: undefined,
             price: this.data.selectedPlan.price,
@@ -107,8 +137,6 @@ export class DialogConfigureNewPlanComponent implements OnInit {
                 duration: 4500,
             }
         );
-
-        console.log(this.sessionService.getCart());
 
         snackBarRef.onAction().subscribe(() => {
             this.sessionService.undoAddToCart();

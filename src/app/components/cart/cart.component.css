@@ -13,3 +13,11 @@ input[type='number'] {
 ::ng-deep .mat-form-field-infix {
     border-top: 0.4em solid transparent;
 }
+
+::ng-deep .mat-form-field-wrapper {
+    padding: 0;
+}
+
+.mat-icon-button:hover {
+    background: rgba(0, 0, 0, 0.05);
+}

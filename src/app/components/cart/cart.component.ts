@@ -119,6 +119,21 @@ export class CartComponent implements OnInit {
         });
     }
 
+    handleCheckoutRequest(): void {
+        if (this.sessionService.getIsLogin()) {
+            this.router.navigate(['/checkout']);
+        } else {
+            this.router.navigate(['/login']);
+            this.snackBar.open(
+                'You are not logged in yet, login now to continue your checkout!',
+                'Close',
+                {
+                    duration: 4500,
+                }
+            );
+        }
+    }
+
     getTotalCost(): number {
         return this.transaction.transactionLineItems
             .map((t) => t.price * t.quantity)

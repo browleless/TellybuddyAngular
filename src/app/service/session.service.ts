@@ -29,6 +29,9 @@ export class SessionService {
 
     setCurrentCustomer(currentCustomer: Customer): void {
         sessionStorage.currentCustomer = JSON.stringify(currentCustomer);
+        this.currentCart = this.getCart();
+        this.currentCart.customer = currentCustomer;
+        this.setCart(this.currentCart);
     }
 
     getUsername(): string {

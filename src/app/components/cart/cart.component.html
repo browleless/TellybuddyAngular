@@ -74,7 +74,11 @@
                     *matCellDef="let transactionLineItem; let i = index"
                 >
                     <mat-form-field
-                        style="width: 150px; margin-bottom: -1.25em;"
+                        style="
+                            width: 150px;
+                            margin-bottom: -1.25em;
+                            padding-bottom: 1.34375em;
+                        "
                         appearance="outline"
                     >
                         <input
@@ -120,10 +124,7 @@
                     mat-cell
                     *matCellDef="let transactionLineItem"
                 >
-                    {{
-                        transactionLineItem.price *
-                            transactionLineItem.quantity | currency
-                    }}
+                    {{ transactionLineItem.price | currency }}
                 </td>
             </ng-container>
 
@@ -140,15 +141,7 @@
                     mat-cell
                     *matCellDef="let transactionLineItem; let i = index"
                 >
-                    <button
-                        style="
-                            border-radius: 50%;
-                            min-width: 0;
-                            padding: 0 6px 0 6px;
-                        "
-                        mat-button
-                        (click)="deleteLineItem(i)"
-                    >
+                    <button mat-icon-button (click)="deleteLineItem(i)">
                         <mat-icon>close</mat-icon>
                     </button>
                 </td>
@@ -165,6 +158,32 @@
                     {{ getTotalCost() | currency }}
                 </span>
             </mat-card>
+        </div>
+        <div
+            style="
+                margin-top: 50px;
+                width: fit-content;
+                float: right;
+                clear: both;
+            "
+        >
+            <a
+                style="border-radius: 50px; width: 150.95px;"
+                mat-raised-button
+                color="primary"
+                routerLink="/index"
+            >
+                Continue Shopping
+            </a>
+            &nbsp;
+            <button
+                style="border-radius: 50px; width: 150.95px;"
+                mat-raised-button
+                color="accent"
+                (click)="handleCheckoutRequest()"
+            >
+                Check Out
+            </button>
         </div>
     </div>
 </div>

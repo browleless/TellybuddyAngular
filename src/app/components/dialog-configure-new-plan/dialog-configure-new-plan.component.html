@@ -1,16 +1,7 @@
 <div mat-dialog-title>
     <div>
         Configure {{ data.selectedPlan.name }} Plan
-        <button
-            style="
-                border-radius: 50%;
-                min-width: 0;
-                padding: 0 6px 0 6px;
-                float: right;
-            "
-            mat-button
-            (click)="onExitClick()"
-        >
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
@@ -44,13 +35,17 @@
                     Data Units:
                     <mat-slider
                         min="1"
-                        [max]="
-                            data.selectedPlan.totalBasicUnits -
-                            smsUnits -
-                            talktimeUnits
-                        "
+                        #dataSlider
+                        [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
-                        [(ngModel)]="dataUnits"
+                        (change)="handleDataSliderChange($event.value)"
+                        (input)="
+                            $event.value - dataUnits <= getRemainingUnits()
+                                ? (dataUnits = $event.value)
+                                : $event.value <= dataUnits
+                                ? (dataUnits = $event.value)
+                                : (dataUnits = dataUnits)
+                        "
                     ></mat-slider>
                     {{
                         (data.selectedPlan.dataConversionRate * dataUnits) /
@@ -62,13 +57,17 @@
                     SMS Units:
                     <mat-slider
                         min="1"
-                        [max]="
-                            data.selectedPlan.totalBasicUnits -
-                            dataUnits -
-                            talktimeUnits
-                        "
+                        #smsSlider
+                        [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
-                        [(ngModel)]="smsUnits"
+                        (change)="handleSmsSliderChange($event.value)"
+                        (input)="
+                            $event.value - smsUnits <= getRemainingUnits()
+                                ? (smsUnits = $event.value)
+                                : $event.value <= smsUnits
+                                ? (smsUnits = $event.value)
+                                : (smsUnits = smsUnits)
+                        "
                     ></mat-slider>
                     {{ data.selectedPlan.smsConversionRate * smsUnits }}
                     SMS
@@ -77,13 +76,17 @@
                     Talktime Units:
                     <mat-slider
                         min="1"
-                        [max]="
-                            data.selectedPlan.totalBasicUnits -
-                            dataUnits -
-                            smsUnits
-                        "
+                        #talktimeSlider
+                        [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
-                        [(ngModel)]="talktimeUnits"
+                        (change)="handleTalktimeSliderChange($event.value)"
+                        (input)="
+                            $event.value - talktimeUnits <= getRemainingUnits()
+                                ? (talktimeUnits = $event.value)
+                                : $event.value <= talktimeUnits
+                                ? (talktimeUnits = $event.value)
+                                : (talktimeUnits = talktimeUnits)
+                        "
                     ></mat-slider>
                     {{
                         data.selectedPlan.talktimeConversionRate * talktimeUnits
@@ -121,7 +124,9 @@
     </div>
     <div style="text-align: center; padding-top: 10px;">
         <button
-            [disabled]="selectedPhoneNumber && !(getRemainingUnits() === 0)"
+            [disabled]="
+                !selectedPhoneNumber.phoneNumber || !(getRemainingUnits() === 0)
+            "
             mat-raised-button
             color="primary"
             (click)="addPlanToCart()"

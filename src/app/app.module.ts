@@ -4,7 +4,7 @@ import {
     HAMMER_GESTURE_CONFIG,
 } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GestureConfig } from '@angular/material';
@@ -24,6 +24,9 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTableModule } from '@angular/material/table';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +38,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { PlansComponent } from './components/plans/plans.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { NumberDirective } from './directive/number.directive';
 
 @NgModule({
     declarations: [
@@ -47,6 +52,8 @@ import { DialogConfigureNewPlanComponent } from './components/dialog-configure-n
         PlansComponent,
         CartComponent,
         DialogConfigureNewPlanComponent,
+        CheckoutComponent,
+        NumberDirective,
     ],
     imports: [
         BrowserModule,
@@ -69,6 +76,10 @@ import { DialogConfigureNewPlanComponent } from './components/dialog-configure-n
         MatTableModule,
         MatChipsModule,
         MatSliderModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
