@@ -6,13 +6,18 @@
         </button>
     </div>
 </div>
-<div *ngIf="!loaded">
-    <mat-spinner style="margin: 0 auto;"></mat-spinner>
-</div>
-<div *ngIf="loaded">
+<div>
     <div mat-dialog-content style="height: auto;">
-        <p>Please choose a number:</p>
-        <mat-chip-list>
+        <div style="margin-bottom: 16px;">
+            Please choose a number:
+            <button mat-icon-button (click)="ngOnInit()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+        <div style="width: 487.75px;" *ngIf="!loaded">
+            <mat-spinner style="margin: 0 auto;" diameter="30"></mat-spinner>
+        </div>
+        <mat-chip-list *ngIf="loaded">
             <mat-chip
                 *ngFor="
                     let availablePhoneNumber of availablePhoneNumbers;

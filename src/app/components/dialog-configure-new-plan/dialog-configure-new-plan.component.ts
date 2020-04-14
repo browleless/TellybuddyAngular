@@ -20,12 +20,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
 
     availablePhoneNumbers: PhoneNumber[];
-    selectedPhoneNumber: PhoneNumber = {
-        phoneNumberId: undefined,
-        inUse: false,
-        phoneNumber: undefined,
-        subscription: undefined,
-    };
+    selectedPhoneNumber: PhoneNumber;
     dataUnits: number = 0;
     smsUnits: number = 0;
     talktimeUnits: number = 0;
@@ -40,6 +35,13 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.loaded = false;
+        this.selectedPhoneNumber = {
+            phoneNumberId: undefined,
+            inUse: false,
+            phoneNumber: undefined,
+            subscription: undefined,
+        };
         this.phoneNumberService.retrieveAllAvailablePhoneNumbers().subscribe(
             (response) => {
                 this.availablePhoneNumbers = response.phoneNumbers;
