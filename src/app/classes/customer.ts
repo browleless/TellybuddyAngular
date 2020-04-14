@@ -37,6 +37,7 @@ export class Customer {
     transactions: Transaction[];
     announcements: Announcement[];
     familyGroup: FamilyGroup;
+    ownerOfFamilyGroup: boolean;
     constructor(
         customerId?: number,
         username?: string,
@@ -67,7 +68,8 @@ export class Customer {
         quizAttempts?: QuizAttempt[],
         transactions?: Transaction[],
         announcements?: Announcement[],
-        familyGroup?: FamilyGroup
+        familyGroup?: FamilyGroup,
+        ownerOfFamilyGroup?: boolean
     ) {
         this.loyaltyPoints = loyaltyPoints;
         this.customerStatusEnum = customerStatusEnum;
@@ -100,5 +102,6 @@ export class Customer {
         this.customerStatusEnum = this.customerStatusEnum;
         this.joinDate = joinDate;
         this.profilePhoto = profilePhoto;
+        this.ownerOfFamilyGroup = ownerOfFamilyGroup;
     }
 }

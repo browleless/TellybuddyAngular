@@ -1,0 +1,96 @@
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div style="text-align: center;">
+            <h1>Tellybuddy FamilyGroup</h1>
+            <div *ngIf="retrieveFamilyGroupError">
+                <div style="color: red;">No family group!</div>
+            </div>
+            <mat-sidenav-container>
+                <mat-sidenav mode="side" opened>
+                    <ul class="familyGroupMenu">
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
+                                Home</a>
+                            <a mat-list-item routerLink="/familyGroup/viewMembers">
+                                Members</a>
+                            <div *ngIf="ownerOfFamilyGroup">
+                                <a mat-list-item routerLink="/familyGroup/viewSettings">
+                                    Setting</a>
+                            </div>
+                        </mat-nav-list>
+                    </ul>
+                </mat-sidenav>
+                <mat-sidenav-content>
+                    <div *ngIf="!retrieveFamilyGroupError">
+                        <p style="margin-bottom: 30px;">
+                            Hello {{ customer.firstName }}!
+                        </p>
+                        <img style="width: 10%;"
+                            src="https://pickaface.net/gallery/avatar/unr_daddy_170307_0223_3hvoe.png" />
+
+                        <p style="margin-bottom: 30px;">
+                            Current units = {{ familyGroup.donatedUnits }}
+                        </p>
+
+                        <mat-accordion>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Donate to the poll
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Select the units from component
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <mat-form-field>
+                                    <mat-label>Choose subscription</mat-label>
+                                    <mat-select [(ngModel)]="selectedSubscription" name="subscription">
+                                        <mat-option *ngFor="
+                                                let subscription of subscriptions
+                                            " value="
+                                                {{subscription}}
+                                            ">{{
+                                                subscription.phoneNumber
+                                                    .phoneNumber
+                                            }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <p> SMS units: {{selectedSubscription}} </p>
+
+                                <br />
+                                <label class="example-margin">Donate SMS:</label>
+                                <mat-slider class="example-margin" [(ngModel)]="donateSMSValue"></mat-slider>
+                                <br />
+                                <label class="example-margin">Donate Data:</label>
+                                <mat-slider class="example-margin" [(ngModel)]="donateDataValue"></mat-slider>
+                                <br />
+                                <label class="example-margin">Donate TalkTime:
+                                </label>
+                                <mat-slider class="example-margin" [(ngModel)]="donateTalkTimeValue"></mat-slider>
+                                <br />
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Receive from the poll
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        Select component to receive units
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p>I'm visible because I am open</p>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+
+                    </div>
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+
+        </div>
+    </div>
+</div>

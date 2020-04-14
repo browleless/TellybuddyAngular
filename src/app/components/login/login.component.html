@@ -1,53 +1,55 @@
 <div style="padding: 3% 30% 0 30%;">
-    <mat-card>
-        <mat-card-title>Login</mat-card-title>
+    <div>
+        <mat-card>
+            <mat-card-title>Login</mat-card-title>
 
-        <form class="login-form">
-            <mat-form-field style="width: 100%;">
-                <mat-label>Username</mat-label>
-                <input
-                    name="username"
-                    type="text"
-                    matInput
-                    placeholder="Username"
-                    [(ngModel)]="username"
-                    required
-                />
-            </mat-form-field>
-            <br />
-            <mat-form-field style="width: 100%; padding-bottom: 0;">
-                <mat-label>Password</mat-label>
-                <input
-                    name="password"
-                    type="password"
-                    matInput
-                    placeholder="Password"
-                    [(ngModel)]="password"
-                    required
-                />
-            </mat-form-field>
-            <br />
-            <a
-                style="text-decoration: none; font-size: small;"
-                routerLink="#"
-                (click)="openDialog()"
-                >Forgot Password?</a
-            >
-            <br />
-            <div style="padding-top: 20px;">
-                <button
-                    style="
-                        background: #3c4cad;
-                        color: white;
-                        width: 100%;
-                        font-size: medium;
-                    "
-                    mat-button
-                    (click)="customerLogin()"
+            <form class="login-form">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Username</mat-label>
+                    <input
+                        name="username"
+                        type="text"
+                        matInput
+                        placeholder="Username"
+                        [(ngModel)]="username"
+                        required
+                    />
+                </mat-form-field>
+                <br />
+                <mat-form-field style="width: 100%; padding-bottom: 0;">
+                    <mat-label>Password</mat-label>
+                    <input
+                        name="password"
+                        type="password"
+                        matInput
+                        placeholder="Password"
+                        [(ngModel)]="password"
+                        required
+                    />
+                </mat-form-field>
+                <br />
+                <a
+                    style="text-decoration: none; font-size: small;"
+                    routerLink="#"
+                    (click)="openDialog()"
+                    >Forgot Password?</a
                 >
-                    Login
-                </button>
-            </div>
-        </form>
-    </mat-card>
+                <br />
+                <div style="padding-top: 20px;">
+                    <button
+                        style="
+                            background: #3c4cad;
+                            color: white;
+                            width: 100%;
+                            font-size: medium;
+                        "
+                        mat-button
+                        (click)="customerLogin()"
+                    >
+                        Login
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+    </div>
 </div>

@@ -1,0 +1,14 @@
+<mat-sidenav mode="side" opened>
+    <ul class="familyGroupMenu">
+        <mat-nav-list>
+            <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
+                Home</a>
+            <a mat-list-item routerLink="/familyGroup/viewMembers">
+                Members</a>
+            <div *ngIf="ownerOfFamilyGroup">
+                <a mat-list-item routerLink="/familyGroup/viewSettings">
+                    Setting</a>
+            </div>
+        </mat-nav-list>
+    </ul>
+</mat-sidenav>
