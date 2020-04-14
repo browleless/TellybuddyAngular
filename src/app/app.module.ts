@@ -61,6 +61,7 @@ import { ViewFamilyGroupDetailsComponent } from './components/familyGroup/view-f
 import { ViewMembersComponent } from './components/familyGroup/view-members/view-members.component';
 import { ViewSettingsComponent } from './components/familyGroup/view-settings/view-settings.component';
 import { FamilyGroupMenuComponent } from './components/familyGroup/family-group-menu/family-group-menu.component';
+import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-new-family-group/create-new-family-group.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -74,6 +75,7 @@ import { FamilyGroupMenuComponent } from './components/familyGroup/family-group-
         ViewMembersComponent,
         ViewSettingsComponent,
         FamilyGroupMenuComponent,
+        CreateNewFamilyGroupComponent,
     ],
     imports: [
         BrowserModule,
