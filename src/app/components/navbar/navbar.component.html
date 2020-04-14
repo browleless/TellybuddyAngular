@@ -82,7 +82,17 @@
             </mat-menu>
         </div>
 
-        <button mat-button>Cart</button>
+        <a
+            mat-button
+            [matBadgeHidden]="
+                !sessionService.getCart().transactionLineItems.length
+            "
+            [matBadge]="sessionService.getCart().transactionLineItems.length"
+            matBadgeColor="accent"
+            routerLink="/cart"
+        >
+            Cart
+        </a>
 
         <a
             *ngIf="sessionService.getIsLogin() == false"

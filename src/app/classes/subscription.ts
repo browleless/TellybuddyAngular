@@ -6,9 +6,9 @@ import { PhoneNumber } from './phone-number';
 
 export class Subscription {
     subscriptionId: number;
-    dataUnits: Map<string, number>;
-    talkTimeUnits: Map<string, number>;
-    smsUnits: Map<string, number>;
+    dataUnits: Object;
+    talkTimeUnits: Object;
+    smsUnits: Object;
     subscriptionStatusEnum: SubscriptionStatusEnum;
     isActive: boolean;
     subscriptionStartDate: Date;
@@ -19,9 +19,9 @@ export class Subscription {
     phoneNumber: PhoneNumber;
     constructor(
         subscriptionId?: number,
-        dataUnits?: Map<string, number>,
-        talkTimeUnits?: Map<string, number>,
-        smsUnits?: Map<string, number>,
+        dataUnits?: Object,
+        talkTimeUnits?: Object,
+        smsUnits?: Object,
         subscriptionStatusEnum?: SubscriptionStatusEnum,
         isActive?: boolean,
         subscriptionStartDate?: Date,

@@ -1,8 +1,13 @@
-import { BrowserModule } from '@angular/platform-browser';
+import 'hammerjs';
+import {
+    BrowserModule,
+    HAMMER_GESTURE_CONFIG,
+} from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GestureConfig } from '@angular/material';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -62,6 +67,11 @@ import { ViewMembersComponent } from './components/familyGroup/view-members/view
 import { ViewSettingsComponent } from './components/familyGroup/view-settings/view-settings.component';
 import { FamilyGroupMenuComponent } from './components/familyGroup/family-group-menu/family-group-menu.component';
 import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-new-family-group/create-new-family-group.component';
+import { CartComponent } from './components/cart/cart.component';
+import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { NumberDirective } from './directive/number.directive';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -76,6 +86,10 @@ import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-n
         ViewSettingsComponent,
         FamilyGroupMenuComponent,
         CreateNewFamilyGroupComponent,
+        CartComponent,
+        DialogConfigureNewPlanComponent,
+        CheckoutComponent,
+        NumberDirective,
     ],
     imports: [
         BrowserModule,
@@ -137,9 +151,20 @@ import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-n
         MatTreeModule,
         PortalModule,
         ScrollingModule,
+        MatBadgeModule,
+        MatTableModule,
+        MatChipsModule,
+        MatSliderModule,
+        MatSidenavModule,
+        MatDividerModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
     ],
-    entryComponents: [DialogForgotPasswordComponent],
-    providers: [],
+    entryComponents: [
+        DialogForgotPasswordComponent,
+        DialogConfigureNewPlanComponent,
+    ],
+    providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

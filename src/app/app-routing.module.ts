@@ -7,6 +7,8 @@ import { PlansComponent } from './components/plans/plans.component';
 import { ViewMembersComponent } from './components/familyGroup/view-members/view-members.component';
 import { ViewSettingsComponent } from './components/familyGroup/view-settings/view-settings.component';
 import { ViewFamilyGroupDetailsComponent } from './components/familyGroup/view-family-group-details/view-family-group-details.component';
+import { CartComponent } from './components/cart/cart.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 const routes: Routes = [
     {
@@ -24,6 +26,8 @@ const routes: Routes = [
     },
     { path: 'familyGroup/viewMembers', component: ViewMembersComponent },
     { path: 'familyGroup/viewSettings', component: ViewSettingsComponent },
+    { path: 'cart', component: CartComponent },
+    { path: 'checkout', component: CheckoutComponent },
 ];
 
 @NgModule({
