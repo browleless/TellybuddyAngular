@@ -27,6 +27,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +43,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
+import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
+import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
+import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +60,9 @@ import { NumberDirective } from './directive/number.directive';
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
+        EarnAdditionalUnitsComponent,
+        QuizAttemptComponent,
+        DialogAllocateAdditionalUnitsComponent,
     ],
     imports: [
         BrowserModule,
@@ -80,10 +89,14 @@ import { NumberDirective } from './directive/number.directive';
         MatDividerModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        MatTabsModule,
+        MatRadioModule,
+        MatProgressBarModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
+        DialogAllocateAdditionalUnitsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

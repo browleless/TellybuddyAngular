@@ -1,0 +1,93 @@
+<div *ngIf="loaded" class="question-header">
+    <div class="question-header-info">
+        <div class="question-header-main-text">
+            {{ questions[0].quiz.name }}
+        </div>
+        <div>
+            <a mat-raised-button color="warn" routerLink="/additionalUnits">
+                <mat-icon>close</mat-icon>
+                Exit
+            </a>
+        </div>
+    </div>
+</div>
+<div class="question-body">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <mat-tab-group
+            mat-stretch-tabs
+            (selectedTabChange)="handleTabChange($event)"
+        >
+            <mat-tab
+                [label]="i + 1"
+                *ngFor="let question of questions; let i = index"
+            >
+                <div>
+                    <div
+                        style="
+                            margin: 50px 0 50px 0;
+                            padding: 0 24px 0 24px;
+                            font-size: larger;
+                        "
+                    >
+                        {{ removeHtmlTag(question.question) }}
+                    </div>
+                    <mat-radio-group [(ngModel)]="selectedAnswer">
+                        <div
+                            style="background: white;"
+                            *ngFor="
+                                let answer of question.answers;
+                                let i = index
+                            "
+                        >
+                            <div>
+                                <mat-radio-button
+                                    style="
+                                        margin: 20px 0 20px 0;
+                                        padding: 0 24px 0 24px;
+                                    "
+                                    [value]="answer.answerId"
+                                    (click)="
+                                        handleAnswerSelection(
+                                            question.questionId,
+                                            answer.answerId
+                                        )
+                                    "
+                                >
+                                    {{ removeHtmlTag(answer.answer) }}
+                                </mat-radio-button>
+                            </div>
+                            <mat-divider
+                                *ngIf="i !== question.answers.length - 1"
+                            ></mat-divider>
+                        </div>
+                    </mat-radio-group>
+                    <div
+                        *ngIf="i + 1 === questions.length"
+                        style="float: right; margin-top: 30px;"
+                    >
+                        <button
+                            mat-raised-button
+                            color="accent"
+                            [disabled]="answers.size !== questions.length"
+                            (click)="openDialog()"
+                        >
+                            Allocate Units!
+                        </button>
+                    </div>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+<div *ngIf="loaded" class="question-footer">
+    <mat-progress-bar
+        mode="determinate"
+        [value]="(answers.size / questions.length) * 100"
+    ></mat-progress-bar>
+    <div class="question-footer-info">
+        <div>{{ answers.size }} out of {{ questions.length }} answered</div>
+    </div>
+</div>

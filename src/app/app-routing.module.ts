@@ -6,6 +6,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { PlansComponent } from './components/plans/plans.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
+import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 
 const routes: Routes = [
     {
@@ -19,6 +21,8 @@ const routes: Routes = [
     { path: 'plans', component: PlansComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
+    { path: 'additionalUnits', component: EarnAdditionalUnitsComponent },
+    { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
 ];
 
 @NgModule({
