@@ -30,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +40,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DialogForgotPasswordComponent } from './components/dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PlansComponent } from './components/plans/plans.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -46,6 +48,7 @@ import { NumberDirective } from './directive/number.directive';
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
+
 
 @NgModule({
     declarations: [
@@ -56,6 +59,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         DialogForgotPasswordComponent,
         ResetPasswordComponent,
         PlansComponent,
+        SubscriptionsComponent,
         CartComponent,
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
@@ -92,6 +96,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         MatTabsModule,
         MatRadioModule,
         MatProgressBarModule,
+        MatExpansionModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,

@@ -1,0 +1,36 @@
+<div style="text-align: center;padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <h1>My Subscriptions</h1>
+</div>
+
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        
+        <mat-accordion>
+            <mat-expansion-panel  *ngFor="let subscription of subscriptions; let i = index" style="border-left: 5px solid #7274d6;">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{i+1}} {{subscription.plan.name}}
+                </mat-panel-title>
+                <mat-panel-description>
+                   Date Enrolled: {{subscription.subscriptionStartDate | date}}
+
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+          
+              <mat-form-field>
+                <mat-label>First name</mat-label>
+                <input matInput>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Age</mat-label>
+                <input matInput type="number" min="1">
+              </mat-form-field>
+            </mat-expansion-panel>
+            
+          </mat-accordion>
+
+    </div>
+</div>
