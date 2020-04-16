@@ -1,1 +1,46 @@
-<p>view-settings works!</p>
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+
+    <div style="text-align: center;">
+        <h1>Tellybuddy FamilyGroup</h1>
+        <div *ngIf="!retrieveFamilyGroupError">
+            <mat-sidenav-container>
+                <mat-sidenav mode="side" opened>
+                    <ul class="familyGroupMenu">
+                        <mat-nav-list>
+                            <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
+                                Home</a>
+                            <a mat-list-item routerLink="/familyGroup/viewMembers">
+                                Members</a>
+                            <div *ngIf="ownerOfFamilyGroup">
+                                <a mat-list-item routerLink="/familyGroup/viewSettings">
+                                    Setting</a>
+                            </div>
+                        </mat-nav-list>
+                    </ul>
+                </mat-sidenav>
+                <mat-sidenav-content>
+                    <form class="update-form">
+                        <mat-form-field class="update-full-width">
+                            <mat-label>Update Family Group Description</mat-label>
+                            <textarea matInput [(ngModel)]="familyGroupToPerformAction.description"
+                                value={{familyGroupToPerformAction.description}} [ngModelOptions]="{standalone: true}"
+                                required></textarea>
+                        </mat-form-field>
+                        <div>
+                            <button mat-button (click)="updateFamilyGroup()">Update</button>
+                        </div>
+                    </form>
+
+                    <section>
+                        <div>Delete the family group</div>
+
+                        <button mat-raised-button (click)="openDialog()">Delete</button>
+                        <button mat-button (click)="deleteFamilyGroup()">Delete</button>
+                    </section>
+
+                </mat-sidenav-content>
+            </mat-sidenav-container>
+        </div>
+    </div>
+
+</div>

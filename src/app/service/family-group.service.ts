@@ -75,12 +75,17 @@ export class FamilyGroupService {
         donateUnitsToFamilyGroupReq['customer'] = customer;
         donateUnitsToFamilyGroupReq['subscription'] = subscription;
         return this.httpClient
-            .post<any>(this.baseUrl+'/donateUnitsToFamilyGroup', donateUnitsToFamilyGroupReq, httpOptions)
+            .post<any>(
+                this.baseUrl + '/donateUnitsToFamilyGroup',
+                donateUnitsToFamilyGroupReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
 
     //Consume from the pool
-    consumeUnitsFromFamilyGroup(dataUnits: number,
+    consumeUnitsFromFamilyGroup(
+        dataUnits: number,
         smsUnits: number,
         talktimeUnits: number,
         subscription: Subscription,
@@ -98,7 +103,11 @@ export class FamilyGroupService {
         consumeUnitsFromFamilyGroupReq['customer'] = customer;
         consumeUnitsFromFamilyGroupReq['subscription'] = subscription;
         return this.httpClient
-            .post<any>(this.baseUrl+'/consumeUnitsFromFamilyGroup', consumeUnitsFromFamilyGroupReq, httpOptions)
+            .post<any>(
+                this.baseUrl + '/consumeUnitsFromFamilyGroup',
+                consumeUnitsFromFamilyGroupReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
     //============================Members
@@ -118,7 +127,11 @@ export class FamilyGroupService {
         addFamilyGroupMemberReq['customer'] = customer;
 
         return this.httpClient
-            .post<any>(this.baseUrl+'/addFamilyGroupMember', addFamilyGroupMemberReq, httpOptions)
+            .post<any>(
+                this.baseUrl + '/addFamilyGroupMember',
+                addFamilyGroupMemberReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
 
@@ -138,7 +151,11 @@ export class FamilyGroupService {
         removeFamilyGroupMemberReq['customer'] = customer;
 
         return this.httpClient
-            .post<any>(this.baseUrl+'/removeFamilyGroupMember', removeFamilyGroupMemberReq, httpOptions)
+            .post<any>(
+                this.baseUrl + '/removeFamilyGroupMember',
+                removeFamilyGroupMemberReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
 
@@ -151,7 +168,11 @@ export class FamilyGroupService {
         };
         updateFamilyGroupReq['familyGroup'] = familyGroup;
         return this.httpClient
-            .put<any>(this.baseUrl+'/updateFamilyGroup', updateFamilyGroupReq, httpOptions)
+            .post<any>(
+                this.baseUrl + '/updateFamilyGroup',
+                updateFamilyGroupReq,
+                httpOptions
+            )
             .pipe(catchError(this.handleError));
     }
 
@@ -160,6 +181,7 @@ export class FamilyGroupService {
         return this.httpClient
             .delete<any>(
                 this.baseUrl +
+                    '/deleteFamilyGroup/' +
                     familyGroupId +
                     '?username=' +
                     this.sessionService.getUsername() +
