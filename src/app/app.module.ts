@@ -71,6 +71,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
+import { MemberDetailsComponent } from './components/familyGroup/member-details/member-details.component';
 
 @NgModule({
     declarations: [
@@ -90,6 +91,7 @@ import { NumberDirective } from './directive/number.directive';
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
+        MemberDetailsComponent,
     ],
     imports: [
         BrowserModule,
@@ -108,7 +110,7 @@ import { NumberDirective } from './directive/number.directive';
         MatGridListModule,
         MatRippleModule,
         MatProgressSpinnerModule,
-
+        BrowserAnimationsModule,
         A11yModule,
         CdkStepperModule,
         CdkTableModule,

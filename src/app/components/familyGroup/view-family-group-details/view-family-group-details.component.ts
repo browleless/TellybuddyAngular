@@ -74,7 +74,6 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
         this.customerService.retrieveCurrentCustomer().subscribe(
             (response) => {
                 this.customer = response.customer;
-
                 if (this.customer.ownerOfFamilyGroup) {
                     this.ownerOfFamilyGroup = true;
                 } else {

@@ -80,6 +80,22 @@ export class CustomerService {
             .pipe(catchError(this.handleError));
     }
 
+    retrieveCustomerFromFamilyGroupId(familyGroupId: number): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveCustomerFromFamilyGroupId/' +
+                    familyGroupId +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword() +
+                    '&familyGroupId=' +
+                    familyGroupId
+            )
+            .pipe(catchError(this.handleError));
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 

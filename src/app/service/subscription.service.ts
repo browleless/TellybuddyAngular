@@ -36,6 +36,24 @@ export class SubscriptionService {
             .pipe(catchError(this.handleError));
     }
 
+    retrieveActiveSubscriptionUnderCustomer(
+        customerId: number
+    ): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveActive/' +
+                    customerId +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword() +
+                    '&customerId=' +
+                    customerId
+            )
+            .pipe(catchError(this.handleError));
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 

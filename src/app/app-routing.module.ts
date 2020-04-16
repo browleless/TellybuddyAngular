@@ -9,6 +9,7 @@ import { ViewSettingsComponent } from './components/familyGroup/view-settings/vi
 import { ViewFamilyGroupDetailsComponent } from './components/familyGroup/view-family-group-details/view-family-group-details.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { MemberDetailsComponent } from './components/familyGroup/member-details/member-details.component';
 
 const routes: Routes = [
     {
@@ -24,7 +25,14 @@ const routes: Routes = [
         path: 'familyGroup/viewFamilyGroupDetails',
         component: ViewFamilyGroupDetailsComponent,
     },
-    { path: 'familyGroup/viewMembers', component: ViewMembersComponent },
+    {
+        path: 'familyGroup/viewMembers',
+        component: ViewMembersComponent,
+    },
+    {
+        path: 'familyGroup/memberDetails/:customerId',
+        component: MemberDetailsComponent,
+    },
     { path: 'familyGroup/viewSettings', component: ViewSettingsComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
