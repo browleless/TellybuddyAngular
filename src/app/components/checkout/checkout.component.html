@@ -60,6 +60,11 @@
                                     border: 1px rgba(0, 0, 0, 0.1) solid;
                                 " [matBadge]="transactionLineItem.quantity">
 
+                                <span *ngIf="transactionLineItem.subscription">
+                                    <img height="64px" width="64px" style="border-radius: 8px;"
+                                        src="https://i7.uihere.com/icons/659/717/224/pie-chart-93988e912b34b5246c58434d999aa30d.png">
+                                </span>
+
                                 <span *ngIf="transactionLineItem.product">
                                     <img height="64px" width="64px" style="border-radius: 8px;"
                                         src="assets/productImages/{{ transactionLineItem.product.productImagePath }}">
