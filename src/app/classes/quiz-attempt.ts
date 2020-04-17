@@ -1,5 +1,6 @@
 import { Customer } from './customer';
 import { Quiz } from './quiz';
+import { Response } from './response';
 
 export class QuizAttempt {
     quizAttemptId: number;

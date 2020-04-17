@@ -1,6 +1,6 @@
 <div mat-dialog-title>
     <div>
-        Configure {{ data.selectedPlan.name }} Plan
+        Allocate Extra Units
         <button style="float: right;" mat-icon-button (click)="onExitClick()">
             <mat-icon>close</mat-icon>
         </button>
@@ -9,10 +9,7 @@
 <div>
     <div mat-dialog-content style="height: auto;">
         <div style="margin-bottom: 16px;">
-            Please choose a number:
-            <button mat-icon-button (click)="ngOnInit()">
-                <mat-icon>refresh</mat-icon>
-            </button>
+            Choose your subscription:
         </div>
         <div style="width: 487.75px;" *ngIf="!loaded">
             <mat-spinner style="margin: 0 auto;" diameter="30"></mat-spinner>
@@ -20,17 +17,17 @@
         <mat-chip-list *ngIf="loaded">
             <mat-chip
                 *ngFor="
-                    let availablePhoneNumber of availablePhoneNumbers;
+                    let subscription of customerSubscriptions;
                     let i = index
                 "
                 style="cursor: pointer;"
                 [ngClass]="
-                    availablePhoneNumber.inUse ? 'mat-chip-selected' : ''
+                    i === selectedSubscriptionIndex ? 'mat-chip-selected' : ''
                 "
-                (click)="selectPhoneNumber(i)"
+                (click)="selectSubscription(i)"
             >
-                {{ availablePhoneNumber.phoneNumber.substring(0, 4) }}
-                {{ availablePhoneNumber.phoneNumber.substring(4) }}
+                {{ subscription.phoneNumber.phoneNumber.substring(0, 4) }}
+                {{ subscription.phoneNumber.phoneNumber.substring(4) }}
             </mat-chip>
         </mat-chip-list>
         <p style="padding-top: 10px;">Set your units allocations:</p>
@@ -40,7 +37,7 @@
                     Data Units:
                     <mat-slider
                         #dataSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
+                        [max]="data.unitsWorth"
                         thumbLabel
                         (change)="handleDataSliderChange($event.value)"
                         (input)="
@@ -51,17 +48,14 @@
                                 : (dataUnits = dataUnits)
                         "
                     ></mat-slider>
-                    {{
-                        (data.selectedPlan.dataConversionRate * dataUnits) /
-                            1000
-                    }}
+                    {{ (dataConversionRate * dataUnits) / 1000 }}
                     GB
                 </div>
                 <div>
                     SMS Units:
                     <mat-slider
                         #smsSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
+                        [max]="data.unitsWorth"
                         thumbLabel
                         (change)="handleSmsSliderChange($event.value)"
                         (input)="
@@ -72,14 +66,14 @@
                                 : (smsUnits = smsUnits)
                         "
                     ></mat-slider>
-                    {{ data.selectedPlan.smsConversionRate * smsUnits }}
+                    {{ smsConversionRate * smsUnits }}
                     SMS
                 </div>
                 <div>
                     Talktime Units:
                     <mat-slider
                         #talktimeSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
+                        [max]="data.unitsWorth"
                         thumbLabel
                         (change)="handleTalktimeSliderChange($event.value)"
                         (input)="
@@ -90,9 +84,7 @@
                                 : (talktimeUnits = talktimeUnits)
                         "
                     ></mat-slider>
-                    {{
-                        data.selectedPlan.talktimeConversionRate * talktimeUnits
-                    }}
+                    {{ talktimeConversionRate * talktimeUnits }}
                     mins
                 </div>
             </div>
@@ -106,7 +98,7 @@
                         font-weight: bold;
                         border-radius: 50%;
                         padding: 15px 25px 15px 25px;
-                        background-color: #f04393;
+                        background-color: #3c4cad;
                         color: white;
                     "
                 >
@@ -126,14 +118,11 @@
     </div>
     <div style="text-align: center; padding-top: 10px;">
         <button
-            [disabled]="
-                !selectedPhoneNumber.phoneNumber || !(getRemainingUnits() === 0)
-            "
             mat-raised-button
             color="primary"
-            (click)="addPlanToCart()"
+            (click)="handleQuizSubmission()"
         >
-            Add to Cart
+            Submit
         </button>
     </div>
 </div>

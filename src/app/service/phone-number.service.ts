@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable({
     providedIn: 'root',
 })
-export class PhoneNumberServiceService {
+export class PhoneNumberService {
     baseUrl: string = '/api/PhoneNumber';
 
     constructor(private httpClient: HttpClient) {}

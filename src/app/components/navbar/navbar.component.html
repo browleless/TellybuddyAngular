@@ -42,12 +42,13 @@
                 (mouseleave)="menuLeave(buttonTwoTrigger, buttonTwo)"
             >
                 <button mat-menu-item>View Promotion Items</button>
-                <button
+                <a
+                    routerLink="/additionalUnits"
                     *ngIf="sessionService.getIsLogin() == true"
                     mat-menu-item
                 >
                     Earn Additional Units
-                </button>
+                </a>
             </div>
         </mat-menu>
 

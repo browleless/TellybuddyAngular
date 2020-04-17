@@ -1,0 +1,86 @@
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div
+            *ngIf="quizzes.length !== 0 && subscriptions.length !== 0"
+            style="text-align: center;"
+        >
+            <h1>Available Questionnaires</h1>
+            <p style="margin-bottom: 30px;">
+                Complete them to earn additional units for your subscriptions!
+            </p>
+            <mat-grid-list
+                [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+            >
+                <mat-grid-tile *ngFor="let quiz of quizzes; let i = index">
+                    <mat-card
+                        mat-ripple
+                        class="mat-elevation-z8"
+                        (click)="handleQuizClick(quiz.quizId)"
+                    >
+                        <mat-card-title> {{ quiz.name }} </mat-card-title>
+                        <mat-card-content>
+                            <div
+                                style="
+                                    margin: 15px 0 25px 0;
+                                    display: inline-block;
+                                    font-size: 350%;
+                                    font-weight: bold;
+                                    border-radius: 50%;
+                                    padding: 15px 35px 15px 35px;
+                                    background-color: #f04393;
+                                    color: white;
+                                "
+                            >
+                                {{ quiz.unitsWorth }}
+                                <div
+                                    style="
+                                        padding: 0;
+                                        font-size: initial;
+                                        font-weight: normal;
+                                    "
+                                >
+                                    Units
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div
+            *ngIf="quizzes.length === 0 && subscriptions.length !== 0"
+            style="text-align: center;"
+        >
+            <h1>All Completed!</h1>
+            <img
+                height="350px"
+                width="350px"
+                src="https://image.freepik.com/free-vector/happy-emoji_53876-25513.jpg"
+            />
+            <p>
+                Check back here again for more opportunites to earn additional
+                units!
+            </p>
+        </div>
+        <div style="text-align: center;" *ngIf="subscriptions.length === 0">
+            <h1>
+                No subscriptions found!
+            </h1>
+            <img
+                height="350px"
+                width="350px"
+                src="https://image.freepik.com/free-vector/sad-emoji_53876-25516.jpg"
+            />
+            <p>
+                You are unable to earn any additional units, subscribe to our
+                plans today!
+            </p>
+            <a mat-raised-button color="accent" routerLink="/plans">
+                Check out our Plans!
+            </a>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ProductsComponent } from './components/products/products.component';
 import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
+import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
+import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 
 const routes: Routes = [
     {
@@ -22,7 +24,9 @@ const routes: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'products', component: ProductsComponent },
-    { path: 'luxuryproducts', component: LuxuryproductsComponent }
+    { path: 'luxuryproducts', component: LuxuryproductsComponent },
+    { path: 'additionalUnits', component: EarnAdditionalUnitsComponent },
+    { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
 ];
 
 @NgModule({
