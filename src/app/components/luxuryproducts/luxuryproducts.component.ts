@@ -12,8 +12,10 @@ import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 import { SessionService } from 'src/app/service/session.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import {MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { MatDialog } from '@angular/material/dialog';
+import { DialogRecommendPlansComponent } from '../dialog-recommend-plans/dialog-recommend-plans.component';
 
 @Component({
   selector: 'app-luxuryproducts',
@@ -35,7 +37,8 @@ export class LuxuryproductsComponent implements OnInit {
     private productService: ProductService,
     private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar,
-    public sessionService: SessionService) {
+    public sessionService: SessionService,
+    public dialog: MatDialog) {
     breakpointObserver
       .observe(['(max-width: 599px)'])
       .subscribe((result) => {
@@ -127,6 +130,11 @@ export class LuxuryproductsComponent implements OnInit {
 
     snackBarRef.onAction().subscribe(() => {
       this.sessionService.undoAddToCart();
+    });
+
+    this.dialog.open(DialogRecommendPlansComponent, {
+      height: '220px',
+      width: '460px',
     });
 
   }
