@@ -105,7 +105,8 @@
                                 "
                                 [matBadge]="transactionLineItem.quantity"
                             >
-                                image here
+                                <!-- image here -->
+                                <!-- <img src="assets/productImages/{{ product.productImagePath }}" > -->
                             </div>
                         </td>
                         <td width="80%">
@@ -117,7 +118,13 @@
                             </span>
                         </td>
                         <td style="padding-right: 17.5px;">
-                            {{ transactionLineItem.price | currency }}
+                            <span *ngIf="transactionLineItem.subscription">
+                                {{ transactionLineItem.price | currency }}
+                            </span>
+                            
+                            <span *ngIf="transactionLineItem.product">
+                                {{ transactionLineItem.subtotal | currency }}
+                            </span>
                         </td>
                     </tr>
                 </table>

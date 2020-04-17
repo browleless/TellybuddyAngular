@@ -127,10 +127,10 @@ export class CheckoutComponent implements OnInit {
 
             this.snackBar.open(
                 'Code "' +
-                    this.enteredDiscountCode +
-                    '" applied successfully! (-' +
-                    this.discountRate +
-                    '%)',
+                this.enteredDiscountCode +
+                '" applied successfully! (-' +
+                this.discountRate +
+                '%)',
                 'Close',
                 {
                     duration: 4500,
@@ -139,8 +139,8 @@ export class CheckoutComponent implements OnInit {
         } else {
             this.snackBar.open(
                 'Sorry, "' +
-                    this.enteredDiscountCode +
-                    '" is not a valid code!',
+                this.enteredDiscountCode +
+                '" is not a valid code!',
                 'Close',
                 {
                     duration: 4500,
@@ -152,8 +152,8 @@ export class CheckoutComponent implements OnInit {
     removeDiscount(): void {
         this.snackBar.open(
             'Discount code "' +
-                this.enteredDiscountCode +
-                '" removed successfully!',
+            this.enteredDiscountCode +
+            '" removed successfully!',
             'Close',
             {
                 duration: 4500,
@@ -183,6 +183,8 @@ export class CheckoutComponent implements OnInit {
         this.loaded = false;
 
         let transaction = this.sessionService.getCart();
+
+        // transaction.customer = this.sessionService.getCurrentCustomer();
 
         transaction.transactionLineItems.forEach((transactionLineItem) => {
             if (transactionLineItem.subscription) {

@@ -2,15 +2,11 @@
     <div *ngIf="!loaded">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
-    <div
-        *ngIf="loaded && !sessionService.getCart().transactionLineItems.length"
-    >
+    <div *ngIf="loaded && !sessionService.getCart().transactionLineItems.length">
         <div style="text-align: center;">
             <h1>Your Cart is Empty!</h1>
-            <img
-                style="max-width: 100%; height: 400px; object-fit: cover;"
-                src="https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png"
-            />
+            <img style="max-width: 100%; height: 400px; object-fit: cover;"
+                src="https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png" />
             <p>
                 Add some shit now
             </p>
@@ -23,12 +19,7 @@
                 Review your cart and checkout now!
             </p>
         </div>
-        <table
-            mat-table
-            [dataSource]="transaction.transactionLineItems"
-            style="width: 100%;"
-            class="mat-elevation-z8"
-        >
+        <table mat-table [dataSource]="transaction.transactionLineItems" style="width: 100%;" class="mat-elevation-z8">
             <ng-container matColumnDef="item">
                 <th mat-header-cell *matHeaderCellDef>
                     Item
@@ -44,103 +35,57 @@
             </ng-container>
 
             <ng-container matColumnDef="price">
-                <th
-                    style="text-align: center;"
-                    mat-header-cell
-                    *matHeaderCellDef
-                >
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef>
                     Price
                 </th>
-                <td
-                    style="text-align: center;"
-                    mat-cell
-                    *matCellDef="let transactionLineItem"
-                >
+                <td style="text-align: center;" mat-cell *matCellDef="let transactionLineItem">
                     {{ transactionLineItem.price | currency }}
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="quantity">
-                <th
-                    style="text-align: center;"
-                    mat-header-cell
-                    *matHeaderCellDef
-                >
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef>
                     Quantity
                 </th>
-                <td
-                    style="text-align: center;"
-                    mat-cell
-                    *matCellDef="let transactionLineItem; let i = index"
-                >
-                    <mat-form-field
-                        style="
+                <td style="text-align: center;" mat-cell *matCellDef="let transactionLineItem; let i = index">
+                    <mat-form-field style="
                             width: 150px;
                             margin-bottom: -1.25em;
                             padding-bottom: 1.34375em;
-                        "
-                        appearance="outline"
-                    >
-                        <input
-                            matInput
-                            style="text-align: center;"
-                            min="1"
-                            [disabled]="transactionLineItem.subscription"
-                            oninput="validity.valid||(value='1')"
-                            type="number"
-                            [(ngModel)]="
+                        " appearance="outline">
+                        <input matInput style="text-align: center;" min="1"
+                            [disabled]="transactionLineItem.subscription || transactionLineItem.productItem" oninput="validity.valid||(value='1')"
+                            type="number" [(ngModel)]="
                                 transaction.transactionLineItems[i].quantity
-                            "
-                            (change)="updateLineItemQuantity(i)"
-                        />
-                        <mat-icon
-                            *ngIf="transactionLineItem.product"
-                            style="cursor: pointer;"
-                            matPrefix
-                            (click)="decrementLineItemQuantity(i)"
-                            >remove</mat-icon
-                        >
-                        <mat-icon
-                            *ngIf="transactionLineItem.product"
-                            style="cursor: pointer;"
-                            matSuffix
-                            (click)="incrementLineItemQuantity(i)"
-                            >add</mat-icon
-                        >
+                            " (change)="updateLineItemQuantity(i)" />
+                        <mat-icon *ngIf="!transactionLineItem.productItem" style="cursor: pointer;" matPrefix
+                            (click)="decrementLineItemQuantity(i)">remove</mat-icon>
+                        <mat-icon *ngIf="!transactionLineItem.productItem" style="cursor: pointer;" matSuffix
+                            (click)="incrementLineItemQuantity(i)">add</mat-icon>
                     </mat-form-field>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="subtotal">
-                <th
-                    style="text-align: center;"
-                    mat-header-cell
-                    *matHeaderCellDef
-                >
+                <th style="text-align: center;" mat-header-cell *matHeaderCellDef>
                     Sub Total
                 </th>
-                <td
-                    style="text-align: center;"
-                    mat-cell
-                    *matCellDef="let transactionLineItem"
-                >
-                    {{ transactionLineItem.price | currency }}
+                <td style="text-align: center;" mat-cell *matCellDef="let transactionLineItem">
+                    <div *ngIf="transactionLineItem.subscription">
+                        {{ transactionLineItem.price | currency }}
+                    </div>
+
+                    <div *ngIf="!transactionLineItem.subscription">
+                        {{ transactionLineItem.subtotal | currency }}
+                    </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="action">
-                <th
-                    style="text-align: right;"
-                    mat-header-cell
-                    *matHeaderCellDef
-                >
+                <th style="text-align: right;" mat-header-cell *matHeaderCellDef>
                     <button mat-button (click)="clearCart()">Clear All</button>
                 </th>
-                <td
-                    style="text-align: right;"
-                    mat-cell
-                    *matCellDef="let transactionLineItem; let i = index"
-                >
+                <td style="text-align: right;" mat-cell *matCellDef="let transactionLineItem; let i = index">
                     <button mat-icon-button (click)="deleteLineItem(i)">
                         <mat-icon>close</mat-icon>
                     </button>
@@ -159,29 +104,18 @@
                 </span>
             </mat-card>
         </div>
-        <div
-            style="
+        <div style="
                 margin-top: 50px;
                 width: fit-content;
                 float: right;
                 clear: both;
-            "
-        >
-            <a
-                style="border-radius: 50px; width: 150.95px;"
-                mat-raised-button
-                color="primary"
-                routerLink="/index"
-            >
+            ">
+            <a style="border-radius: 50px; width: 150.95px;" mat-raised-button color="primary" routerLink="/index">
                 Continue Shopping
             </a>
             &nbsp;
-            <button
-                style="border-radius: 50px; width: 150.95px;"
-                mat-raised-button
-                color="accent"
-                (click)="handleCheckoutRequest()"
-            >
+            <button style="border-radius: 50px; width: 150.95px;" mat-raised-button color="accent"
+                (click)="handleCheckoutRequest()">
                 Check Out
             </button>
         </div>

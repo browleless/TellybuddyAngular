@@ -1,0 +1,34 @@
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div style="text-align: center;">
+            <h1>Phone Accessories</h1>
+            <p style="margin-bottom: 30px;">
+                Click on a product to add it to cart!
+            </p>
+        </div>
+        <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="420px">
+            <mat-grid-tile *ngFor="let product of products, let i = index">
+                <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)">
+                    <mat-card-title>
+                        <div style="text-align:center;">
+                            {{ product.name }}
+                        </div>
+                    </mat-card-title>
+                    <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
+                        Price: ${{ product.price }}
+                    </mat-card-subtitle>
+                    <img mat-card-image src="assets/productImages/{{ product.productImagePath }}">
+                    <mat-card-content>
+                        <div>
+                            Description: {{ product.description }}
+                        </div>
+                    </mat-card-content>
+
+                </mat-card>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+</div>

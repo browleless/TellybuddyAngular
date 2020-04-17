@@ -6,6 +6,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { PlansComponent } from './components/plans/plans.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ProductsComponent } from './components/products/products.component';
+import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
 
 const routes: Routes = [
     {
@@ -19,10 +21,12 @@ const routes: Routes = [
     { path: 'plans', component: PlansComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
+    { path: 'products', component: ProductsComponent },
+    { path: 'luxuryproducts', component: LuxuryproductsComponent }
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

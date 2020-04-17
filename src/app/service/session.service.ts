@@ -9,7 +9,7 @@ import { TransactionLineItem } from '../classes/transaction-line-item';
 export class SessionService {
     currentCart: Transaction;
 
-    constructor() {}
+    constructor() { }
 
     getIsLogin(): boolean {
         if (sessionStorage.isLogin == 'true') {
@@ -102,6 +102,15 @@ export class SessionService {
         this.currentCart.transactionLineItems[
             lineItemIndex
         ].quantity = newQuantity;
+
+        //newly add
+        this.currentCart.transactionLineItems[
+            lineItemIndex
+        ].subtotal = this.currentCart.transactionLineItems[
+            lineItemIndex
+        ].quantity * this.currentCart.transactionLineItems[
+            lineItemIndex].price;
+
         this.setCart(this.currentCart);
     }
 

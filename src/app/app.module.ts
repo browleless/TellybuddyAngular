@@ -40,6 +40,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
+import { ProductsComponent } from './components/products/products.component';
+import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
 
 @NgModule({
     declarations: [
@@ -54,6 +56,8 @@ import { NumberDirective } from './directive/number.directive';
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
+        ProductsComponent,
+        LuxuryproductsComponent,
     ],
     imports: [
         BrowserModule,
