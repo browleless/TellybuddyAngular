@@ -105,8 +105,11 @@
                                 "
                                 [matBadge]="transactionLineItem.quantity"
                             >
-                                <!-- image here -->
-                                <!-- <img src="assets/productImages/{{ product.productImagePath }}" > -->
+                                image here
+                                <!-- <cl-image public-id="assets/productImages/{{ product.productImagePath }}">
+                                    <cl-transformation crop="scale"></cl-transformation>
+                                </c1-image> -->
+                                <!-- <img src="assets/productImages/{{ product.productImagePath }}" style="" > -->
                             </div>
                         </td>
                         <td width="80%">
@@ -116,9 +119,12 @@
                             <span *ngIf="transactionLineItem.product">
                                 {{ transactionLineItem.product.name }}
                             </span>
+                            <span *ngIf="transactionLineItem.productItem">
+                                {{ transactionLineItem.productItem.luxuryProduct.name }}
+                            </span>
                         </td>
                         <td style="padding-right: 17.5px;">
-                            <span *ngIf="transactionLineItem.subscription">
+                            <span *ngIf="transactionLineItem.subscription || transactionLineItem.productItem">
                                 {{ transactionLineItem.price | currency }}
                             </span>
                             

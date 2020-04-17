@@ -31,6 +31,9 @@
                     <span *ngIf="transactionLineItem.product">
                         {{ transactionLineItem.product.name }}
                     </span>
+                    <span *ngIf="transactionLineItem.productItem">
+                        {{ transactionLineItem.productItem.luxuryProduct.name }}
+                    </span>
                 </td>
             </ng-container>
 
@@ -58,9 +61,9 @@
                             type="number" [(ngModel)]="
                                 transaction.transactionLineItems[i].quantity
                             " (change)="updateLineItemQuantity(i)" />
-                        <mat-icon *ngIf="!transactionLineItem.productItem" style="cursor: pointer;" matPrefix
+                        <mat-icon *ngIf="transactionLineItem.product" style="cursor: pointer;" matPrefix
                             (click)="decrementLineItemQuantity(i)">remove</mat-icon>
-                        <mat-icon *ngIf="!transactionLineItem.productItem" style="cursor: pointer;" matSuffix
+                        <mat-icon *ngIf="transactionLineItem.product" style="cursor: pointer;" matSuffix
                             (click)="incrementLineItemQuantity(i)">add</mat-icon>
                     </mat-form-field>
                 </td>

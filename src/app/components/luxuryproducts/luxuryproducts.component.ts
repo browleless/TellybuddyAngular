@@ -12,6 +12,8 @@ import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 import { SessionService } from 'src/app/service/session.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 @Component({
   selector: 'app-luxuryproducts',
@@ -80,21 +82,7 @@ export class LuxuryproductsComponent implements OnInit {
     // }
 
     let newLineItem: TransactionLineItem = {
-      product: {
-        productId: this.selectedLuxury.productId,
-        skuCode: this.selectedLuxury.skuCode,
-        name: this.selectedLuxury.name,
-        description: this.selectedLuxury.description,
-        price: this.selectedLuxury.price,
-        quantityOnHand: this.selectedLuxury.quantityOnHand,
-        reorderQuantity: this.selectedLuxury.reorderQuantity,
-        productImagePath: this.selectedLuxury.productImagePath,
-        tags: this.selectedLuxury.tags,
-        category: this.selectedLuxury.category,
-        dealStartTime: this.selectedLuxury.dealStartTime,
-        dealEndTime: this.selectedLuxury.dealEndTime,
-        discountPrice: this.selectedLuxury.discountPrice,
-      },
+      product: undefined,
       transactionLineItemId: undefined,
       price: this.selectedLuxury.price,
       quantity: 1,
@@ -108,9 +96,9 @@ export class LuxuryproductsComponent implements OnInit {
         luxuryProduct: {
           serialNumber: selectedLuxuryProd.serialNumber,
           productItems: undefined,
-          productId: selectedLuxuryProd.productId,
+          productId: this.selectedLuxury.productId,
           skuCode: selectedLuxuryProd.skuCode,
-          name: selectedLuxuryProd.name,
+          name: this.selectedLuxury.name,
           description: selectedLuxuryProd.description,
           price: selectedLuxuryProd.price,
           quantityOnHand: selectedLuxuryProd.quantityOnHand,
