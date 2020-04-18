@@ -32,7 +32,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,7 +55,7 @@ import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.com
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
 import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
 import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
-
+import { BillsComponent } from './components/bills/bills.component';
 
 @NgModule({
     declarations: [
@@ -77,6 +78,7 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
+        BillsComponent,
     ],
     imports: [
         BrowserModule,
@@ -108,17 +110,17 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         MatProgressBarModule,
         MatExpansionModule,
         MatSlideToggleModule,
-        MatListModule
+        MatListModule,
+        MatTooltipModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
-        DialogAmendSubscriptionUnits
+        DialogAmendSubscriptionUnits,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

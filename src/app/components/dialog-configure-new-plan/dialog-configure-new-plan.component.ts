@@ -112,6 +112,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
                 usageDetails: undefined,
                 phoneNumber: this.selectedPhoneNumber,
                 plan: this.data.selectedPlan,
+                outstandingBills: undefined,
             },
             transactionLineItemId: undefined,
             transaction: undefined,
