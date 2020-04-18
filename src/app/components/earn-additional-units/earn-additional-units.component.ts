@@ -80,20 +80,24 @@ export class EarnAdditionalUnitsComponent implements OnInit {
         this.quizService.retrieveAllUnattemptedActiveQuizzes().subscribe(
             (response) => {
                 this.quizzes = response.quizzes;
-                this.quizzes.forEach((quiz) => {
-                    this.observables.push(
-                        this.quizService.retrieveQuizUnattemptedFamilyMembers(
-                            quiz
-                        )
-                    );
-                });
-                forkJoin(this.observables).subscribe((result) => {
-                    for (let i = 0; i < result.length; i++) {
-                        this.quizzes[i].familyGroupMembers =
-                            result[i].familyGroupMembers;
-                    }
+                if (this.quizzes.length) {
+                    this.quizzes.forEach((quiz) => {
+                        this.observables.push(
+                            this.quizService.retrieveQuizUnattemptedFamilyMembers(
+                                quiz
+                            )
+                        );
+                    });
+                    forkJoin(this.observables).subscribe((result) => {
+                        for (let i = 0; i < result.length; i++) {
+                            this.quizzes[i].familyGroupMembers =
+                                result[i].familyGroupMembers;
+                        }
+                        this.loaded = true;
+                    });
+                } else {
                     this.loaded = true;
-                });
+                }
             },
             (error) => {
                 console.log(error);
