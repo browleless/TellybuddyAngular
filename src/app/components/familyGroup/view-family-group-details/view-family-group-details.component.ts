@@ -183,19 +183,19 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
     }
     getRemainingDataUnits(): number {
         return (
-            this.selectedSubscription.dataUnits.allocated -
+            this.selectedSubscription.dataUnits['allocated'] -
             this.selectedSubscription.usageDetails.pop().dataUsage
         );
     }
     getRemainingSMSUnits(): number {
         return (
-            this.selectedSubscription.smsUnits.allocated -
+            this.selectedSubscription.smsUnits['allocated'] -
             this.selectedSubscription.usageDetails.pop().smsUsage
         );
     }
     getRemainingTalkTimeUnits(): number {
         return (
-            this.selectedSubscription.talkTimeUnits.allocated -
+            this.selectedSubscription.talkTimeUnits['allocated'] -
             this.selectedSubscription.usageDetails.pop().talktimeUsage
         );
     }

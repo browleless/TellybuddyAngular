@@ -1,0 +1,61 @@
+<div mat-dialog-title style="width: 500px">
+    <div style="font-weight: 700; margin-left:20%;">
+        Amend Subscription Allocation
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div  mat-dialog-content style="height: 200px;width: 100%; padding-top: 20px; " >
+    <div style="width:100%;">
+        <mat-list>
+            <mat-list-item style="width:100%; left:0 ">
+
+                <div style="width:100%; ">
+                    Data Units: &nbsp;
+                    <mat-slider #dataSlider [max]="totalUnits" [thumbLabel]="true" [value]="dataUnits"
+                        (change)="handleDataSliderChange($event.value)" (input)="
+                      $event.value - dataUnits <= getRemainingUnits()
+                      ? (dataUnits = $event.value)
+                      : $event.value <= dataUnits
+                      ? (dataUnits = $event.value)
+                      : (dataUnits = dataUnits)"></mat-slider>
+                    {{selectedSubscriptionPlan.dataConversionRate * dataUnits /1000}}&nbsp;GBs
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div style="width:100%; ">
+                    SMS Units:
+                    <mat-slider #smsSlider [max]="totalUnits" [thumbLabel]="true"  [value]="smsUnits"
+                        (change)="handleSmsSliderChange($event.value)" (input)="
+                            $event.value - smsUnits <= getRemainingUnits()
+                                ? (smsUnits = $event.value)
+                                : $event.value <= smsUnits
+                                ? (smsUnits = $event.value)
+                                : (smsUnits = smsUnits)"></mat-slider>
+                    {{(selectedSubscriptionPlan.smsConversionRate * smsUnits)}}&nbsp;SMS
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div style="width:100%; ">
+                    TalkTime Units:
+                    <mat-slider #talktimeSlider [max]="totalUnits" [thumbLabel]="true"  [value]="talktimeUnits"
+                        (change)="handleTalktimeSliderChange($event.value)" (input)="
+                            $event.value - talktimeUnits <= getRemainingUnits()
+                                ? (talktimeUnits = $event.value)
+                                : $event.value <= talktimeUnits
+                                ? (talktimeUnits = $event.value)
+                                : (talktimeUnits = talktimeUnits)"></mat-slider>
+                    {{(selectedSubscriptionPlan.talktimeConversionRate * talktimeUnits)}}&nbsp;mins
+                </div>
+            </mat-list-item>
+        </mat-list>
+
+        <mat-list style="text-align: center; position: relative;">
+            <button (click)="allocateUnitsForNextMonth()" mat-raised-button color="primary">Amend
+                Units</button>
+
+        </mat-list>
+    </div>
+</div>

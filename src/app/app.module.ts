@@ -66,12 +66,20 @@ import { ViewFamilyGroupDetailsComponent } from './components/familyGroup/view-f
 import { ViewMembersComponent } from './components/familyGroup/view-members/view-members.component';
 import { ViewSettingsComponent } from './components/familyGroup/view-settings/view-settings.component';
 import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-new-family-group/create-new-family-group.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
 import { MemberDetailsComponent } from './components/familyGroup/member-details/member-details.component';
 import { DialogAddNewFamilyMemberComponent } from './components/dialog-add-new-family-member/dialog-add-new-family-member.component';
+import { ProductsComponent } from './components/products/products.component';
+import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
+import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
+import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
+import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
+import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
+import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
 
 @NgModule({
     declarations: [
@@ -86,12 +94,20 @@ import { DialogAddNewFamilyMemberComponent } from './components/dialog-add-new-f
         ViewMembersComponent,
         ViewSettingsComponent,
         CreateNewFamilyGroupComponent,
+        SubscriptionsComponent,
         CartComponent,
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
         MemberDetailsComponent,
         DialogAddNewFamilyMemberComponent,
+        ProductsComponent,
+        LuxuryproductsComponent,
+        EarnAdditionalUnitsComponent,
+        QuizAttemptComponent,
+        DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
+        DialogAmendSubscriptionUnits,
     ],
     imports: [
         BrowserModule,
@@ -161,11 +177,20 @@ import { DialogAddNewFamilyMemberComponent } from './components/dialog-add-new-f
         MatDividerModule,
         MatDatepickerModule,
         ReactiveFormsModule,
+        MatTabsModule,
+        MatRadioModule,
+        MatProgressBarModule,
+        MatExpansionModule,
+        MatSlideToggleModule,
+        MatListModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
-        DialogAddNewFamilyMemberComponent
+        DialogAddNewFamilyMemberComponent,
+        DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
+        DialogAmendSubscriptionUnits,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

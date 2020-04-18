@@ -6,13 +6,18 @@
         </button>
     </div>
 </div>
-<div *ngIf="!loaded">
-    <mat-spinner style="margin: 0 auto;"></mat-spinner>
-</div>
-<div *ngIf="loaded">
+<div>
     <div mat-dialog-content style="height: auto;">
-        <p>Please choose a number:</p>
-        <mat-chip-list>
+        <div style="margin-bottom: 16px;">
+            Please choose a number:
+            <button mat-icon-button (click)="ngOnInit()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+        <div style="width: 487.75px;" *ngIf="!loaded">
+            <mat-spinner style="margin: 0 auto;" diameter="30"></mat-spinner>
+        </div>
+        <mat-chip-list *ngIf="loaded">
             <mat-chip
                 *ngFor="
                     let availablePhoneNumber of availablePhoneNumbers;
@@ -20,7 +25,7 @@
                 "
                 style="cursor: pointer;"
                 [ngClass]="
-                    availablePhoneNumber.inUse ? 'mat-chip-selected' : ''
+                    selectedPhoneNumberIndex === i ? 'mat-chip-selected' : ''
                 "
                 (click)="selectPhoneNumber(i)"
             >
@@ -28,13 +33,12 @@
                 {{ availablePhoneNumber.phoneNumber.substring(4) }}
             </mat-chip>
         </mat-chip-list>
-        <p style="padding-top: 20px;">Set your units allocations:</p>
+        <p style="padding-top: 10px;">Set your units allocations:</p>
         <div>
             <div style="float: left;">
                 <div>
                     Data Units:
                     <mat-slider
-                        min="1"
                         #dataSlider
                         [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
@@ -56,7 +60,6 @@
                 <div>
                     SMS Units:
                     <mat-slider
-                        min="1"
                         #smsSlider
                         [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
@@ -75,7 +78,6 @@
                 <div>
                     Talktime Units:
                     <mat-slider
-                        min="1"
                         #talktimeSlider
                         [max]="data.selectedPlan.totalBasicUnits"
                         thumbLabel
@@ -124,9 +126,7 @@
     </div>
     <div style="text-align: center; padding-top: 10px;">
         <button
-            [disabled]="
-                !selectedPhoneNumber.phoneNumber || !(getRemainingUnits() === 0)
-            "
+            [disabled]="!selectedPhoneNumber || !(getRemainingUnits() === 0)"
             mat-raised-button
             color="primary"
             (click)="addPlanToCart()"

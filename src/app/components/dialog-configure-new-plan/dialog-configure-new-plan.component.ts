@@ -5,7 +5,7 @@ import { DialogConfigureNewPlanData } from './dialog-configure-new-plan-data';
 import { PhoneNumber } from 'src/app/classes/phone-number';
 import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 
-import { PhoneNumberServiceService } from 'src/app/service/phone-number-service.service';
+import { PhoneNumberService } from 'src/app/service/phone-number.service';
 import { SessionService } from 'src/app/service/session.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -20,12 +20,8 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
 
     availablePhoneNumbers: PhoneNumber[];
-    selectedPhoneNumber: PhoneNumber = {
-        phoneNumberId: undefined,
-        inUse: false,
-        phoneNumber: undefined,
-        subscription: undefined,
-    };
+    selectedPhoneNumber: PhoneNumber;
+    selectedPhoneNumberIndex: number = -1;
     dataUnits: number = 0;
     smsUnits: number = 0;
     talktimeUnits: number = 0;
@@ -34,12 +30,13 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<DialogConfigureNewPlanComponent>,
         @Inject(MAT_DIALOG_DATA) public data: DialogConfigureNewPlanData,
-        private phoneNumberService: PhoneNumberServiceService,
+        private phoneNumberService: PhoneNumberService,
         public sessionService: SessionService,
         private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
+        this.loaded = false;
         this.phoneNumberService.retrieveAllAvailablePhoneNumbers().subscribe(
             (response) => {
                 this.availablePhoneNumbers = response.phoneNumbers;
@@ -57,9 +54,8 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     }
 
     selectPhoneNumber(index: number): void {
-        this.selectedPhoneNumber.inUse = false;
-        this.availablePhoneNumbers[index].inUse = true;
         this.selectedPhoneNumber = this.availablePhoneNumbers[index];
+        this.selectedPhoneNumberIndex = index;
     }
 
     handleDataSliderChange(value: number): void {

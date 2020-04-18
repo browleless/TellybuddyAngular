@@ -1,17 +1,9 @@
 <mat-toolbar style="padding: 0 15% 0 15%; background: #240e8b;" color="primary">
     <mat-toolbar-row>
-        <a style="font-size: large;" mat-button routerLink="/index"
-            >Tellybuddy</a
-        >
+        <a style="font-size: large;" mat-button routerLink="/index">Tellybuddy</a>
 
-        <button
-            #buttonOne
-            #buttonOneTrigger="matMenuTrigger"
-            mat-button
-            [matMenuTriggerFor]="firstMenu"
-            (mouseenter)="buttonEnter(buttonOneTrigger)"
-            (mouseleave)="buttonLeave(buttonOneTrigger, buttonOne)"
-        >
+        <button #buttonOne #buttonOneTrigger="matMenuTrigger" mat-button [matMenuTriggerFor]="firstMenu"
+            (mouseenter)="buttonEnter(buttonOneTrigger)" (mouseleave)="buttonLeave(buttonOneTrigger, buttonOne)">
             Products
         </button>
         <mat-menu [hasBackdrop]="false" #firstMenu="matMenu">
@@ -19,57 +11,37 @@
                 (mouseenter)="menuenter()"
                 (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)"
             >
-                <button mat-menu-item>Phones</button>
-                <button mat-menu-item>Accessories</button>
+                <button mat-menu-item routerLink="/luxuryproducts">Mobile Devices</button>
+                <button mat-menu-item routerLink="/products">Accessories</button>
             </div>
         </mat-menu>
 
         <a mat-button routerLink="/plans">Plans</a>
 
-        <button
-            #buttonTwo
-            #buttonTwoTrigger="matMenuTrigger"
-            mat-button
-            [matMenuTriggerFor]="secondMenu"
-            (mouseenter)="buttonEnter(buttonTwoTrigger)"
-            (mouseleave)="buttonLeave(buttonTwoTrigger, buttonTwo)"
-        >
+        <button #buttonTwo #buttonTwoTrigger="matMenuTrigger" mat-button [matMenuTriggerFor]="secondMenu"
+            (mouseenter)="buttonEnter(buttonTwoTrigger)" (mouseleave)="buttonLeave(buttonTwoTrigger, buttonTwo)">
             Promotions
         </button>
         <mat-menu [hasBackdrop]="false" #secondMenu="matMenu">
-            <div
-                (mouseenter)="menuenter()"
-                (mouseleave)="menuLeave(buttonTwoTrigger, buttonTwo)"
-            >
+            <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonTwoTrigger, buttonTwo)">
                 <button mat-menu-item>View Promotion Items</button>
-                <button
-                    *ngIf="sessionService.getIsLogin() == true"
-                    mat-menu-item
-                >
+                <a routerLink="/additionalUnits" *ngIf="sessionService.getIsLogin() == true" mat-menu-item>
                     Earn Additional Units
-                </button>
+                </a>
             </div>
         </mat-menu>
 
         <div class="flex-spacer"></div>
 
         <div *ngIf="sessionService.getIsLogin() == true">
-            <button
-                #buttonThree
-                #buttonThreeTrigger="matMenuTrigger"
-                mat-button
-                [matMenuTriggerFor]="thirdMenu"
+            <button #buttonThree #buttonThreeTrigger="matMenuTrigger" mat-button [matMenuTriggerFor]="thirdMenu"
                 (mouseenter)="buttonEnter(buttonThreeTrigger)"
-                (mouseleave)="buttonLeave(buttonThreeTrigger, buttonThree)"
-            >
+                (mouseleave)="buttonLeave(buttonThreeTrigger, buttonThree)">
                 My Account
             </button>
             <mat-menu [hasBackdrop]="false" #thirdMenu="matMenu">
-                <div
-                    (mouseenter)="menuenter()"
-                    (mouseleave)="menuLeave(buttonThreeTrigger, buttonThree)"
-                >
-                    <button mat-menu-item>My Subscriptions</button>
+                <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonThreeTrigger, buttonThree)">
+                    <button mat-menu-item routerLink="/subscriptions">My Subscriptions</button>
                     <button mat-menu-item>My Transactions</button>
                     <button mat-menu-item>My Bills</button>
                     <button
@@ -82,30 +54,16 @@
             </mat-menu>
         </div>
 
-        <a
-            mat-button
-            [matBadgeHidden]="
+        <a mat-button [matBadgeHidden]="
                 !sessionService.getCart().transactionLineItems.length
-            "
-            [matBadge]="sessionService.getCart().transactionLineItems.length"
-            matBadgeColor="accent"
-            routerLink="/cart"
-        >
+            " [matBadge]="sessionService.getCart().transactionLineItems.length" matBadgeColor="accent"
+            routerLink="/cart">
             Cart
         </a>
 
-        <a
-            *ngIf="sessionService.getIsLogin() == false"
-            mat-button
-            routerLink="/login"
-            >Login</a
-        >
+        <a *ngIf="sessionService.getIsLogin() == false" mat-button routerLink="/login">Login</a>
 
-        <button
-            *ngIf="sessionService.getIsLogin() == true"
-            (click)="customerLogout()"
-            mat-button
-        >
+        <button *ngIf="sessionService.getIsLogin() == true" (click)="customerLogout()" mat-button>
             Logout
         </button>
     </mat-toolbar-row>
