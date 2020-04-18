@@ -10,7 +10,7 @@
 
     <mat-accordion>
       <mat-expansion-panel *ngFor="let subscription of subscriptions; let i = index" (opened)="openGroup(i)"
-        (closed)="resetState()" style="border-left: 5px solid #7274d6;">
+        style="border-left: 5px solid #7274d6;">
         <mat-expansion-panel-header style="vertical-align: baseline;">
 
           <mat-panel-title>
@@ -27,7 +27,7 @@
         </mat-expansion-panel-header>
 
         <strong> Phone Number: </strong>{{subscription.phoneNumber.phoneNumber}}
-        <div style="float:right; padding-right: 5px;">
+        <div style="float:right; padding-right: 5px;" *ngIf="subscription.subscriptionStartDate!=null">
 
           <strong>Usage Period:</strong> {{subscription.subscriptionStartDate | date: 'd'}} {{monthAgo | date: 'MMM'}} -
           {{currentDate | date: 'd MMM'}}
