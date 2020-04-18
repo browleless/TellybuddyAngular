@@ -82,20 +82,24 @@ export class BillsComponent implements OnInit {
         this.subscriptionService.retrieveAllCustomerSubscriptions().subscribe(
             (response) => {
                 this.subscriptions = response.subscriptions;
-                this.subscriptions.forEach((subscription) => {
-                    this.observables.push(
-                        this.billService.retrieveSubscriptionOutstandingBills(
-                            subscription
-                        )
-                    );
-                });
-                forkJoin(this.observables).subscribe((result) => {
-                    for (let i = 0; i < result.length; i++) {
-                        this.subscriptions[i].outstandingBills =
-                            result[i].bills;
-                    }
+                if (this.subscriptions.length) {
+                    this.subscriptions.forEach((subscription) => {
+                        this.observables.push(
+                            this.billService.retrieveSubscriptionOutstandingBills(
+                                subscription
+                            )
+                        );
+                    });
+                    forkJoin(this.observables).subscribe((result) => {
+                        for (let i = 0; i < result.length; i++) {
+                            this.subscriptions[i].outstandingBills =
+                                result[i].bills;
+                        }
+                        this.loaded = true;
+                    });
+                } else {
                     this.loaded = true;
-                });
+                }
             },
             (error) => {
                 console.log(error);
