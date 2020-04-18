@@ -50,6 +50,42 @@ export class TransactionService {
             )
             .pipe(catchError(this.handleError));
     }
+    retrieveAllCustomerTransactions(): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                '/retrieveCustomerTransactions?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
+                   
+            )
+            .pipe(catchError(this.handleError));
+    }
+    retrieveTransactionById(transaction : Transaction): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                '/retrieveCustomerTransactions' + transaction.transactionId + '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
+                   
+            )
+            .pipe(catchError(this.handleError));
+    }
+    refundTransaction(transaction : Transaction): Observable<any> {
+        return this.httpClient
+            .post<any>(
+                this.baseUrl +
+                '/retrieveCustomerTransactions/' + transaction.transactionId + '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
+                   ,httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';

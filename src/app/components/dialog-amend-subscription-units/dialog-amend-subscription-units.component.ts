@@ -117,8 +117,8 @@ export class DialogAmendSubscriptionUnits implements OnInit {
                     }
                 );
                 this.snackBar.open(
-                    'Successfully amended allocation of units!\nChanges would be reflected from the next billing cycle',
-                    '',
+                    'Successfully amended allocation of units!\n\nChanges would be reflected from the next billing cycle',
+                    'Close',
                     {
                         duration: 4500,
                     }

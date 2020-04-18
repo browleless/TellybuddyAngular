@@ -11,8 +11,8 @@ export class Subscription {
     smsUnits: Object;
     subscriptionStatusEnum: SubscriptionStatusEnum;
     isActive: boolean;
-    subscriptionStartDate: string;
-    subscriptionEndDate: string;
+    subscriptionStartDate: Date;
+    subscriptionEndDate: Date;
     customer: Customer;
     usageDetails: UsageDetail[];
     plan: Plan;
@@ -24,8 +24,8 @@ export class Subscription {
         smsUnits?: Object,
         subscriptionStatusEnum?: SubscriptionStatusEnum,
         isActive?: boolean,
-        subscriptionStartDate?: string,
-        subscriptionEndDate?: string,
+        subscriptionStartDate?: Date,
+        subscriptionEndDate?: Date,
         customer?: Customer,
         usageDetails?: UsageDetail[],
         plan?: Plan,
@@ -35,10 +35,10 @@ export class Subscription {
         this.dataUnits = dataUnits;
         this.talkTimeUnits = talkTimeUnits;
         this.smsUnits = smsUnits;
-        this.subscriptionEndDate = subscriptionEndDate.substring(0,5);
+        this.subscriptionEndDate = subscriptionEndDate;
         this.subscriptionStatusEnum = subscriptionStatusEnum;
         this.isActive = isActive;
-        this.subscriptionStartDate = subscriptionStartDate.substring(0,18);
+        this.subscriptionStartDate = subscriptionStartDate;
         this.customer = customer;
         this.usageDetails = usageDetails;
         this.plan = plan;

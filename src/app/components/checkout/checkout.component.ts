@@ -224,6 +224,7 @@ export class CheckoutComponent implements OnInit {
                     totalPrice: undefined,
                     voidRefund: false,
                     transactionDateTime: undefined,
+                    transactionStatusEnum: undefined,
                     payment: undefined,
                     customer: undefined,
                     discountCode: undefined,

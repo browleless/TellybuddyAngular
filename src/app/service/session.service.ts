@@ -141,6 +141,7 @@ export class SessionService {
             totalPrice: undefined,
             voidRefund: false,
             transactionDateTime: undefined,
+            transactionStatusEnum: undefined,
             payment: undefined,
             customer: undefined,
             discountCode: undefined,

@@ -8,10 +8,8 @@ import { SubscriptionService } from 'src/app/service/subscription.service';
 import { Subscription } from 'src/app/classes/subscription';
 import { Plan } from 'src/app/classes/plan';
 import * as Chart from 'chart.js'
-import { ViewChild } from '@angular/core';
 import { DialogAmendSubscriptionUnits } from '../dialog-amend-subscription-units/dialog-amend-subscription-units.component';
-
-declare var require: any;
+import { DialogAddonSubscriptionUnits } from '../dialog-addon-subscription-units/dialog-addon-subscription-units.component';
 
 @Component({
     selector: 'app-subscriptions',
@@ -29,13 +27,16 @@ export class SubscriptionsComponent implements OnInit {
     talktimeUnits: number;
     totalUnits: number;
     editMode: boolean = false;
+    addon: boolean = false;
     selectedSubscriptionPlan: Plan;
     currentDate: Date;
     monthAgo: Date;
-    dataUsage: number = 6.89;
-    smsUsage: number = 333;
-    talktimeUsage: number = 421;
-
+    dataUsage: number = 0;
+    smsUsage: number = 0
+    talktimeUsage: number = 0;
+    remainingData: number;
+    remainingSms: number;
+    remainingTalktime: number;
 
     canvas: any;
     ctx: any;
@@ -72,8 +73,11 @@ export class SubscriptionsComponent implements OnInit {
 
                 for (var i = 0; i < this.subscriptions.length; i++) {
                     var sub = this.subscriptions[i];
-                    if(sub.subscriptionStartDate != null){
-                        sub.subscriptionStartDate = sub.subscriptionStartDate.substring(0, 19);
+                    if (sub.subscriptionStartDate != null) {
+                        sub.subscriptionStartDate = new Date(sub.subscriptionStartDate.toString().substring(0, 19));
+                    }
+                    if (sub.subscriptionEndDate != null) {
+                        sub.subscriptionEndDate = new Date(sub.subscriptionEndDate.toString().substring(0, 19));
                     }
                 }
                 this.loaded = true;
@@ -82,13 +86,7 @@ export class SubscriptionsComponent implements OnInit {
                 console.log(error);
             }
         );
-        this.currentDate = new Date();
-        this.monthAgo = new Date(this.currentDate);
-        var date = new Date(this.selectedSubscription.subscriptionStartDate);
-        if(this.currentDate.getDate() < date.getDate()){
 
-            this.monthAgo.setMonth(this.monthAgo.getMonth() - 1);
-        }
     }
 
 
@@ -97,7 +95,7 @@ export class SubscriptionsComponent implements OnInit {
         this.ctx = this.canvas.getContext('2d');
         let myChart = new Chart(this.ctx, {
             type: 'bar',
-            data: {
+            data: {     
                 labels: ["Data", "SMS", "Talk Time"],
                 datasets: [{
                     label: 'Current Allocation of Units',
@@ -129,6 +127,9 @@ export class SubscriptionsComponent implements OnInit {
                 }
             }
         });
+        this.remainingData = this.dataUnits * this.selectedSubscriptionPlan.dataConversionRate / 1000 - this.dataUsage;
+        this.remainingSms = this.smsUnits * this.selectedSubscriptionPlan.smsConversionRate - this.smsUsage;
+        this.remainingTalktime = this.talktimeUnits * this.selectedSubscriptionPlan.talktimeConversionRate - this.talktimeUsage;
 
         this.dataCanvas = document.getElementById(('dataChart' + i).toString());
         this.dataCtx = this.dataCanvas.getContext('2d');
@@ -136,10 +137,12 @@ export class SubscriptionsComponent implements OnInit {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [this.dataUsage, this.dataUnits*this.selectedSubscriptionPlan.dataConversionRate/1000 - this.dataUsage],
+                    data: [this.remainingData > 0 ? this.dataUsage : 0, this.remainingData > 0 ? this.remainingData : 0, this.remainingData < 0 ? this.remainingData : 0],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(228, 233, 237, 1)',
+                        'rgba(249, 71, 6, 1)',
+
                     ],
                     borderWidth: 1
                 }]
@@ -156,10 +159,12 @@ export class SubscriptionsComponent implements OnInit {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [this.smsUsage, this.smsUnits*this.selectedSubscriptionPlan.smsConversionRate - this.smsUsage],
+                    data: [this.remainingSms > 0 ? this.smsUsage : 0, this.remainingSms > 0 ? this.remainingSms : 0, this.remainingSms < 0 ? this.remainingSms : 0],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(228, 233, 237, 1)',
+                        'rgba(249, 71, 6, 1)',
+
                     ],
                     borderWidth: 1
                 }]
@@ -176,10 +181,12 @@ export class SubscriptionsComponent implements OnInit {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [this.talktimeUsage, this.talktimeUnits*this.selectedSubscriptionPlan.talktimeConversionRate - this.talktimeUsage],
+                    data: [this.remainingTalktime > 0 ? this.talktimeUsage : 0, this.remainingTalktime > 0 ? this.remainingTalktime : 0, this.remainingTalktime < 0 ? this.remainingTalktime : 0],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(228, 233, 237, 1)',
+                        'rgba(249, 71, 6, 1)',
+
                     ],
                     borderWidth: 1
                 }]
@@ -196,34 +203,72 @@ export class SubscriptionsComponent implements OnInit {
         this.subscriptionService.retrieveSubscriptionById(this.subscriptions[i]).subscribe(
             (response) => {
                 this.selectedSubscription = response.subscription;
+                this.selectedSubscriptionPlan = this.selectedSubscription.plan;
+        
+                this.dataUnits = this.subscriptions[i].dataUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+                this.smsUnits = this.subscriptions[i].smsUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+                this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+                this.totalUnits = this.subscriptions[i].plan.totalBasicUnits;
+                // function roundN(num,n){
+                //     return parseFloat(Math.round(num * Math.pow(10, n) /Math.pow(10,n)).toFixed(n));
+                //   }
+                if(this.selectedSubscription.subscriptionStatusEnum == "ACTIVE"){
+
+                    this.dataUsage = this.selectedSubscription.usageDetails[this.selectedSubscription.usageDetails.length-1].dataUsage;
+                    this.smsUsage = this.selectedSubscription.usageDetails[this.selectedSubscription.usageDetails.length-1].smsUsage;
+                    this.talktimeUsage = this.selectedSubscription.usageDetails[this.selectedSubscription.usageDetails.length-1].talktimeUsage;
+                }
+                if(this.selectedSubscription.subscriptionStartDate != null){
+
+                    this.currentDate = new Date();
+                    this.monthAgo = new Date(this.currentDate);
+                    var date = new Date(this.selectedSubscription.subscriptionStartDate);
+                    if (this.currentDate.getDate() < date.getDate()) {
+            
+                        this.monthAgo.setMonth(this.monthAgo.getMonth() - 1);
+                    }
+                }
+                this.loadCharts(i);
             },
             (error) => {
                 console.log(error);
             }
         );
-        this.selectedSubscriptionPlan = this.subscriptions[i].plan;
-        this.dataUnits = this.subscriptions[i].dataUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
-        this.smsUnits = this.subscriptions[i].smsUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
-        this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
-        this.totalUnits = this.subscriptions[i].plan.totalBasicUnits;
 
-        this.loadCharts(i);
+
+        var itemsExceeded = "";
+        if (this.remainingData < 0) {
+            itemsExceeded += " Data"
+        } 
+        if (this.remainingSms < 0) {
+            itemsExceeded += " Sms"
+        } 
+        if (this.remainingTalktime < 0) {
+            itemsExceeded += " TalkTime"
+        }
+
+        if (itemsExceeded.length != 0) {
+            let snackBarRef = this.snackBar.open(
+                'You\'ve exceeded your monthly allowance for' + itemsExceeded + '. Purchase a top-up now to avoid penalty charges! ',
+                'Close',
+                {
+                    duration: 10000,
+                    panelClass: 'text-align:center'
+                }
+            );
+        }
 
         this.isOpened = true;
     }
 
-    // refresh() :void{
-    //     this.dataSlider.value = this.dataUnits;
-    //     this.smsSlider.value = this.smsUnits;
-    //     this.talktimeSlider.value = this.talktimeUnits;
-    //     console.log(this.talktimeSlider.value);
-    // }
-    // resetState() :void{
-    //     this.dataSlider.value =0;
-    //     this.smsSlider.value = 0;
-    //     this.talktimeSlider.value = 0;
-    //     this.editMode = false;
-    // }
+    resetState() :void{
+        this.dataUsage = 0;
+        this.smsUsage = 0;
+        this.talktimeUsage = 0;
+        this.dataUnits = 0;
+        this.smsUnits = 0;
+        this.talktimeUnits = 0;
+    }
     toggleEdit(i: number): void {
         this.editMode = !this.editMode;
 
@@ -240,26 +285,26 @@ export class SubscriptionsComponent implements OnInit {
         );
 
     }
-    allocateUnitsForNextMonth(): void {
-        this.subscriptionService.amendSubscriptionUnits(this.selectedSubscription, this.dataUnits, this.smsUnits, this.talktimeUnits).subscribe(
-            (response) => {
-                console.log("Subscription Id: " + response.subscriptionId + " has been edited");
+
+    subscribeAddon(i: number): void {
+        this.addon = !this.addon;
+
+        const dialogRef = this.dialog.open(DialogAddonSubscriptionUnits, {
+            data: {
+                selectedSubscription: this.subscriptions[i],
             },
-            (error) => {
-                console.log(error);
+        });
+
+        dialogRef.afterClosed().subscribe(
+            (response) => {
+                this.addon = false;
             }
         );
-        this.snackBar.open(
-            'Successfully amended allocation of units! Changes will be reflected from next month!',
-            'Undo',
-            {
-                duration: 4500,
-            }
-        );
+
     }
 
-    requestToTerminateSubscription(i:number): void{
-        if(this.subscriptions[i].subscriptionStatusEnum != "ACTIVE"){
+    requestToTerminateSubscription(i: number): void {
+        if (this.subscriptions[i].subscriptionStatusEnum != "ACTIVE") {
             this.snackBar.open(
                 'Permission Denied! Please ensure that the subscription is currently active',
                 '',
@@ -267,23 +312,24 @@ export class SubscriptionsComponent implements OnInit {
                     duration: 1500,
                 }
             );
-        } else{
+        } else {
 
             this.subscriptionService.terminateSubscription(this.selectedSubscription).subscribe(
                 (response) => {
                     console.log("Request has been put in to terminate the subscription");
+                    this.snackBar.open(
+                        'We\'re sad to see you go! The subscription will be terminated at the end of this billing cycle!',
+                        'Close',
+                        {
+                            duration: 4500,
+                        }
+                    );
                 },
                 (error) => {
                     console.log(error);
                 }
             );
-            this.snackBar.open(
-                'We\'re sad to see you go! The subscription will be terminated at the end of this billing cycle!',
-                'U',
-                {
-                    duration: 4500,
-                }
-            );
+
         }
     }
 }

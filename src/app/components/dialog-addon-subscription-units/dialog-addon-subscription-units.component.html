@@ -1,0 +1,48 @@
+<div mat-dialog-title style="width: 500px">
+    <div style="font-weight: 700; margin-left:25%;">
+        Subscribe to add-on units
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<mat-divider></mat-divider>
+<div  mat-dialog-content style="height: 40%;width: 100%; padding-top: 20px; " >
+    <div style="width:100%;">
+        <mat-list>
+            <mat-list-item style="width:100%; left:0 ">
+
+                <div style="width:100%; ">
+                    Data Units:
+                    <mat-slider #dataSlider [max]="totalUnits" [thumbLabel]="true" [(ngModel)]="dataUnits"
+                        (change)="calculatePrice()"></mat-slider>
+                    {{selectedSubscriptionPlan.dataConversionRate * dataUnits /1000}}&nbsp;GBs
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div style="width:100%; ">
+                    SMS Units:
+                    <mat-slider #smsSlider [max]="totalUnits" [thumbLabel]="true"  [(ngModel)]="smsUnits"
+                        (change)="calculatePrice()"></mat-slider>
+                    {{(selectedSubscriptionPlan.smsConversionRate * smsUnits)}}&nbsp;SMS
+                </div>
+            </mat-list-item>
+            <mat-list-item>
+                <div style="width:100%; ">
+                    TalkTime Units:
+                    <mat-slider #talktimeSlider [max]="totalUnits" [thumbLabel]="true"  [(ngModel)]="talktimeUnits"
+                        (change)="calculatePrice()"></mat-slider>
+                    {{(selectedSubscriptionPlan.talktimeConversionRate * talktimeUnits)}}&nbsp;mins
+                </div>
+            </mat-list-item>
+        </mat-list>
+        <div style="float: right">
+            Total: ${{(price*1).toFixed(2)}}
+        </div>
+
+        <div style="text-align: center; padding-left: 14%;">
+            <button (click)="allocateAddonUnitsForCurrentMonth()" mat-raised-button color="primary">Top-up
+                Units</button>
+        </div>
+    </div>
+</div>

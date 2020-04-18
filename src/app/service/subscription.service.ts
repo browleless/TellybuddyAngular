@@ -50,6 +50,30 @@ export class SubscriptionService {
             .pipe(catchError(this.handleError));
     }
     
+    allocateAddOnUnits(
+        subscriptionToUpdate: Subscription,
+        dataUnits: number,
+        smsUnits: number,
+        talktimeUnits: number
+    ): Observable<any> {
+        let allocateAddOnUnitsReq = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+            subscription: subscriptionToUpdate,
+            dataUnits: dataUnits,
+            smsUnits: smsUnits,
+            talktimeUnits: talktimeUnits,
+        };
+
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/allocateAddOnUnitsForCurrentMonth',
+                allocateAddOnUnitsReq,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
+    
     allocateQuizExtraUnits(
         subscriptionToUpdate: Subscription,
         dataUnits: number,
