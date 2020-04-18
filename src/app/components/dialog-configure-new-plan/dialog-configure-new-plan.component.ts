@@ -21,6 +21,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
 
     availablePhoneNumbers: PhoneNumber[];
     selectedPhoneNumber: PhoneNumber;
+    selectedPhoneNumberIndex: number = -1;
     dataUnits: number = 0;
     smsUnits: number = 0;
     talktimeUnits: number = 0;
@@ -36,12 +37,6 @@ export class DialogConfigureNewPlanComponent implements OnInit {
 
     ngOnInit() {
         this.loaded = false;
-        this.selectedPhoneNumber = {
-            phoneNumberId: undefined,
-            inUse: false,
-            phoneNumber: undefined,
-            subscription: undefined,
-        };
         this.phoneNumberService.retrieveAllAvailablePhoneNumbers().subscribe(
             (response) => {
                 this.availablePhoneNumbers = response.phoneNumbers;
@@ -59,9 +54,8 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     }
 
     selectPhoneNumber(index: number): void {
-        this.selectedPhoneNumber.inUse = false;
-        this.availablePhoneNumbers[index].inUse = true;
         this.selectedPhoneNumber = this.availablePhoneNumbers[index];
+        this.selectedPhoneNumberIndex = index;
     }
 
     handleDataSliderChange(value: number): void {

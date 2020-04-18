@@ -29,23 +29,38 @@ export class EarnAdditionalUnitsComponent implements OnInit {
         private quizService: QuizService,
         private subscriptionService: SubscriptionService
     ) {
-        breakpointObserver
-            .observe(['(max-width: 599px)'])
+        this.breakpointObserver
+            .observe([
+                Breakpoints.XSmall,
+                Breakpoints.Small,
+                Breakpoints.Medium,
+                Breakpoints.Large,
+                Breakpoints.XLarge,
+            ])
             .subscribe((result) => {
-                this.isMobile = result.matches;
-            });
-        breakpointObserver
-            .observe(['(max-width: 1279px)'])
-            .subscribe((result) => {
-                this.isTablet = result.matches;
-                this.isMobile = false;
-            });
-        breakpointObserver
-            .observe(['(max-width: 1919px)'])
-            .subscribe((result) => {
-                this.isLaptop = result.matches;
-                this.isMobile = false;
-                this.isTablet = false;
+                if (result.breakpoints[Breakpoints.XSmall]) {
+                    this.isMobile = true;
+                    this.isTablet = false;
+                    this.isLaptop = false;
+                }
+                if (result.breakpoints[Breakpoints.Small]) {
+                    this.isTablet = true;
+                    this.isMobile = false;
+                    this.isLaptop = false;
+                }
+                if (
+                    result.breakpoints[Breakpoints.Medium] ||
+                    result.breakpoints[Breakpoints.Large]
+                ) {
+                    this.isLaptop = true;
+                    this.isMobile = false;
+                    this.isTablet = false;
+                }
+                if (result.breakpoints[Breakpoints.XLarge]) {
+                    this.isMobile = false;
+                    this.isTablet = false;
+                    this.isLaptop = false;
+                }
             });
     }
 
