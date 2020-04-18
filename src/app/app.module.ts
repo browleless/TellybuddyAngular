@@ -31,6 +31,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatListModule} from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -48,6 +50,7 @@ import { NumberDirective } from './directive/number.directive';
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
+import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
 
 
 @NgModule({
@@ -67,6 +70,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogAmendSubscriptionUnits,
     ],
     imports: [
         BrowserModule,
@@ -96,14 +100,18 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         MatTabsModule,
         MatRadioModule,
         MatProgressBarModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatSlideToggleModule,
+        MatListModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogAmendSubscriptionUnits
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

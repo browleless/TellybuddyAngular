@@ -30,14 +30,26 @@ export class SubscriptionService {
         return this.httpClient
             .get<any>(
                 this.baseUrl +
-                    '/retrieveAllCustomerSubscriptions?username=' +
+                '/retrieveAllCustomerSubscriptions?username=' +
                     this.sessionService.getUsername() +
                     '&password=' +
                     this.sessionService.getPassword()
+                   
             )
             .pipe(catchError(this.handleError));
     }
-
+    retrieveSubscriptionById(s : Subscription): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                '/retrieveSubscription/' + s.subscriptionId + '?username=' +
+                this.sessionService.getUsername() +
+                '&password=' +
+                this.sessionService.getPassword()
+            )
+            .pipe(catchError(this.handleError));
+    }
+    
     allocateQuizExtraUnits(
         subscriptionToUpdate: Subscription,
         dataUnits: number,
@@ -61,7 +73,46 @@ export class SubscriptionService {
             )
             .pipe(catchError(this.handleError));
     }
+    amendSubscriptionUnits(
+        subscriptionToUpdate: Subscription,
+        dataUnits: number,
+        smsUnits: number,
+        talktimeUnits: number
+    ): Observable<any> {
+        let allocateUnitsForNextMonthReq = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+            subscription: subscriptionToUpdate,
+            dataUnits: dataUnits,
+            smsUnits: smsUnits,
+            talktimeUnits: talktimeUnits,
+        };
 
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/allocateUnitsForNextMonth',
+                allocateUnitsForNextMonthReq,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
+    terminateSubscription(
+        subscriptionToTerminate: Subscription,
+    ): Observable<any> {
+        let terminateSubscriptionReq = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+            subscription: subscriptionToTerminate,
+        };
+
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/requestToTerminateSubscription',
+                terminateSubscriptionReq,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 
