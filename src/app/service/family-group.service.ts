@@ -4,12 +4,13 @@ import {
     HttpHeaders,
     HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, throwError, Subscription } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
 import { Customer } from '../classes/customer';
 import { FamilyGroup } from '../classes/family-group';
+import { Subscription } from '../classes/subscription';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),

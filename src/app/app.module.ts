@@ -65,13 +65,13 @@ import { PlansComponent } from './components/plans/plans.component';
 import { ViewFamilyGroupDetailsComponent } from './components/familyGroup/view-family-group-details/view-family-group-details.component';
 import { ViewMembersComponent } from './components/familyGroup/view-members/view-members.component';
 import { ViewSettingsComponent } from './components/familyGroup/view-settings/view-settings.component';
-import { FamilyGroupMenuComponent } from './components/familyGroup/family-group-menu/family-group-menu.component';
 import { CreateNewFamilyGroupComponent } from './components/familyGroup/create-new-family-group/create-new-family-group.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
 import { MemberDetailsComponent } from './components/familyGroup/member-details/member-details.component';
+import { DialogAddNewFamilyMemberComponent } from './components/dialog-add-new-family-member/dialog-add-new-family-member.component';
 
 @NgModule({
     declarations: [
@@ -85,13 +85,13 @@ import { MemberDetailsComponent } from './components/familyGroup/member-details/
         ViewFamilyGroupDetailsComponent,
         ViewMembersComponent,
         ViewSettingsComponent,
-        FamilyGroupMenuComponent,
         CreateNewFamilyGroupComponent,
         CartComponent,
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
         MemberDetailsComponent,
+        DialogAddNewFamilyMemberComponent,
     ],
     imports: [
         BrowserModule,
@@ -165,6 +165,7 @@ import { MemberDetailsComponent } from './components/familyGroup/member-details/
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
+        DialogAddNewFamilyMemberComponent
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
