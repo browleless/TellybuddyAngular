@@ -30,6 +30,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatListModule} from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,6 +42,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DialogForgotPasswordComponent } from './components/dialog-forgot-password/dialog-forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PlansComponent } from './components/plans/plans.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
@@ -49,6 +53,8 @@ import { EarnAdditionalUnitsComponent } from './components/earn-additional-units
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
 import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
+import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
+
 
 @NgModule({
     declarations: [
@@ -59,6 +65,7 @@ import { DialogRecommendPlansComponent } from './components/dialog-recommend-pla
         DialogForgotPasswordComponent,
         ResetPasswordComponent,
         PlansComponent,
+        SubscriptionsComponent,
         CartComponent,
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
@@ -68,7 +75,11 @@ import { DialogRecommendPlansComponent } from './components/dialog-recommend-pla
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,
+<<<<<<< HEAD
         DialogRecommendPlansComponent,
+=======
+        DialogAmendSubscriptionUnits,
+>>>>>>> 0dfc8bd5cfa2863c3344d3a86cee8c158f5153e0
     ],
     imports: [
         BrowserModule,
@@ -98,14 +109,22 @@ import { DialogRecommendPlansComponent } from './components/dialog-recommend-pla
         MatTabsModule,
         MatRadioModule,
         MatProgressBarModule,
+        MatExpansionModule,
+        MatSlideToggleModule,
+        MatListModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
+<<<<<<< HEAD
         DialogRecommendPlansComponent,
+=======
+        DialogAmendSubscriptionUnits
+>>>>>>> 0dfc8bd5cfa2863c3344d3a86cee8c158f5153e0
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

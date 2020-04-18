@@ -10,6 +10,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,7 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'resetPassword/:salt', component: ResetPasswordComponent },
     { path: 'plans', component: PlansComponent },
+    { path: 'subscriptions', component: SubscriptionsComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'products', component: ProductsComponent },

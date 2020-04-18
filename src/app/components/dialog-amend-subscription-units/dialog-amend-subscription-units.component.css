@@ -1,0 +1,13 @@
+.mat-slider-horizontal {
+    width: 50%;
+    /* display: flex;
+    justify-content: flex-end; */
+    position: absolute;
+    right: 20px;
+    bottom: 3px;
+}
+.mat-dialog-container{
+    /* background-color: cornflowerblue; */
+    vertical-align: bottom;
+    padding-top: 20px;
+}

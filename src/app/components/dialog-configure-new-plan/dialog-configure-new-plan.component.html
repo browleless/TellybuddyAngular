@@ -25,7 +25,7 @@
                 "
                 style="cursor: pointer;"
                 [ngClass]="
-                    availablePhoneNumber.inUse ? 'mat-chip-selected' : ''
+                    selectedPhoneNumberIndex === i ? 'mat-chip-selected' : ''
                 "
                 (click)="selectPhoneNumber(i)"
             >
@@ -126,9 +126,7 @@
     </div>
     <div style="text-align: center; padding-top: 10px;">
         <button
-            [disabled]="
-                !selectedPhoneNumber.phoneNumber || !(getRemainingUnits() === 0)
-            "
+            [disabled]="!selectedPhoneNumber || !(getRemainingUnits() === 0)"
             mat-raised-button
             color="primary"
             (click)="addPlanToCart()"
