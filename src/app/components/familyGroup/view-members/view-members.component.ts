@@ -6,6 +6,8 @@ import { FamilyGroup } from 'src/app/classes/family-group';
 import { Customer } from 'src/app/classes/customer';
 import { Subscription } from 'src/app/classes/subscription';
 import { SubscriptionService } from 'src/app/service/subscription.service';
+import { MatDialog } from '@angular/material';
+import { DialogAddNewFamilyMemberComponent } from '../../dialog-add-new-family-member/dialog-add-new-family-member.component';
 
 @Component({
     selector: 'app-view-members',
@@ -18,15 +20,18 @@ export class ViewMembersComponent implements OnInit {
     subscriptions: Subscription[];
     selectedSubscription: Subscription;
     panelOpenState: boolean;
+    newCustomer: Customer;
 
     constructor(
         public sessionService: SessionService,
         private customerService: CustomerService,
         private familyGroupService: FamilyGroupService,
-        private subscriptionService: SubscriptionService
+        private subscriptionService: SubscriptionService,
+        public dialog: MatDialog
     ) {
         this.familyGroup = new FamilyGroup();
         this.panelOpenState = false;
+        this.newCustomer = new Customer();
     }
 
     ngOnInit() {
@@ -70,5 +75,12 @@ export class ViewMembersComponent implements OnInit {
                     );
                 }
             );
+    }
+    openDialog(): void {
+        this.dialog.open(DialogAddNewFamilyMemberComponent, {
+            data: {
+                selectedFamilyGroup: this.familyGroup,
+            },
+        });
     }
 }

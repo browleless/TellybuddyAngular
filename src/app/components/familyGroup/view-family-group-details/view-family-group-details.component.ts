@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FamilyGroupService } from 'src/app/service/family-group.service';
 import { SessionService } from 'src/app/service/session.service';
@@ -18,19 +18,59 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
     familyGroup: FamilyGroup;
     customer: Customer;
     subscriptions: Subscription[];
-    selectedSubscription: Subscription;
+    selectedSubscription: Subscription = {
+        subscriptionId: undefined,
+        dataUnits: {
+            allocated: 0,
+            nextMonth: 0,
+            donated: 0,
+            addOn: 0,
+            familyGroup: 0,
+            quizExtraUnits: 0,
+        },
+        talkTimeUnits: {
+            allocated: 0,
+            nextMonth: 0,
+            donated: 0,
+            addOn: 0,
+            familyGroup: 0,
+            quizExtraUnits: 0,
+        },
+        smsUnits: {
+            allocated: 0,
+            nextMonth: 0,
+            donated: 0,
+            addOn: 0,
+            familyGroup: 0,
+            quizExtraUnits: 0,
+        },
+        subscriptionStatusEnum: undefined,
+        isActive: undefined,
+        subscriptionStartDate: undefined,
+        subscriptionEndDate: undefined,
+        customer: undefined,
+        usageDetails: undefined,
+        plan: undefined,
+        phoneNumber: undefined,
+    };
     //++++++++++++++++++++++++++++++++++++++++++++++
-    currentSMSUnits: number;
-    currentDataUnits: number;
-    currentTalkTimeUnits: number;
+    @ViewChild('dataSlider', { static: false }) dataSlider;
+    @ViewChild('smsSlider', { static: false }) smsSlider;
+    @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
+
+    donateSMSValue = 0;
+    donateDataValue = 0;
+    donateTalkTimeValue = 0;
+
+    smsUnitsLeft: number;
+    dataUnitsLeft: number;
+    talkTimeUnitsLeft: number;
+
     //++++++++++++++++++++++++++++++++++++++++++++++
     retrieveFamilyGroupError: boolean;
     loaded: boolean;
     panelOpenState: boolean;
 
-    donateSMSValue = 0;
-    donateDataValue = 0;
-    donateTalkTimeValue = 0;
     ownerOfFamilyGroup: boolean;
 
     constructor(
@@ -44,6 +84,8 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
         this.retrieveFamilyGroupError = false;
         this.loaded = false;
         this.panelOpenState = false;
+        this.customer = new Customer();
+        this.selectedSubscription = new Subscription();
     }
 
     ngOnInit() {
@@ -60,20 +102,26 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
                 );
             }
         );
-        this.subscriptionService.retrieveAllCustomerSubscriptions().subscribe(
-            (response) => {
-                this.subscriptions = response.subscriptions;
-            },
-            (error) => {
-                console.log(
-                    '********** ViewFamilyGroupDetailsComponent.ts: ' + error
-                );
-            }
-        );
-        //    this.subscriptions = this.subscriptions.filter((obj) => obj.isActive);
+
         this.customerService.retrieveCurrentCustomer().subscribe(
             (response) => {
                 this.customer = response.customer;
+                this.subscriptionService
+                    .retrieveActiveSubscriptionUnderCustomer(
+                        this.customer.customerId
+                    )
+                    .subscribe(
+                        (response) => {
+                            this.subscriptions = response.activeSubscriptions;
+                            // this.selectedSubscription = this.subscriptions[0];
+                        },
+                        (error) => {
+                            console.log(
+                                '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                                    error
+                            );
+                        }
+                    );
                 if (this.customer.ownerOfFamilyGroup) {
                     this.ownerOfFamilyGroup = true;
                 } else {
@@ -88,40 +136,87 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
         );
     }
 
-    /* donate(donateUnitsForm: NgForm) {
-        let longTagIds: number[] = new Array();
+    selectSubscription(event): void {
+        this.selectedSubscription = event.source.value;
+        console.log(this.selectedSubscription.subscriptionId);
+        console.log(this.selectedSubscription.dataUnits['allocated']);
+    }
 
-        for (var i = 0; i < this.tagIds.length; i++) {
-            longTagIds.push(parseInt(this.tagIds[i]));
+    handleDataSliderChange(value: number): void {
+        if (this.selectedSubscription != null) {
+            if (
+                value - this.donateDataValue <= this.getRemainingDataUnits() ||
+                value <= this.donateDataValue
+            ) {
+                this.donateDataValue = value;
+            } else {
+                this.dataSlider.value = this.donateDataValue;
+            }
         }
+    }
 
-        this.submitted = true;
-
-        if (createProductForm.valid) {
-            this.productService
-                .createNewProduct(this.newProduct, this.categoryId, longTagIds)
-                .subscribe(
-                    (response) => {
-                        let newProductId: number = response.productId;
-                        this.resultSuccess = true;
-                        this.resultError = false;
-                        this.message =
-                            'New product ' +
-                            newProductId +
-                            ' created successfully';
-                    },
-                    (error) => {
-                        this.resultError = true;
-                        this.resultSuccess = false;
-                        this.message =
-                            'An error has occurred while creating the new product: ' +
-                            error;
-
-                        console.log(
-                            '********** CreateNewProductComponent.ts: ' + error
-                        );
-                    }
-                );
+    handleSmsSliderChange(value: number): void {
+        if (this.selectedSubscription != null) {
+            if (
+                value - this.donateSMSValue <= this.getRemainingSMSUnits() ||
+                value <= this.donateSMSValue
+            ) {
+                this.donateSMSValue = value;
+            } else {
+                this.smsSlider.value = this.donateSMSValue;
+            }
         }
-    }*/
+    }
+
+    handleTalktimeSliderChange(value: number): void {
+        if (this.selectedSubscription != null) {
+            if (
+                value - this.donateTalkTimeValue <=
+                    this.getRemainingTalkTimeUnits() ||
+                value <= this.donateTalkTimeValue
+            ) {
+                this.donateTalkTimeValue = value;
+            } else {
+                this.talktimeSlider.value = this.donateTalkTimeValue;
+            }
+        }
+    }
+    getRemainingDataUnits(): number {
+        return (
+            this.selectedSubscription.dataUnits.allocated -
+            this.selectedSubscription.usageDetails.pop().dataUsage
+        );
+    }
+    getRemainingSMSUnits(): number {
+        return (
+            this.selectedSubscription.smsUnits.allocated -
+            this.selectedSubscription.usageDetails.pop().smsUsage
+        );
+    }
+    getRemainingTalkTimeUnits(): number {
+        return (
+            this.selectedSubscription.talkTimeUnits.allocated -
+            this.selectedSubscription.usageDetails.pop().talktimeUsage
+        );
+    }
+
+    donate() {
+        this.familyGroupService
+            .donateUnitsToFamilyGroup(
+                this.donateDataValue,
+                this.donateSMSValue,
+                this.donateTalkTimeValue,
+                this.selectedSubscription,
+                this.customer,
+                this.familyGroup
+            )
+            .subscribe(
+                (response) => {
+                    location.reload();
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }
 }

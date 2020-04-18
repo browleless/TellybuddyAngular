@@ -3,7 +3,7 @@
     <div style="text-align: center;">
         <h1>Tellybuddy FamilyGroup</h1>
         <div *ngIf="!retrieveFamilyGroupError">
-            <mat-sidenav-container>
+            <mat-sidenav-container fullscreen>
                 <mat-sidenav mode="side" opened>
                     <ul class="familyGroupMenu">
                         <mat-nav-list>
@@ -19,6 +19,10 @@
                     </ul>
                 </mat-sidenav>
                 <mat-sidenav-content>
+                    <br>
+                    <br>
+                    <br>
+
                     <form class="update-form">
                         <mat-form-field class="update-full-width">
                             <mat-label>Update Family Group Description</mat-label>
@@ -34,7 +38,7 @@
                     <section>
                         <div>Delete the family group</div>
 
-                        <button mat-raised-button (click)="openDialog()">Delete</button>
+                        <!-- <button mat-raised-button (click)="openDialog()">Delete</button> -->
                         <button mat-button (click)="deleteFamilyGroup()">Delete</button>
                     </section>
 

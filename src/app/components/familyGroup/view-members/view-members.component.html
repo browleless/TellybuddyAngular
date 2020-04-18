@@ -1,55 +1,36 @@
-<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
-
-    <div style="text-align: center;">
-        <h1>Tellybuddy FamilyGroup</h1>
-        <div *ngIf="!retrieveFamilyGroupError">
-            <mat-sidenav-container>
-                <mat-sidenav mode="side" opened>
-                    <ul class="familyGroupMenu">
-                        <mat-nav-list>
-                            <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
-                                Home</a>
-                            <a mat-list-item routerLink="/familyGroup/viewMembers">
-                                Members</a>
-                            <div *ngIf="ownerOfFamilyGroup">
-                                <a mat-list-item routerLink="/familyGroup/viewSettings">
-                                    Setting</a>
-                            </div>
-                        </mat-nav-list>
-                    </ul>
-                </mat-sidenav>
-                <mat-sidenav-content>
-                    <div *ngIf="!retrieveFamilyGroupError">
-                        <div *ngFor="let member of familyMembers">
-                            <mat-expansion-panel (opened)="retrieveActiveSubscriptions(member.customerId)">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title>
-                                        {{ member.firstName }}
-                                    </mat-panel-title>
-                                    <mat-panel-description>
-                                        View details
-                                    </mat-panel-description>
-
-                                    <!-- 查看member的active subscriptions -->
-
-                                </mat-expansion-panel-header>
-                                <mat-form-field>
-                                    <mat-label>Active subscription</mat-label>
-                                    <mat-select [(ngModel)]="selectedSubscription" name="subscription">
-                                        <mat-option *ngFor="
-                                            let subscription of subscriptions" value="{{subscription}}">{{subscription.phoneNumber
-                                                .phoneNumber}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </mat-expansion-panel>
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;"></div>
+<div style="text-align: center;">
+    <h1>Tellybuddy FamilyGroup</h1>
+    <div *ngIf="!retrieveFamilyGroupError">
+        <mat-sidenav-container fullscreen>
+            <mat-sidenav mode="side" opened>
+                <ul class="familyGroupMenu">
+                    <mat-nav-list>
+                        <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
+                            Home</a>
+                        <a mat-list-item routerLink="/familyGroup/viewMembers">
+                            Members</a>
+                        <div *ngIf="ownerOfFamilyGroup">
+                            <a mat-list-item routerLink="/familyGroup/viewSettings">
+                                Setting</a>
                         </div>
+                    </mat-nav-list>
+                </ul>
+            </mat-sidenav>
+            <mat-sidenav-content>
+                <div *ngIf="!retrieveFamilyGroupError">
+                    <mat-nav-list>
+                        <a mat-list-item href="/familyGroup/memberDetails/{{member.customerId}}"
+                            *ngFor="let member of familyMembers">
+                            {{ member.firstName }} </a>
+                    </mat-nav-list>
+                </div>
 
+                <button mat-mini-fab color="accent" (click)="openDialog()" aria-label="add member">
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+            </mat-sidenav-content>
 
-
-                    </div>
-                </mat-sidenav-content>
-            </mat-sidenav-container>
-        </div>
+        </mat-sidenav-container>
     </div>
-
 </div>
