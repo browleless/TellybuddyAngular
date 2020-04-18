@@ -110,6 +110,9 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogAmendSubscriptionUnits,
     ],
     imports: [
+        BrowserAnimationsModule,
+        MatInputModule,
+        MatButtonModule,
         BrowserModule,
         AppRoutingModule,
         FormsModule,

@@ -85,7 +85,6 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
         this.loaded = false;
         this.panelOpenState = false;
         this.customer = new Customer();
-        this.selectedSubscription = new Subscription();
     }
 
     ngOnInit() {
@@ -183,20 +182,20 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
     }
     getRemainingDataUnits(): number {
         return (
-            this.selectedSubscription.dataUnits['allocated'] -
-            this.selectedSubscription.usageDetails.pop().dataUsage
+            this.selectedSubscription.dataUnits['allocated']
+            // -this.selectedSubscription.usageDetails.pop().dataUsage
         );
     }
     getRemainingSMSUnits(): number {
         return (
-            this.selectedSubscription.smsUnits['allocated'] -
-            this.selectedSubscription.usageDetails.pop().smsUsage
+            this.selectedSubscription.smsUnits['allocated']
+            // -this.selectedSubscription.usageDetails.pop().smsUsage
         );
     }
     getRemainingTalkTimeUnits(): number {
         return (
-            this.selectedSubscription.talkTimeUnits['allocated'] -
-            this.selectedSubscription.usageDetails.pop().talktimeUsage
+            this.selectedSubscription.talkTimeUnits['allocated']
+            // -this.selectedSubscription.usageDetails.pop().talktimeUsage
         );
     }
 

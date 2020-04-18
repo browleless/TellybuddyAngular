@@ -6,8 +6,9 @@ import { FamilyGroup } from 'src/app/classes/family-group';
 import { Customer } from 'src/app/classes/customer';
 import { Subscription } from 'src/app/classes/subscription';
 import { SubscriptionService } from 'src/app/service/subscription.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { DialogAddNewFamilyMemberComponent } from '../../dialog-add-new-family-member/dialog-add-new-family-member.component';
+import { UsageDetail } from 'src/app/classes/usage-detail';
 
 @Component({
     selector: 'app-view-members',
@@ -15,23 +16,31 @@ import { DialogAddNewFamilyMemberComponent } from '../../dialog-add-new-family-m
     styleUrls: ['./view-members.component.css'],
 })
 export class ViewMembersComponent implements OnInit {
+    isOpened: boolean;
     familyGroup: FamilyGroup;
     familyMembers: Customer[];
-    subscriptions: Subscription[];
-    selectedSubscription: Subscription;
+    activeSubscriptionsUnderThatCustomer: Subscription[];
     panelOpenState: boolean;
-    newCustomer: Customer;
+    customerToRemove: Customer;
+    currentCustomer: Customer;
+    ownerOfFamilyGroup: boolean;
+    displayedColumns: string[] = [
+        'Number',
+        'SMS usage',
+        'Talk time usage',
+        'Data usage',
+    ];
 
     constructor(
         public sessionService: SessionService,
         private customerService: CustomerService,
         private familyGroupService: FamilyGroupService,
         private subscriptionService: SubscriptionService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private snackBar: MatSnackBar
     ) {
         this.familyGroup = new FamilyGroup();
         this.panelOpenState = false;
-        this.newCustomer = new Customer();
     }
 
     ngOnInit() {
@@ -60,13 +69,100 @@ export class ViewMembersComponent implements OnInit {
                 );
             }
         );
+        this.customerService.retrieveCurrentCustomer().subscribe(
+            (response) => {
+                this.currentCustomer = response.customer;
+                // this.subscriptionService
+                //     .retrieveActiveSubscriptionUnderCustomer(
+                //         this.currentCustomer.customerId
+                //     )
+                //     .subscribe(
+                //         (response) => {
+                //             this.subscriptions = response.activeSubscriptions;
+                //             // this.selectedSubscription = this.subscriptions[0];
+                //         },
+                //         (error) => {
+                //             console.log(
+                //                 '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                //                     error
+                //             );
+                //         }
+                //     );
+                if (this.currentCustomer.ownerOfFamilyGroup) {
+                    this.ownerOfFamilyGroup = true;
+                } else {
+                    this.ownerOfFamilyGroup = false;
+                }
+            },
+            (error) => {
+                console.log(
+                    '********** ViewFamilyGroupDetailsComponent.ts: ' + error
+                );
+            }
+        );
     }
-    retrieveActiveSubscriptions(customerId: number) {
+
+    retrieveActiveSubscriptions(i: number) {
         this.subscriptionService
-            .retrieveActiveSubscriptionUnderCustomer(customerId)
+            .retrieveActiveSubscriptionUnderCustomer(
+                this.familyMembers[i].customerId
+            )
             .subscribe(
                 (response) => {
-                    this.subscriptions = response.subscriptions;
+                    this.activeSubscriptionsUnderThatCustomer =
+                        response.activeSubscriptions;
+                },
+                (error) => {
+                    console.log(
+                        '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                            error
+                    );
+                }
+            );
+        this.isOpened = true;
+    }
+
+    removeMember(i: number) {
+        this.familyGroupService
+            .removeFamilyGroupMember(this.familyGroup, this.familyMembers[i])
+            .subscribe(
+                (response) => {
+                    this.customerToRemove = this.familyMembers[i];
+
+                    const snackBarRef = this.snackBar.open(
+                        'Member removed successfully!',
+                        'Undo',
+                        {
+                            duration: 4500,
+                        }
+                    );
+                    //location.reload;
+                    snackBarRef.onAction().subscribe(() => {
+                        this.familyGroupService
+                            .addFamilyGroupMember(
+                                this.customerToRemove,
+                                this.familyGroup
+                            )
+                            .subscribe(
+                                (response) => {
+                                    location.reload();
+                                },
+                                (error) => {
+                                    const snackBarRef = this.snackBar.open(
+                                        error,
+                                        '',
+                                        {
+                                            duration: 4500,
+                                        }
+                                    );
+
+                                    console.log(
+                                        '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                                            error
+                                    );
+                                }
+                            );
+                    });
                 },
                 (error) => {
                     console.log(
@@ -76,11 +172,14 @@ export class ViewMembersComponent implements OnInit {
                 }
             );
     }
+
     openDialog(): void {
         this.dialog.open(DialogAddNewFamilyMemberComponent, {
             data: {
                 selectedFamilyGroup: this.familyGroup,
             },
+            // height: '300px',
+            // width: '600px',
         });
     }
 }

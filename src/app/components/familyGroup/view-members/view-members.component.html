@@ -18,17 +18,90 @@
                 </ul>
             </mat-sidenav>
             <mat-sidenav-content>
-                <div *ngIf="!retrieveFamilyGroupError">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let member of familyMembers; let i = index"
+                        (opened)="retrieveActiveSubscriptions(i)" style="border-left: 5px solid #7274d6;">
+                        <mat-expansion-panel-header style="vertical-align: baseline;">
+                            <mat-panel-title>
+                                {{member.firstName}}
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <!-- <div *ngIf="member.customerId == currentCustomer.customerId">
+                                    Yourself
+                                </div>
+                                <div *ngIf="member.customerId != currentCustomer.customerId">
+                                    Member
+                                </div> -->
+
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                        <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true ">
+                            <div *ngIf="member.ownerOfFamilyGroup == false"> -->
+                        <button mat-raised-button color="primary" (click)="removeMember(i)">
+                            Remove this memeber
+                        </button>
+                        <!-- </div>
+                        </div> -->
+                        <!-- <div *ngIf="activeSubscriptionsUnderThatCustomer == null">
+                            No active subscriptions under this customer now
+                        </div> -->
+
+                        <div *ngIf="activeSubscriptionsUnderThatCustomer != null">
+                            <table mat-table [dataSource]="activeSubscriptionsUnderThatCustomer"
+                                class="mat-elevation-z8" width=100%;>
+
+                                <ng-container matColumnDef="Number">
+                                    <th mat-header-cell *matHeaderCellDef> Subscription Number </th>
+                                    <td mat-cell *matCellDef="let subscription">
+                                        {{subscription.phoneNumber.phoneNumber}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="SMS usage">
+                                    <th mat-header-cell *matHeaderCellDef> SMS Usage </th>
+                                    <td mat-cell *matCellDef="let subscription">
+                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage}}
+                                        Out Of {{subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
+                                    + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Talk time usage">
+                                    <th mat-header-cell *matHeaderCellDef> Talk Time Usage</th>
+                                    <td mat-cell *matCellDef="let subscription">
+                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage}}
+                                        Out Of
+                                        {{subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
+                                      + subscription.talkTimeUnits.quizExtraUnits - subscription.talkTimeUnits.donated}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="Data usage">
+                                    <th mat-header-cell *matHeaderCellDef> Data Usage</th>
+                                    <td mat-cell *matCellDef="let subscription">
+                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage}}
+                                        Out Of {{subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
+                                      + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated}} </td>
+                                </ng-container>
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+
+                    </mat-expansion-panel>
+
+                </mat-accordion>
+                <!-- <div *ngIf="!retrieveFamilyGroupError">
                     <mat-nav-list>
                         <a mat-list-item href="/familyGroup/memberDetails/{{member.customerId}}"
                             *ngFor="let member of familyMembers">
                             {{ member.firstName }} </a>
                     </mat-nav-list>
-                </div>
-
-                <button mat-mini-fab color="accent" (click)="openDialog()" aria-label="add member">
-                    <mat-icon>add_circle</mat-icon>
-                </button>
+                </div> -->
+                <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true"> -->
+                <button mat-stroked-button color="primary" (click)="openDialog()">Add new family member</button>
+                <!-- </div> -->
             </mat-sidenav-content>
 
         </mat-sidenav-container>

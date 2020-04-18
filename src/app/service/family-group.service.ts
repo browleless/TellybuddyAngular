@@ -116,8 +116,8 @@ export class FamilyGroupService {
 
     //Add family group member
     addFamilyGroupMember(
-        familyGroup: FamilyGroup,
-        customer: Customer
+        customer: Customer,
+        familyGroup: FamilyGroup
     ): Observable<any> {
         let addFamilyGroupMemberReq = {
             username: this.sessionService.getUsername(),

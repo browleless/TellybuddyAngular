@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 export class ViewSettingsComponent implements OnInit {
     customer: Customer;
     familyGroupToPerformAction: FamilyGroup;
+    ownerOfFamilyGroup:boolean;
 
     constructor(
         private router: Router,
@@ -30,6 +31,9 @@ export class ViewSettingsComponent implements OnInit {
         this.customerService.retrieveCurrentCustomer().subscribe(
             (response) => {
                 this.customer = response.customer;
+                if(this.customer.ownerOfFamilyGroup){
+                    this.ownerOfFamilyGroup = true;
+                }
             },
             (error) => {
                 console.log('********** ViewSettingComponent.ts: ' + error);

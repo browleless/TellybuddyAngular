@@ -1,122 +1,33 @@
-<div mat-dialog-title>
-    <div>
-        Add New Member To {{ data.selectedFamilyGroup.description }} 
-        <button style="float: right;" mat-icon-button (click)="onExitClick()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-</div>
-<div *ngIf="!loaded">
-    <mat-spinner style="margin: 0 auto;"></mat-spinner>
-</div>
-<div *ngIf="loaded">
-    <div mat-dialog-content style="height: auto;">
-        <p>Please enter member email:</p>
-        
-        <p style="padding-top: 20px;">Set your units allocations:</p>
+<div [ngClass]="{'shake': shakeIt, 'dialog-class': true}">
+    <div mat-dialog-title>
         <div>
-            <div style="float: left;">
-                <div>
-                    Data Units:
-                    <mat-slider
-                        min="1"
-                        #dataSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
-                        thumbLabel
-                        (change)="handleDataSliderChange($event.value)"
-                        (input)="
-                            $event.value - dataUnits <= getRemainingUnits()
-                                ? (dataUnits = $event.value)
-                                : $event.value <= dataUnits
-                                ? (dataUnits = $event.value)
-                                : (dataUnits = dataUnits)
-                        "
-                    ></mat-slider>
-                    {{
-                        (data.selectedPlan.dataConversionRate * dataUnits) /
-                            1000
-                    }}
-                    GB
-                </div>
-                <div>
-                    SMS Units:
-                    <mat-slider
-                        min="1"
-                        #smsSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
-                        thumbLabel
-                        (change)="handleSmsSliderChange($event.value)"
-                        (input)="
-                            $event.value - smsUnits <= getRemainingUnits()
-                                ? (smsUnits = $event.value)
-                                : $event.value <= smsUnits
-                                ? (smsUnits = $event.value)
-                                : (smsUnits = smsUnits)
-                        "
-                    ></mat-slider>
-                    {{ data.selectedPlan.smsConversionRate * smsUnits }}
-                    SMS
-                </div>
-                <div>
-                    Talktime Units:
-                    <mat-slider
-                        min="1"
-                        #talktimeSlider
-                        [max]="data.selectedPlan.totalBasicUnits"
-                        thumbLabel
-                        (change)="handleTalktimeSliderChange($event.value)"
-                        (input)="
-                            $event.value - talktimeUnits <= getRemainingUnits()
-                                ? (talktimeUnits = $event.value)
-                                : $event.value <= talktimeUnits
-                                ? (talktimeUnits = $event.value)
-                                : (talktimeUnits = talktimeUnits)
-                        "
-                    ></mat-slider>
-                    {{
-                        data.selectedPlan.talktimeConversionRate * talktimeUnits
-                    }}
-                    mins
-                </div>
-            </div>
-            <div style="text-align: center;">
-                <div
-                    style="
-                        align-self: center;
-                        margin: 15px 0 25px 0;
-                        display: inline-block;
-                        font-size: 350%;
-                        font-weight: bold;
-                        border-radius: 50%;
-                        padding: 15px 25px 15px 25px;
-                        background-color: #f04393;
-                        color: white;
-                    "
-                >
-                    {{ getRemainingUnits() }}
-                    <div
-                        style="
-                            padding: 0;
-                            font-size: initial;
-                            font-weight: normal;
-                        "
-                    >
-                        units left
-                    </div>
-                </div>
-            </div>
+            Add New Member To 
+            <strong>{{ data.selectedFamilyGroup.description}}</strong>
+            <button style="float: right;" mat-icon-button (click)="onExitClick()">
+                <mat-icon>close</mat-icon>
+            </button>
         </div>
     </div>
-    <div style="text-align: center; padding-top: 10px;">
-        <button
-            [disabled]="
-                !selectedPhoneNumber.phoneNumber || !(getRemainingUnits() === 0)
-            "
-            mat-raised-button
-            color="primary"
-            (click)="addPlanToCart()"
-        >
-            Add to Cart
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <p>
+            <mat-form-field>
+                <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                    placeholder="Ex. pat@example.com" [(ngModel)]="email">
+                <mat-hint>Valid email form</mat-hint>
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Please enter a valid email address
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                    Email is <strong>required</strong>
+                </mat-error>
+
+            </mat-form-field>
+        </p>
+        <button mat-raised-button color="primary" (click)="retrieveCustomerByEmail()">
+            Invite
         </button>
     </div>
 </div>
