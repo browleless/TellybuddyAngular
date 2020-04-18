@@ -75,11 +75,8 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,
-<<<<<<< HEAD
         DialogRecommendPlansComponent,
-=======
         DialogAmendSubscriptionUnits,
->>>>>>> 0dfc8bd5cfa2863c3344d3a86cee8c158f5153e0
     ],
     imports: [
         BrowserModule,
@@ -117,11 +114,8 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
-<<<<<<< HEAD
         DialogRecommendPlansComponent,
-=======
         DialogAmendSubscriptionUnits
->>>>>>> 0dfc8bd5cfa2863c3344d3a86cee8c158f5153e0
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
