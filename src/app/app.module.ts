@@ -47,6 +47,8 @@ import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { NumberDirective } from './directive/number.directive';
+import { ProductsComponent } from './components/products/products.component';
+import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
@@ -67,6 +69,8 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogConfigureNewPlanComponent,
         CheckoutComponent,
         NumberDirective,
+        ProductsComponent,
+        LuxuryproductsComponent,
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,

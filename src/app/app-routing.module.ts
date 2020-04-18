@@ -6,6 +6,8 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { PlansComponent } from './components/plans/plans.component';
 import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ProductsComponent } from './components/products/products.component';
+import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryproducts.component';
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
@@ -23,6 +25,8 @@ const routes: Routes = [
     { path: 'subscriptions', component: SubscriptionsComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
+    { path: 'products', component: ProductsComponent },
+    { path: 'luxuryproducts', component: LuxuryproductsComponent },
     { path: 'additionalUnits', component: EarnAdditionalUnitsComponent },
     { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
 ];
@@ -31,4 +35,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

@@ -7,9 +7,12 @@
             Products
         </button>
         <mat-menu [hasBackdrop]="false" #firstMenu="matMenu">
-            <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)">
-                <button mat-menu-item>Phones</button>
-                <button mat-menu-item>Accessories</button>
+            <div
+                (mouseenter)="menuenter()"
+                (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)"
+            >
+                <button mat-menu-item routerLink="/luxuryproducts">Mobile Devices</button>
+                <button mat-menu-item routerLink="/products">Accessories</button>
             </div>
         </mat-menu>
 
