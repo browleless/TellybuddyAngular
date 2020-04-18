@@ -52,6 +52,7 @@ import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryprodu
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
+import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
 import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
 
 
@@ -74,6 +75,7 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
     ],
     imports: [
@@ -112,6 +114,7 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
