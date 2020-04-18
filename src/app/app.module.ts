@@ -48,6 +48,7 @@ import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryprodu
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
+import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
 
 @NgModule({
     declarations: [
@@ -67,6 +68,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
     ],
     imports: [
         BrowserModule,
@@ -101,6 +103,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
         DialogForgotPasswordComponent,
         DialogConfigureNewPlanComponent,
         DialogAllocateAdditionalUnitsComponent,
+        DialogRecommendPlansComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
