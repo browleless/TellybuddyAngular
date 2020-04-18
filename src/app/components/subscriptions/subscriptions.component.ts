@@ -71,7 +71,10 @@ export class SubscriptionsComponent implements OnInit {
                 this.subscriptions = response.subscriptions.sort(compare);
 
                 for (var i = 0; i < this.subscriptions.length; i++) {
-                    this.subscriptions[i].subscriptionStartDate = this.subscriptions[i].subscriptionStartDate.substring(0, 19);
+                    var sub = this.subscriptions[i];
+                    if(sub.subscriptionStartDate != null){
+                        sub.subscriptionStartDate = sub.subscriptionStartDate.substring(0, 19);
+                    }
                 }
                 this.loaded = true;
             },
@@ -81,7 +84,11 @@ export class SubscriptionsComponent implements OnInit {
         );
         this.currentDate = new Date();
         this.monthAgo = new Date(this.currentDate);
-        this.monthAgo.setMonth(this.monthAgo.getMonth() - 1);
+        var date = new Date(this.selectedSubscription.subscriptionStartDate);
+        if(this.currentDate.getDate() < date.getDate()){
+
+            this.monthAgo.setMonth(this.monthAgo.getMonth() - 1);
+        }
     }
 
 
@@ -94,7 +101,7 @@ export class SubscriptionsComponent implements OnInit {
                 labels: ["Data", "SMS", "Talk Time"],
                 datasets: [{
                     label: 'Current Allocation of Units',
-                    data: [this.subscriptions[i].dataUnits['allocated'], this.subscriptions[i].smsUnits['allocated'], this.subscriptions[i].talkTimeUnits['allocated']],
+                    data: [this.dataUnits, this.smsUnits, this.talktimeUnits],
                     backgroundColor: [
                         'rgba(255, 99, 132, 1)',
                         'rgba(54, 162, 235, 1)',
@@ -195,9 +202,9 @@ export class SubscriptionsComponent implements OnInit {
             }
         );
         this.selectedSubscriptionPlan = this.subscriptions[i].plan;
-        this.dataUnits = this.subscriptions[i].dataUnits['allocated'];
-        this.smsUnits = this.subscriptions[i].smsUnits['allocated'];
-        this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"];
+        this.dataUnits = this.subscriptions[i].dataUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+        this.smsUnits = this.subscriptions[i].smsUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+        this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
         this.totalUnits = this.subscriptions[i].plan.totalBasicUnits;
 
         this.loadCharts(i);

@@ -10,7 +10,7 @@
 
     <mat-accordion>
       <mat-expansion-panel *ngFor="let subscription of subscriptions; let i = index" (opened)="openGroup(i)"
-        (closed)="resetState()" style="border-left: 5px solid #7274d6;">
+        style="border-left: 5px solid #7274d6;">
         <mat-expansion-panel-header style="vertical-align: baseline;">
 
           <mat-panel-title>
@@ -27,7 +27,7 @@
         </mat-expansion-panel-header>
 
         <strong> Phone Number: </strong>{{subscription.phoneNumber.phoneNumber}}
-        <div style="float:right; padding-right: 5px;">
+        <div style="float:right; padding-right: 5px;" *ngIf="subscription.subscriptionStartDate!=null">
 
           <strong>Usage Period:</strong> {{subscription.subscriptionStartDate | date: 'd'}} {{monthAgo | date: 'MMM'}} -
           {{currentDate | date: 'd MMM'}}
@@ -37,14 +37,13 @@
 
         <mat-grid-list cols="5" rowHeight="40vh">
 
-          <mat-grid-tile colspan="2">
+          <mat-grid-tile colspan="2" >
             <canvas id="myChart{{i}}" width="700" height="400"></canvas>
 
           </mat-grid-tile>
-          <!-- <mat-grid-tile colspan="1"></mat-grid-tile> -->
-          <mat-grid-tile colspan="3">
+          <mat-grid-tile colspan="3" >
 
-            <div class="css-grid">
+            <div class="css-grid" style="border-left: 3px solid #fafafa; margin-left: 25px;">
               <div class="css-grid-tile ">
                 <div class="icons">
                   <mat-icon color="primary">language</mat-icon>
@@ -101,11 +100,14 @@
                   <canvas id="talkTimeChart{{i}}" ></canvas>
                 </div>
               </div>
+
             </div>
           </mat-grid-tile>        
+
           <div style="position: absolute;bottom: 0;left: 0;">
             <mat-slide-toggle labelPosition="before" (change)="toggleEdit(i)" [checked]="editMode">Edit</mat-slide-toggle>
           </div>
+
         </mat-grid-list>
 
         <div style="text-align: center;">
