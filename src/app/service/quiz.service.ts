@@ -9,6 +9,12 @@ import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
 
+import { Quiz } from '../classes/quiz';
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
+
 @Injectable({
     providedIn: 'root',
 })
@@ -28,6 +34,22 @@ export class QuizService {
                     this.sessionService.getUsername() +
                     '&password=' +
                     this.sessionService.getPassword()
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveQuizUnattemptedFamilyMembers(quiz: Quiz): Observable<any> {
+        let retrieveQuizUnattemptedFamilyMembersReq = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+            customer: this.sessionService.getCurrentCustomer(),
+            quiz: quiz,
+        };
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/retrieveQuizUnattemptedFamilyMembers',
+                retrieveQuizUnattemptedFamilyMembersReq,
+                httpOptions
             )
             .pipe(catchError(this.handleError));
     }

@@ -1,10 +1,5 @@
 <div mat-dialog-title>
-    <div>
-        Allocate Extra Units
-        <button style="float: right;" mat-icon-button (click)="onExitClick()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
+    Allocate Extra Units
 </div>
 <div>
     <div mat-dialog-content style="height: auto;">
@@ -36,6 +31,7 @@
                 <div>
                     Data Units:
                     <mat-slider
+                        [disabled]="!this.selectedSubscription"
                         #dataSlider
                         [max]="data.unitsWorth"
                         thumbLabel
@@ -48,12 +44,13 @@
                                 : (dataUnits = dataUnits)
                         "
                     ></mat-slider>
-                    {{ (dataConversionRate * dataUnits) / 1000 }}
+                    + {{ (dataConversionRate * dataUnits) / 1000 }}
                     GB
                 </div>
                 <div>
                     SMS Units:
                     <mat-slider
+                        [disabled]="!this.selectedSubscription"
                         #smsSlider
                         [max]="data.unitsWorth"
                         thumbLabel
@@ -66,12 +63,13 @@
                                 : (smsUnits = smsUnits)
                         "
                     ></mat-slider>
-                    {{ smsConversionRate * smsUnits }}
+                    + {{ smsConversionRate * smsUnits }}
                     SMS
                 </div>
                 <div>
                     Talktime Units:
                     <mat-slider
+                        [disabled]="!this.selectedSubscription"
                         #talktimeSlider
                         [max]="data.unitsWorth"
                         thumbLabel
@@ -84,7 +82,7 @@
                                 : (talktimeUnits = talktimeUnits)
                         "
                     ></mat-slider>
-                    {{ talktimeConversionRate * talktimeUnits }}
+                    + {{ talktimeConversionRate * talktimeUnits }}
                     mins
                 </div>
             </div>
@@ -117,11 +115,7 @@
         </div>
     </div>
     <div style="text-align: center; padding-top: 10px;">
-        <button
-            mat-raised-button
-            color="primary"
-            (click)="handleQuizSubmission()"
-        >
+        <button mat-raised-button color="primary" (click)="handleAllocation()">
             Submit
         </button>
     </div>

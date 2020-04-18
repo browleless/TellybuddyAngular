@@ -40,7 +40,6 @@ export class DialogAllocateAdditionalUnitsComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: DialogAllocateAdditionalUnitsData,
         private subscriptionService: SubscriptionService,
         public sessionService: SessionService,
-        private quizAttemptService: QuizAttemptService,
         private snackBar: MatSnackBar
     ) {}
 
@@ -97,13 +96,19 @@ export class DialogAllocateAdditionalUnitsComponent implements OnInit {
         }
     }
 
-    handleQuizSubmission(): void {
-        this.quizAttemptService
-            .createNewQuizAttempt(this.data.quizAttempt)
+    handleAllocation(): void {
+        this.subscriptionService
+            .allocateQuizExtraUnits(
+                this.selectedSubscription,
+                this.dataUnits,
+                this.smsUnits,
+                this.talktimeUnits
+            )
             .subscribe(
                 (response) => {
                     this.snackBar.open(
-                        'Responses recorded and extra units added to ' +
+                        this.data.unitsWorth +
+                            ' extra units added to ' +
                             this.selectedSubscription.phoneNumber.phoneNumber.substring(
                                 0,
                                 4
@@ -116,28 +121,13 @@ export class DialogAllocateAdditionalUnitsComponent implements OnInit {
                         'Close',
                         { duration: 4500 }
                     );
+                    this.dialogRef.close();
                     this.router.navigate(['/additionalUnits']);
                 },
                 (error) => {
                     console.log(error);
                 }
             );
-
-        this.subscriptionService
-            .allocateQuizExtraUnits(
-                this.selectedSubscription,
-                this.dataUnits,
-                this.smsUnits,
-                this.talktimeUnits
-            )
-            .subscribe(
-                (response) => {},
-                (error) => {
-                    console.log(error);
-                }
-            );
-
-        this.dialogRef.close();
     }
 
     getRemainingUnits(): number {

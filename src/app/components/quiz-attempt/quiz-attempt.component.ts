@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent, MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAllocateAdditionalUnitsComponent } from '../dialog-allocate-additional-units/dialog-allocate-additional-units.component';
 
@@ -10,6 +10,7 @@ import { QuizAttempt } from 'src/app/classes/quiz-attempt';
 
 import { QuestionService } from 'src/app/service/question.service';
 import { SessionService } from 'src/app/service/session.service';
+import { QuizAttemptService } from 'src/app/service/quiz-attempt.service';
 
 @Component({
     selector: 'app-quiz-attempt',
@@ -36,7 +37,9 @@ export class QuizAttemptComponent implements OnInit {
         private breakpointObserver: BreakpointObserver,
         private questionService: QuestionService,
         private sessionService: SessionService,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private quizAttemptService: QuizAttemptService,
+        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
@@ -65,7 +68,7 @@ export class QuizAttemptComponent implements OnInit {
         this.answers.set(questionId, answerId);
     }
 
-    openDialog(): void {
+    handleQuizSubmit(): void {
         this.quizAttempt = {
             quizAttemptId: undefined,
             quiz: {
@@ -76,6 +79,7 @@ export class QuizAttemptComponent implements OnInit {
                 questions: undefined,
                 quizAttempts: undefined,
                 unitsWorth: undefined,
+                familyGroupMembers: undefined,
             },
             completedDate: undefined,
             customer: this.sessionService.getCurrentCustomer(),
@@ -102,15 +106,41 @@ export class QuizAttemptComponent implements OnInit {
             });
         }
 
-        const dialogRef = this.dialog.open(
-            DialogAllocateAdditionalUnitsComponent,
-            {
-                data: {
-                    unitsWorth: this.questions[0].quiz.unitsWorth,
-                    quizAttempt: this.quizAttempt,
+        this.quizAttemptService
+            .createNewQuizAttempt(this.quizAttempt)
+            .subscribe(
+                (response) => {
+                    if (response.quizScore) {
+                        this.dialog.open(
+                            DialogAllocateAdditionalUnitsComponent,
+                            {
+                                disableClose: true,
+                                data: {
+                                    unitsWorth: response.quizScore,
+                                    quizAttempt: this.quizAttempt,
+                                },
+                            }
+                        );
+                        this.snackBar.open(
+                            'You earned ' +
+                                response.quizScore +
+                                ' units, allocate them now!',
+                            'Close',
+                            { duration: 4500 }
+                        );
+                    } else {
+                        this.snackBar.open(
+                            'Sorry, you did not manage to answer any questions correctly!',
+                            'Close',
+                            { duration: 4500 }
+                        );
+                        this.router.navigate(['/additionalUnits']);
+                    }
                 },
-            }
-        );
+                (error) => {
+                    console.log(error);
+                }
+            );
     }
 
     removeHtmlTag(text: string): string {
