@@ -13,6 +13,7 @@ import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.com
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
 import { AccountComponent } from './components/account/account.component';
 import { ViewTransactionComponent } from './components/transaction-view/transaction-view.component';
+import { BillsComponent } from './components/bills/bills.component';
 
 const routes: Routes = [
     {
@@ -33,10 +34,11 @@ const routes: Routes = [
     { path: 'luxuryproducts', component: LuxuryproductsComponent },
     { path: 'additionalUnits', component: EarnAdditionalUnitsComponent },
     { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
+    { path: 'bills', component: BillsComponent },
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

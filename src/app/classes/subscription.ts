@@ -3,6 +3,7 @@ import { Customer } from './customer';
 import { UsageDetail } from './usage-detail';
 import { Plan } from './plan';
 import { PhoneNumber } from './phone-number';
+import { Bill } from './bill';
 
 export class Subscription {
     subscriptionId: number;
@@ -17,6 +18,7 @@ export class Subscription {
     usageDetails: UsageDetail[];
     plan: Plan;
     phoneNumber: PhoneNumber;
+    outstandingBills: Bill[];
     constructor(
         subscriptionId?: number,
         dataUnits?: Object,
@@ -29,7 +31,8 @@ export class Subscription {
         customer?: Customer,
         usageDetails?: UsageDetail[],
         plan?: Plan,
-        phoneNumber?: PhoneNumber
+        phoneNumber?: PhoneNumber,
+        outstandingBills?: Bill[]
     ) {
         this.subscriptionId = subscriptionId;
         this.dataUnits = dataUnits;
@@ -43,5 +46,6 @@ export class Subscription {
         this.usageDetails = usageDetails;
         this.plan = plan;
         this.phoneNumber = phoneNumber;
+        this.outstandingBills = outstandingBills;
     }
 }

@@ -1,5 +1,6 @@
 import { QuizAttempt } from './quiz-attempt';
 import { Questions } from './questions';
+import { Customer } from './customer';
 
 export class Quiz {
     quizId: number;
@@ -9,6 +10,7 @@ export class Quiz {
     unitsWorth: number;
     quizAttempts: QuizAttempt[];
     questions: Questions[];
+    familyGroupMembers: Customer[];
     constructor(
         quizId?: number,
         name?: string,
@@ -16,7 +18,8 @@ export class Quiz {
         expiryDate?: Date,
         unitsWorth?: number,
         quizAttempts?: QuizAttempt[],
-        questions?: Questions[]
+        questions?: Questions[],
+        familyGroupMembers?: Customer[]
     ) {
         this.questions = questions;
         this.quizAttempts = quizAttempts;
@@ -25,5 +28,6 @@ export class Quiz {
         this.openDate = openDate;
         this.expiryDate = expiryDate;
         this.unitsWorth = unitsWorth;
+        this.familyGroupMembers = familyGroupMembers;
     }
 }

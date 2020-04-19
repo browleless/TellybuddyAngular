@@ -32,8 +32,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatListModule} from '@angular/material/list';
-import { MatStepperModule } from '@angular/material/stepper'
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,8 @@ import { DialogRecommendPlansComponent } from './components/dialog-recommend-pla
 import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
 import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscription-units/dialog-addon-subscription-units.component';
 
+import { BillsComponent } from './components/bills/bills.component';
+import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dialog-bill-payment.component';
 
 @NgModule({
     declarations: [
@@ -84,7 +87,9 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
-        DialogAddonSubscriptionUnits
+        DialogAddonSubscriptionUnits,
+        BillsComponent,
+        DialogBillPaymentComponent,
     ],
     imports: [
         BrowserModule,
@@ -117,7 +122,8 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
         MatExpansionModule,
         MatSlideToggleModule,
         MatListModule,
-        MatStepperModule
+        MatStepperModule,
+        MatTooltipModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
@@ -125,10 +131,10 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
-        DialogAddonSubscriptionUnits
+        DialogAddonSubscriptionUnits,
+        DialogBillPaymentComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

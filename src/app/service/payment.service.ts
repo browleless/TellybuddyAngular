@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
 
 import { SessionService } from './session.service';
 
-import { Quiz } from '../classes/quiz';
+import { Payment } from '../classes/payment';
+import { Bill } from '../classes/bill';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -18,39 +19,24 @@ const httpOptions = {
 @Injectable({
     providedIn: 'root',
 })
-export class QuizService {
-    baseUrl: string = '/api/Quiz';
+export class PaymentService {
+    baseUrl: string = '/api/Payment';
 
     constructor(
         private httpClient: HttpClient,
         private sessionService: SessionService
     ) {}
 
-    retrieveAllUnattemptedActiveQuizzes(): Observable<any> {
-        return this.httpClient
-            .get<any>(
-                this.baseUrl +
-                    '/retrieveAllUnattemptedActiveQuizzes?username=' +
-                    this.sessionService.getUsername() +
-                    '&password=' +
-                    this.sessionService.getPassword()
-            )
-            .pipe(catchError(this.handleError));
-    }
-
-    retrieveQuizUnattemptedFamilyMembers(quiz: Quiz): Observable<any> {
-        let retrieveQuizUnattemptedFamilyMembersReq = {
+    createNewBillPayment(newBillPayment: Payment, bill: Bill): Observable<any> {
+        let makeBillPaymentReq = {
             username: this.sessionService.getUsername(),
             password: this.sessionService.getPassword(),
-            customer: this.sessionService.getCurrentCustomer(),
-            quiz: quiz,
+            payment: newBillPayment,
+            bill: bill,
         };
+
         return this.httpClient
-            .post<any>(
-                this.baseUrl + '/retrieveQuizUnattemptedFamilyMembers',
-                retrieveQuizUnattemptedFamilyMembersReq,
-                httpOptions
-            )
+            .put<any>(this.baseUrl, makeBillPaymentReq, httpOptions)
             .pipe(catchError(this.handleError));
     }
 

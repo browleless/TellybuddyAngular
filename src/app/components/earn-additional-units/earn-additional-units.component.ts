@@ -7,6 +7,7 @@ import { SubscriptionService } from 'src/app/service/subscription.service';
 
 import { Quiz } from 'src/app/classes/quiz';
 import { Subscription } from 'src/app/classes/subscription';
+import { forkJoin } from 'rxjs';
 
 @Component({
     selector: 'app-earn-additional-units',
@@ -21,6 +22,8 @@ export class EarnAdditionalUnitsComponent implements OnInit {
 
     quizzes: Quiz[];
     subscriptions: Subscription[];
+
+    observables = [];
 
     constructor(
         private router: Router,
@@ -77,7 +80,24 @@ export class EarnAdditionalUnitsComponent implements OnInit {
         this.quizService.retrieveAllUnattemptedActiveQuizzes().subscribe(
             (response) => {
                 this.quizzes = response.quizzes;
-                this.loaded = true;
+                if (this.quizzes.length) {
+                    this.quizzes.forEach((quiz) => {
+                        this.observables.push(
+                            this.quizService.retrieveQuizUnattemptedFamilyMembers(
+                                quiz
+                            )
+                        );
+                    });
+                    forkJoin(this.observables).subscribe((result) => {
+                        for (let i = 0; i < result.length; i++) {
+                            this.quizzes[i].familyGroupMembers =
+                                result[i].familyGroupMembers;
+                        }
+                        this.loaded = true;
+                    });
+                } else {
+                    this.loaded = true;
+                }
             },
             (error) => {
                 console.log(error);

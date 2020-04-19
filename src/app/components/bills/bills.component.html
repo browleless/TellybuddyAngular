@@ -1,0 +1,238 @@
+<div style="text-align: left; padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <h1>My Bills</h1>
+</div>
+
+<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div>
+            <h1>Outstanding</h1>
+            <mat-grid-list
+                [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                rowHeight="522.5px"
+            >
+                <mat-grid-tile
+                    *ngFor="let bill of outstandingBills; let i = index"
+                >
+                    <mat-card
+                        mat-ripple
+                        class="mat-elevation-z8"
+                        matTooltip="Pay Now"
+                        (click)="openDialog(i)"
+                    >
+                        <mat-card-title>
+                            {{
+                                bill.usageDetail.subscription.phoneNumber.phoneNumber.substring(
+                                    0,
+                                    4
+                                )
+                            }}
+                            {{
+                                bill.usageDetail.subscription.phoneNumber.phoneNumber.substring(
+                                    4
+                                )
+                            }}
+                        </mat-card-title>
+                        <mat-card-content>
+                            <div style="margin: 10px 0 5px 0;">
+                                {{
+                                    bill.usageDetail.startDate.substring(0, 19)
+                                        | date: 'dd MMM'
+                                }}
+                                –
+                                {{
+                                    bill.usageDetail.endDate.substring(0, 19)
+                                        | date: 'dd MMM'
+                                }}
+                            </div>
+                            <div style="height: 129px;">
+                                <canvas id="usageChart{{ i }}"></canvas>
+                            </div>
+                            <div>
+                                <mat-grid-list rowHeight="50" cols="3">
+                                    <mat-grid-tile>
+                                        Data&nbsp;&nbsp;
+                                        <div
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedDataUsage /
+                                                    bill.usageDetail.dataUsage >
+                                                1
+                                                    ? '#3C4CAD'
+                                                    : '#D50000'
+                                            "
+                                            style="padding: 5px 10px;"
+                                        ></div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        SMS&nbsp;&nbsp;
+                                        <div
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedSmsUsage /
+                                                    bill.usageDetail.smsUsage >
+                                                1
+                                                    ? '#F9C449'
+                                                    : '#D50000'
+                                            "
+                                            style="padding: 5px 10px;"
+                                        ></div>
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        Talktime&nbsp;&nbsp;
+                                        <div
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedTalktimeUsage /
+                                                    bill.usageDetail
+                                                        .talktimeUsage >
+                                                1
+                                                    ? '#F04393'
+                                                    : '#D50000'
+                                            "
+                                            style="padding: 5px 10px;"
+                                        ></div>
+                                    </mat-grid-tile>
+                                </mat-grid-list>
+                            </div>
+                            <div>
+                                <mat-grid-list rowHeight="30" cols="3">
+                                    <mat-grid-tile>
+                                        {{ bill.usageDetail.dataUsage }} /
+                                        {{ bill.usageDetail.allowedDataUsage }}
+                                        GBs
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        {{ bill.usageDetail.smsUsage }} /
+                                        {{ bill.usageDetail.allowedSmsUsage }}
+                                        SMS
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        {{ bill.usageDetail.talktimeUsage }} /
+                                        {{
+                                            bill.usageDetail
+                                                .allowedTalktimeUsage
+                                        }}
+                                        mins
+                                    </mat-grid-tile>
+                                </mat-grid-list>
+                            </div>
+                            <div style="margin: 20px 0;">
+                                <mat-grid-list rowHeight="30" cols="2">
+                                    <mat-grid-tile
+                                        style="font-size: large;"
+                                        rowspan="3"
+                                    >
+                                        <span style="font-weight: bold;">
+                                            Plan:&nbsp;
+                                        </span>
+                                        {{ bill.price | currency }}
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <span style="font-weight: bold;">
+                                            Add-ons:&nbsp;
+                                        </span>
+                                        {{ bill.addOnPrice | currency }}
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <span style="font-weight: bold;">
+                                            Exceeded:&nbsp;
+                                        </span>
+                                        {{ bill.exceedPenaltyPrice | currency }}
+                                    </mat-grid-tile>
+                                    <mat-grid-tile>
+                                        <span style="font-weight: bold;">
+                                            Discount:&nbsp;
+                                        </span>
+                                        <span *ngIf="bill.familyDiscountRate">
+                                            -{{
+                                                (bill.price +
+                                                    bill.addOnPrice +
+                                                    bill.exceedPenaltyPrice) *
+                                                    (bill.familyDiscountRate /
+                                                        100) | currency
+                                            }}
+                                        </span>
+                                        <span *ngIf="!bill.familyDiscountRate">
+                                            N.A.
+                                        </span>
+                                    </mat-grid-tile>
+                                </mat-grid-list>
+                            </div>
+                            <div
+                                style="
+                                    font-size: x-large;
+                                    font-weight: 500;
+                                    border-top: 2.5px solid #3c4cad;
+                                    border-bottom: 2.5px solid #3c4cad;
+                                    padding: 10px 0;
+                                "
+                            >
+                                {{
+                                    (bill.price +
+                                        bill.addOnPrice +
+                                        bill.exceedPenaltyPrice) *
+                                        ((100 - bill.familyDiscountRate) / 100)
+                                        | currency
+                                }}
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+        <div>
+            <h1>Bills by Subscriptions</h1>
+            <mat-accordion style="margin: 100px;" class="align-headers">
+                <mat-expansion-panel
+                    *ngFor="let subscription of subscriptions; let i = index"
+                    style="border-left: 5px solid #7274d6;"
+                    (opened)="handleOpen(i)"
+                >
+                    <mat-expansion-panel-header
+                        style="vertical-align: baseline;"
+                    >
+                        <mat-panel-title>
+                            <mat-icon>signal_cellular_alt</mat-icon>
+                            &nbsp;
+                            {{ i + 1 }}: &nbsp;{{ subscription.plan.name }} ({{
+                                subscription.phoneNumber.phoneNumber
+                            }})
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <span
+                                style="
+                                    color: #66bb6a;
+                                    text-transform: uppercase;
+                                "
+                                *ngIf="!subscription.outstandingBills.length"
+                                >Clear</span
+                            >
+                            <span
+                                style="
+                                    color: #ff1744;
+                                    text-transform: uppercase;
+                                "
+                                *ngIf="subscription.outstandingBills.length"
+                                >Outstanding</span
+                            >
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <div *ngIf="!loadedBills">
+                        <mat-spinner
+                            diameter="50"
+                            style="margin: 0 auto;"
+                        ></mat-spinner>
+                    </div>
+                    <div *ngIf="loadedBills">
+                        <div *ngFor="let bill of subscriptionBills">
+                            {{ bill.price | currency }}
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>

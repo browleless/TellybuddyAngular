@@ -9,10 +9,12 @@
         >
             <h1>Available Questionnaires</h1>
             <p style="margin-bottom: 30px;">
-                Complete them to earn additional units for your subscriptions!
+                Complete them to earn additional units for your subscriptions
+                based on how many answers you answer correctly!
             </p>
             <mat-grid-list
                 [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                rowHeight="420px"
             >
                 <mat-grid-tile *ngFor="let quiz of quizzes; let i = index">
                     <mat-card
@@ -22,6 +24,9 @@
                     >
                         <mat-card-title> {{ quiz.name }} </mat-card-title>
                         <mat-card-content>
+                            <div style="margin-top: 20px; font-size: larger;">
+                                Earn up to
+                            </div>
                             <div
                                 style="
                                     margin: 15px 0 25px 0;
@@ -44,6 +49,38 @@
                                 >
                                     Units
                                 </div>
+                            </div>
+                            <div *ngIf="quiz.familyGroupMembers.length">
+                                <div
+                                    style="
+                                        margin-top: 5px;
+                                        margin-bottom: 10px;
+                                    "
+                                >
+                                    Unattempted:
+                                </div>
+                                <div
+                                    *ngFor="
+                                        let member of quiz.familyGroupMembers
+                                    "
+                                    style="font-style: italic;"
+                                >
+                                    {{ member.firstName }}
+                                </div>
+
+                                <div style="margin-top: 20px;">
+                                    Notify them today!
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="!quiz.familyGroupMembers.length"
+                                style="
+                                    margin-top: 5px;
+                                    margin-bottom: 10px;
+                                    font-style: italic;
+                                "
+                            >
+                                All family members attempted
                             </div>
                         </mat-card-content>
                     </mat-card>
