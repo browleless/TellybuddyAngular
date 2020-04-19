@@ -15,3 +15,10 @@
     margin: 0;
     text-align: center;
 }
+
+.align-headers .mat-expansion-panel-header-description {
+    flex-basis: 0;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 10%;
+}

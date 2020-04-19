@@ -1,0 +1,117 @@
+<div mat-dialog-title>
+    <div>
+        Payment for
+        {{
+            data.selectedBill.usageDetail.subscription.phoneNumber.phoneNumber.substring(
+                0,
+                4
+            )
+        }}
+        {{
+            data.selectedBill.usageDetail.subscription.phoneNumber.phoneNumber.substring(
+                4
+            )
+        }}
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div>
+    <div mat-dialog-content style="height: auto;">
+        <div style="width: 100%;">
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Credit Card Number</mat-label>
+                <input
+                    matInput
+                    type="text"
+                    minlength="16"
+                    maxlength="16"
+                    [(ngModel)]="enteredCreditCardNumber"
+                    numbersOnly
+                />
+            </mat-form-field>
+        </div>
+        <div style="width: 100%;">
+            <div style="float: left; width: 30%;">
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>CVV</mat-label>
+                    <input
+                        matInput
+                        type="text"
+                        minlength="3"
+                        maxlength="3"
+                        [(ngModel)]="enteredCvv"
+                        numbersOnly
+                    />
+                </mat-form-field>
+            </div>
+            <div style="text-align: right;">
+                <mat-form-field style="width: 50%;" appearance="outline">
+                    <mat-label>Expiry Date</mat-label>
+                    <input
+                        matInput
+                        [matDatepicker]="dp"
+                        [formControl]="creditCardExpiry"
+                    />
+                    <mat-datepicker-toggle
+                        matSuffix
+                        [for]="dp"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker
+                        #dp
+                        startView="multi-year"
+                        (yearSelected)="chosenYearHandler($event)"
+                        (monthSelected)="chosenMonthHandler($event, dp)"
+                        panelClass="example-month-picker"
+                    >
+                    </mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div>
+            <mat-slide-toggle (change)="toggleLoyaltyPoints($event.checked)"
+                >Use Loyalty Points</mat-slide-toggle
+            >
+        </div>
+        <div
+            *ngIf="useLoyaltyPoints"
+            style="margin: 10px 0; text-align: center;"
+        >
+            <button mat-icon-button (click)="decrementLoyaltyPoints()">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <span style="padding: 0 10px;">
+                {{ loyaltyPointsUsed }}
+            </span>
+            <button mat-icon-button (click)="incrementLoyaltyPoints()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div
+            style="
+                font-size: x-large;
+                font-weight: 500;
+                padding-top: 10px;
+                text-align: right;
+            "
+        >
+            <button
+                (click)="handlePayment()"
+                matTooltip="Make Payment"
+                mat-icon-button
+            >
+                <mat-icon>payment</mat-icon>
+            </button>
+            <span style="border-bottom: 2.5px solid #3c4cad;">
+                {{
+                    (data.selectedBill.price +
+                        data.selectedBill.addOnPrice +
+                        data.selectedBill.exceedPenaltyPrice) *
+                        ((100 - data.selectedBill.familyDiscountRate) / 100) -
+                        loyaltyPointsUsed | currency
+                }}
+            </span>
+        </div>
+    </div>
+</div>

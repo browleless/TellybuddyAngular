@@ -56,6 +56,7 @@ import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allo
 import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
 import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
 import { BillsComponent } from './components/bills/bills.component';
+import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dialog-bill-payment.component';
 
 @NgModule({
     declarations: [
@@ -79,6 +80,7 @@ import { BillsComponent } from './components/bills/bills.component';
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
         BillsComponent,
+        DialogBillPaymentComponent,
     ],
     imports: [
         BrowserModule,
@@ -119,6 +121,7 @@ import { BillsComponent } from './components/bills/bills.component';
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
+        DialogBillPaymentComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

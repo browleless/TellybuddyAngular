@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { Subscription } from 'src/app/classes/subscription';
 import { Bill } from 'src/app/classes/bill';
@@ -12,6 +12,7 @@ import { BillService } from 'src/app/service/bill.service';
 
 import { forkJoin } from 'rxjs';
 import * as Chart from 'chart.js';
+import { DialogBillPaymentComponent } from '../dialog-bill-payment/dialog-bill-payment.component';
 
 @Component({
     selector: 'app-bills',
@@ -39,6 +40,7 @@ export class BillsComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private breakpointObserver: BreakpointObserver,
         private snackBar: MatSnackBar,
+        public dialog: MatDialog,
         public sessionService: SessionService,
         private subscriptionService: SubscriptionService,
         private billService: BillService
@@ -92,7 +94,7 @@ export class BillsComponent implements OnInit {
                     });
                     forkJoin(this.observables).subscribe((result) => {
                         for (let i = 0; i < result.length; i++) {
-                            this.subscriptions[i].outstandingBills =
+                            this.subscriptions[i]['outstandingBills'] =
                                 result[i].bills;
                         }
                         this.loaded = true;
@@ -125,36 +127,61 @@ export class BillsComponent implements OnInit {
                                 datasets: [
                                     {
                                         data: [
-                                            bill.usageDetail.dataUsage,
+                                            bill.usageDetail.dataUsage %
+                                                bill.usageDetail
+                                                    .allowedDataUsage,
                                             bill.usageDetail.allowedDataUsage -
-                                                bill.usageDetail.dataUsage,
+                                                (bill.usageDetail.dataUsage %
+                                                    bill.usageDetail
+                                                        .allowedDataUsage),
                                         ],
                                         backgroundColor: [
-                                            '#FF6384',
+                                            bill.usageDetail.allowedDataUsage /
+                                                bill.usageDetail.dataUsage >
+                                            1
+                                                ? '#3C4CAD'
+                                                : '#D50000',
                                             'rgba(228, 233, 237, 1)',
                                         ],
-                                        label: 'Data',
                                     },
                                     {
                                         data: [
-                                            bill.usageDetail.smsUsage,
+                                            bill.usageDetail.smsUsage %
+                                                bill.usageDetail
+                                                    .allowedSmsUsage,
                                             bill.usageDetail.allowedSmsUsage -
-                                                bill.usageDetail.smsUsage,
+                                                (bill.usageDetail.smsUsage %
+                                                    bill.usageDetail
+                                                        .allowedSmsUsage),
                                         ],
                                         backgroundColor: [
-                                            '#FFCE56',
+                                            bill.usageDetail.allowedSmsUsage /
+                                                bill.usageDetail.smsUsage >
+                                            1
+                                                ? '#F9C449'
+                                                : '#D50000',
                                             'rgba(228, 233, 237, 1)',
                                         ],
                                     },
                                     {
                                         data: [
-                                            bill.usageDetail.talktimeUsage,
+                                            bill.usageDetail.talktimeUsage %
+                                                bill.usageDetail
+                                                    .allowedTalktimeUsage,
                                             bill.usageDetail
                                                 .allowedTalktimeUsage -
-                                                bill.usageDetail.talktimeUsage,
+                                                (bill.usageDetail
+                                                    .talktimeUsage %
+                                                    bill.usageDetail
+                                                        .allowedTalktimeUsage),
                                         ],
                                         backgroundColor: [
-                                            '#36A2EB',
+                                            bill.usageDetail
+                                                .allowedTalktimeUsage /
+                                                bill.usageDetail.talktimeUsage >
+                                            1
+                                                ? '#F04393'
+                                                : '#D50000',
                                             'rgba(228, 233, 237, 1)',
                                         ],
                                     },
@@ -186,5 +213,25 @@ export class BillsComponent implements OnInit {
                     console.log(error);
                 }
             );
+    }
+
+    openDialog(index: number): void {
+        const dialogRef = this.dialog.open(DialogBillPaymentComponent, {
+            data: {
+                selectedBill: this.outstandingBills[index],
+            },
+        });
+
+        dialogRef.afterClosed().subscribe((paid) => {
+            if (paid) {
+                this.loaded = false;
+                this.subscriptions = new Array();
+                this.subscriptionBills = new Array();
+                this.outstandingBills = new Array();
+                this.observables = new Array();
+
+                this.ngOnInit();
+            }
+        });
     }
 }

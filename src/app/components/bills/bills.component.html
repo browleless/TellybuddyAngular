@@ -20,6 +20,7 @@
                         mat-ripple
                         class="mat-elevation-z8"
                         matTooltip="Pay Now"
+                        (click)="openDialog(i)"
                     >
                         <mat-card-title>
                             {{
@@ -54,28 +55,44 @@
                                     <mat-grid-tile>
                                         Data&nbsp;&nbsp;
                                         <div
-                                            style="
-                                                background: #ff6384;
-                                                padding: 5px 10px;
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedDataUsage /
+                                                    bill.usageDetail.dataUsage >
+                                                1
+                                                    ? '#3C4CAD'
+                                                    : '#D50000'
                                             "
+                                            style="padding: 5px 10px;"
                                         ></div>
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         SMS&nbsp;&nbsp;
                                         <div
-                                            style="
-                                                background: #ffce56;
-                                                padding: 5px 10px;
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedSmsUsage /
+                                                    bill.usageDetail.smsUsage >
+                                                1
+                                                    ? '#F9C449'
+                                                    : '#D50000'
                                             "
+                                            style="padding: 5px 10px;"
                                         ></div>
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         Talktime&nbsp;&nbsp;
                                         <div
-                                            style="
-                                                background: #36a2eb;
-                                                padding: 5px 10px;
+                                            [style.backgroundColor]="
+                                                bill.usageDetail
+                                                    .allowedTalktimeUsage /
+                                                    bill.usageDetail
+                                                        .talktimeUsage >
+                                                1
+                                                    ? '#F04393'
+                                                    : '#D50000'
                                             "
+                                            style="padding: 5px 10px;"
                                         ></div>
                                     </mat-grid-tile>
                                 </mat-grid-list>
@@ -168,7 +185,7 @@
         </div>
         <div>
             <h1>Bills by Subscriptions</h1>
-            <mat-accordion style="margin: 100px;">
+            <mat-accordion style="margin: 100px;" class="align-headers">
                 <mat-expansion-panel
                     *ngFor="let subscription of subscriptions; let i = index"
                     style="border-left: 5px solid #7274d6;"
