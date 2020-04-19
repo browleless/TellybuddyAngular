@@ -33,6 +33,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatListModule} from '@angular/material/list';
+import { MatStepperModule } from '@angular/material/stepper'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +47,8 @@ import { SubscriptionsComponent } from './components/subscriptions/subscriptions
 import { CartComponent } from './components/cart/cart.component';
 import { DialogConfigureNewPlanComponent } from './components/dialog-configure-new-plan/dialog-configure-new-plan.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
-import { TransactionsComponent } from './components/transactions/transactions.component';
+import { AccountComponent } from './components/account/account.component';
+import { ViewTransactionComponent } from './components/transaction-view/transaction-view.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 
 import { NumberDirective } from './directive/number.directive';
@@ -77,7 +79,8 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
         LuxuryproductsComponent,
         EarnAdditionalUnitsComponent,
         QuizAttemptComponent,
-        TransactionsComponent,
+        AccountComponent,
+        ViewTransactionComponent,
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
@@ -113,7 +116,8 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
         MatProgressBarModule,
         MatExpansionModule,
         MatSlideToggleModule,
-        MatListModule
+        MatListModule,
+        MatStepperModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,

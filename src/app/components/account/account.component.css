@@ -1,0 +1,9 @@
+.mat-card{
+    display:flex;
+    flex-direction: column;
+  }
+  
+  .mat-card-content{
+    flex-grow: 5;
+    overflow: auto;
+  }

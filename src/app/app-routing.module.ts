@@ -11,7 +11,8 @@ import { LuxuryproductsComponent } from './components/luxuryproducts/luxuryprodu
 import { EarnAdditionalUnitsComponent } from './components/earn-additional-units/earn-additional-units.component';
 import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.component';
 import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
-import { TransactionsComponent } from './components/transactions/transactions.component';
+import { AccountComponent } from './components/account/account.component';
+import { ViewTransactionComponent } from './components/transaction-view/transaction-view.component';
 
 const routes: Routes = [
     {
@@ -24,7 +25,8 @@ const routes: Routes = [
     { path: 'resetPassword/:salt', component: ResetPasswordComponent },
     { path: 'plans', component: PlansComponent },
     { path: 'subscriptions', component: SubscriptionsComponent },
-    { path: 'transactions', component: TransactionsComponent },
+    { path: 'account', component: AccountComponent },
+    { path: 'transaction-view/:transactionId', component: ViewTransactionComponent },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'products', component: ProductsComponent },

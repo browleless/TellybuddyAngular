@@ -62,11 +62,11 @@ export class TransactionService {
             )
             .pipe(catchError(this.handleError));
     }
-    retrieveTransactionById(transaction : Transaction): Observable<any> {
+    retrieveTransactionById(transactionId : number): Observable<any> {
         return this.httpClient
             .get<any>(
                 this.baseUrl +
-                '/retrieveCustomerTransactions' + transaction.transactionId + '?username=' +
+                '/retrieveTransactionById/' + transactionId + '?username=' +
                     this.sessionService.getUsername() +
                     '&password=' +
                     this.sessionService.getPassword()
@@ -74,15 +74,20 @@ export class TransactionService {
             )
             .pipe(catchError(this.handleError));
     }
-    refundTransaction(transaction : Transaction): Observable<any> {
+    refundTransaction(transactionId : number): Observable<any> {
+
+        let refundRequest = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+            transactionId: transactionId,
+        }
+
         return this.httpClient
             .post<any>(
                 this.baseUrl +
-                '/retrieveCustomerTransactions/' + transaction.transactionId + '?username=' +
-                    this.sessionService.getUsername() +
-                    '&password=' +
-                    this.sessionService.getPassword()
-                   ,httpOptions
+                '/refundTransactionRequest',
+                    refundRequest,
+                    httpOptions
             )
             .pipe(catchError(this.handleError));
     }
