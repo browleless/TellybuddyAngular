@@ -61,7 +61,6 @@ export class AccountComponent implements OnInit {
                     } else {
                         delivered.push(item);
                     }
-                    console.log(item.transactionStatusEnum);
                 });
                 this.sortedTransactions['All']= (this.allTransactions);
                 this.sortedTransactions['Processing']= (processed);

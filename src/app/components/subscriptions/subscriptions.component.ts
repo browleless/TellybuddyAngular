@@ -229,36 +229,34 @@ export class SubscriptionsComponent implements OnInit {
                     }
                 }
                 this.loadCharts(i);
+                var itemsExceeded = "";
+                if (this.remainingData < 0) {
+                    itemsExceeded += " Data"
+                } 
+                if (this.remainingSms < 0) {
+                    itemsExceeded += " Sms"
+                } 
+                if (this.remainingTalktime < 0) {
+                    itemsExceeded += " TalkTime"
+                }
+        
+                if (itemsExceeded.length != 0) {
+                    let snackBarRef = this.snackBar.open(
+                        'You\'ve exceeded your monthly allowance for' + itemsExceeded + '. Purchase a top-up now to avoid penalty charges! ',
+                        'Close',
+                        {
+                            duration: 10000,
+                            panelClass: 'text-align:center'
+                        }
+                    );
+                }
+        
+                this.isOpened = true;
             },
             (error) => {
                 console.log(error);
             }
         );
-
-
-        var itemsExceeded = "";
-        if (this.remainingData < 0) {
-            itemsExceeded += " Data"
-        } 
-        if (this.remainingSms < 0) {
-            itemsExceeded += " Sms"
-        } 
-        if (this.remainingTalktime < 0) {
-            itemsExceeded += " TalkTime"
-        }
-
-        if (itemsExceeded.length != 0) {
-            let snackBarRef = this.snackBar.open(
-                'You\'ve exceeded your monthly allowance for' + itemsExceeded + '. Purchase a top-up now to avoid penalty charges! ',
-                'Close',
-                {
-                    duration: 10000,
-                    panelClass: 'text-align:center'
-                }
-            );
-        }
-
-        this.isOpened = true;
     }
 
     resetState() :void{
