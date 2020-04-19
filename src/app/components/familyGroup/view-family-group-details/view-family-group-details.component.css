@@ -5,4 +5,27 @@
     left: 0;
     right: 0;
     background: #eee;
-  }
+}
+.mat-card {
+    /* margin-left: auto;
+    margin-right: auto; */
+    border-radius: 0;
+    text-align: center;
+    border-top: 5px solid #f04393;
+    cursor: pointer;
+    max-width: 200px;
+    /* margin-bottom: 50px; */
+    margin-left: 200px;
+    margin: 200px;
+    float: left;
+    margin-top: 30px;
+}
+
+.mat-card:hover {
+    background: rgba(0, 0, 0, 0.04);
+}
+
+.mat-card-title {
+    margin: 0;
+    text-align: center;
+}

@@ -22,19 +22,22 @@
                     <br>
                     <br>
                     <br>
+                    <mat-card>
 
-                    <form class="update-form">
-                        <mat-form-field class="update-full-width">
-                            <mat-label>Update Family Group Description</mat-label>
-                            <textarea matInput [(ngModel)]="familyGroupToPerformAction.description"
-                                value={{familyGroupToPerformAction.description}} [ngModelOptions]="{standalone: true}"
-                                required></textarea>
-                        </mat-form-field>
-                        <div>
-                            <button mat-button (click)="updateFamilyGroup()">Update</button>
-                        </div>
-                    </form>
-
+                        <form>
+                            <mat-form-field>
+                                <mat-label>Update Family Group Description</mat-label>
+                                <textarea matInput [(ngModel)]="familyGroupToPerformAction.description"
+                                    value={{familyGroupToPerformAction.description}}
+                                    [ngModelOptions]="{standalone: true}" required cdkTextareaAutosize
+                                    #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"
+                                    cdkAutosizeMaxRows="10"></textarea>
+                            </mat-form-field>
+                            <div>
+                                <button mat-button (click)="updateFamilyGroup()">Update</button>
+                            </div>
+                        </form>
+                    </mat-card>
                     <section>
                         <div>Delete the family group</div>
 

@@ -26,6 +26,41 @@
                 </mat-sidenav>
                 <mat-sidenav-content>
                     <div *ngIf="!retrieveFamilyGroupError">
+                        <h1>Tellybuddy FamilyGroup</h1>
+                        <h2> Welcome to the {{ familyGroup.description }}!</h2>
+                        <mat-divider></mat-divider>
+                        <p style="margin-bottom: 10px;">
+                            Current units = {{ familyGroup.donatedUnits }}
+                        </p>
+                        <mat-grid-list [cols]="2" rowHeight="420px">
+                            <mat-card mat-ripple class="mat-elevation-z8" (click)="openDonateDialog()">
+                                <mat-card-title>
+                                    Donate units
+                                </mat-card-title>
+                                <img mat-card-image src="assets/familyGroupIcon/receive-hand-svgrepo-com.jpg">
+                                <mat-card-content>
+
+                                    <div style="padding-bottom: 10px;">
+                                        Donate to the family pool
+                                    </div>
+
+                                </mat-card-content>
+                            </mat-card>
+                            <mat-card mat-ripple class="mat-elevation-z8" (click)="openReceiveDialog()">
+                                <mat-card-title>
+                                    Receive units
+                                </mat-card-title>
+                                <img mat-card-image src="assets/familyGroupIcon/receive-svgrepo-com.jpg">
+                                <mat-card-content>
+
+                                    <div style="padding-bottom: 10px;">
+                                        Donate to the family pool
+                                    </div>
+
+                                </mat-card-content>
+                            </mat-card>
+                        </mat-grid-list>
+                        <!-- <div *ngIf="!retrieveFamilyGroupError">
                         <p style="margin-bottom: 30px;">
                             Hello {{ customer.firstName }}!
                         </p>
@@ -35,9 +70,9 @@
                         <p style="margin-bottom: 30px;">
                             Current units = {{ familyGroup.donatedUnits }}
                             Description = {{familyGroup.description}}
-                        </p>
+                        </p> -->
 
-                        <mat-accordion>
+                        <!-- <mat-accordion>
                             <div>
                                 <mat-expansion-panel>
                                     <mat-expansion-panel-header>
@@ -79,7 +114,7 @@
                                         </label>
                                         <mat-slider class="example-margin" [(ngModel)]="donateTalkTimeValue">
                                         </mat-slider> -->
-                                        <br />
+                        <!-- <br />
 
                                     </div>
                                 </mat-expansion-panel>
@@ -95,7 +130,7 @@
                                 </mat-expansion-panel-header>
                                 <p>I'm visible because I am open</p>
                             </mat-expansion-panel>
-                        </mat-accordion>
+                        </mat-accordion>  -->
 
                     </div>
                 </mat-sidenav-content>
