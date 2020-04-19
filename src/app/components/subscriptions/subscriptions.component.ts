@@ -206,8 +206,8 @@ export class SubscriptionsComponent implements OnInit {
                 this.selectedSubscriptionPlan = this.selectedSubscription.plan;
         
                 this.dataUnits = this.subscriptions[i].dataUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
-                this.smsUnits = this.subscriptions[i].smsUnits['allocated'] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
-                this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"] + this.subscriptions[i].dataUnits['familyGroup'] + this.subscriptions[i].dataUnits['addOn'] - this.subscriptions[i].dataUnits['donated'];
+                this.smsUnits = this.subscriptions[i].smsUnits['allocated'] + this.subscriptions[i].smsUnits['familyGroup'] + this.subscriptions[i].smsUnits['addOn'] - this.subscriptions[i].smsUnits['donated'];
+                this.talktimeUnits = this.subscriptions[i].talkTimeUnits["allocated"] + this.subscriptions[i].talkTimeUnits['familyGroup'] + this.subscriptions[i].talkTimeUnits['addOn'] - this.subscriptions[i].talkTimeUnits['donated'];
                 this.totalUnits = this.subscriptions[i].plan.totalBasicUnits;
                 // function roundN(num,n){
                 //     return parseFloat(Math.round(num * Math.pow(10, n) /Math.pow(10,n)).toFixed(n));
