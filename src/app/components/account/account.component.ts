@@ -52,7 +52,7 @@ export class AccountComponent implements OnInit {
                 var delivered = [];
                 var refunded = [];
                 this.allTransactions.forEach(function(item) {
-                    if (item.transactionStatusEnum == 'PROCESSED') {
+                    if (item.transactionStatusEnum == 'PROCESSING') {
                         processed.push(item);
                     } else if (item.transactionStatusEnum == 'SHIPPED') {
                         shipped.push(item);
