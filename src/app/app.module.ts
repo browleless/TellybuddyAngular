@@ -80,7 +80,8 @@ import { QuizAttemptComponent } from './components/quiz-attempt/quiz-attempt.com
 import { DialogAllocateAdditionalUnitsComponent } from './components/dialog-allocate-additional-units/dialog-allocate-additional-units.component';
 import { DialogRecommendPlansComponent } from './components/dialog-recommend-plans/dialog-recommend-plans.component';
 import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscription-units/dialog-amend-subscription-units.component';
-
+import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-donate-units/dialog-donate-units.component';
+import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -108,6 +109,8 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
+        DialogDonateUnitsComponent,
+        DialogReceiveUnitsComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -194,6 +197,8 @@ import { DialogAmendSubscriptionUnits } from './components/dialog-amend-subscrip
         DialogAllocateAdditionalUnitsComponent,
         DialogRecommendPlansComponent,
         DialogAmendSubscriptionUnits,
+        DialogDonateUnitsComponent,
+        DialogReceiveUnitsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],
