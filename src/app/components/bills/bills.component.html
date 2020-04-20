@@ -1,13 +1,31 @@
-<div style="text-align: center; padding: 0 17.5% 0 17.5%; margin-top: 3%;">
-    <h1>My Bills</h1>
-    <p>View and manage your bills here!</p>
-</div>
-
 <div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
     <div *ngIf="!loaded">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
-    <div *ngIf="loaded">
+    <div *ngIf="loaded && !subscriptions.length" style="text-align: center;">
+        <h1>
+            No bills found!
+        </h1>
+        <img
+            style="margin-top: 85px; margin-bottom: 85px;"
+            height="170px"
+            width="170px"
+            src="https://image.flaticon.com/icons/svg/743/743233.svg"
+        />
+        <div>
+            You do not have any bill payments due nor any past bills for
+            viewing!
+        </div>
+        <div style="margin-top: 5px;">
+            Wait for us to notify you of your first bill view email before
+            checking back here!
+        </div>
+    </div>
+    <div *ngIf="loaded && subscriptions.length">
+        <div style="text-align: center;">
+            <h1>My Bills</h1>
+            <p>View and manage your bills here!</p>
+        </div>
         <h1>Outstanding</h1>
         <div style="text-align: center;" *ngIf="!outstandingBills.length">
             <img
