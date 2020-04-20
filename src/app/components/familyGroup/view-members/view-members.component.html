@@ -59,7 +59,10 @@
                                 <ng-container matColumnDef="SMS usage">
                                     <th mat-header-cell *matHeaderCellDef> SMS Usage </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <!-- <p><ngb-progressbar type="info" [value]="75" [striped]="true" [animated]="true"><i>50%</i></ngb-progressbar></p> -->
+                                        <!-- <p>
+                                            <ngb-progressbar type="info" [value]="75" [striped]="true"
+                                                [animated]="true"><i>50%</i></ngb-progressbar>
+                                        </p> -->
                                         {{subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage}}
                                         Out Of {{subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
                                     + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated}}

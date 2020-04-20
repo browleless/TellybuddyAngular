@@ -3,6 +3,16 @@
 </div>
 <div *ngIf="customer.isApproved">
     <h2>Create your family group today!</h2>
+    <mat-card style="background-color:powderblue;">
+        <p>Hey there! Welcome to family group</p>
+        <p>In family group, you can create a family group or get invited by your family members to the a group.</p>
+        <p>Family group is a maximum of 5 members and minimum of 2 members to enjoy exclusive discount and sharing of
+            units for all members</p>
+        <mat-divider></mat-divider>
+        <br>
+        <p>To get started, please fill in the form below</p>
+    </mat-card>
+
     <mat-vertical-stepper [linear]="isLinear" #stepper>
         <mat-step [stepControl]="verifyAddressFormGroup">
             <form [formGroup]="verifyAddressFormGroup">

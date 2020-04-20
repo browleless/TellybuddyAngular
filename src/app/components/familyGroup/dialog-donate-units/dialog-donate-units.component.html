@@ -1,1 +1,87 @@
-<p>dialog-donate-units works!</p>
+<div [ngClass]="{'dialog-class': true}">
+    <div mat-dialog-title>
+        <div>
+            <button style="float: right;" mat-icon-button (click)="onExitClick()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <p>
+            <mat-form-field>
+
+                <mat-label>Select an subscription you want to donate units</mat-label>
+                <mat-select>
+                    <mat-option (click)="selectSubscription(subscription)" *ngFor="
+                  let subscription of currentCustomerSubscription" [value]="subscription">{{subscription.phoneNumber
+                      .phoneNumber}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </p>
+        <div *ngIf="dataLeft == null">
+            Please choose a subscription to donate
+        </div>
+        <div *ngIf="dataLeft != null">
+            <p style="padding-top: 10px;">Select the units you want to donate:</p>
+            <div>
+                <div style="float: left;">
+                    <div>
+                        Data Units:
+                        <mat-slider #dataSlider [max]="dataLeft" thumbLabel
+                            (change)="handleDataSliderChange($event.value)">
+                        </mat-slider>
+                        Donated Unit: {{donatedData}} out of {{dataLeft}}
+                    </div>
+                    <div>
+                        SMS Units:
+                        <mat-slider #smsSlider [max]="smsLeft" thumbLabel
+                            (change)="handleSMSSliderChange($event.value)">
+                        </mat-slider>
+                        Donated Unit: {{donatedSMS}} out of {{smsLeft}}
+                    </div>
+                    <div>
+                        Talk Time Units:
+                        <mat-slider #talktimeSlider [max]="talkTimeLeft" thumbLabel
+                            (change)="handleTalkTimeSliderChange($event.value)">
+                        </mat-slider>
+                        Donated Unit: {{donatedTalkTime}} out of {{talkTimeLeft}}
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="
+                        align-self: center;
+                        margin: 15px 0 25px 0;
+                        display: inline-block;
+                        font-size: 350%;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        padding: 15px 25px 15px 25px;
+                        background-color: #f04393;
+                        color: white;
+                    ">
+                        {{donatedData + donatedSMS + donatedTalkTime}}
+                        <div style="
+                            padding: 0;
+                            font-size: initial;
+                            font-weight: normal;
+                        ">
+
+                            Donated
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; padding-top: 10px;">
+            <button [disabled]="dataLeft == null" mat-raised-button color="primary" (click)="donate()">
+                Donate
+            </button>
+        </div>
+
+    </div>
+</div>

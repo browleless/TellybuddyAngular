@@ -29,3 +29,10 @@
     margin: 0;
     text-align: center;
 }
+
+mat-progress-bar.bottomBar.mat-progress-bar {
+    z-index: 1;
+}
+/* mat-progress-bar.topBar.mat-progress-bar {
+    z-index: 2;
+} */
