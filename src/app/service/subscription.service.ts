@@ -30,14 +30,33 @@ export class SubscriptionService {
         return this.httpClient
             .get<any>(
                 this.baseUrl +
-                '/retrieveAllCustomerSubscriptions?username=' +
+                    '/retrieveAllCustomerSubscriptions?username=' +
                     this.sessionService.getUsername() +
                     '&password=' +
                     this.sessionService.getPassword()
-                   
             )
             .pipe(catchError(this.handleError));
     }
+
+    retrieveActiveSubscriptionUnderCustomer(
+        customerId: number
+    ): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveActive/' +
+                    customerId +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword() +
+                    '&customerId=' +
+                    customerId
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+
     retrieveSubscriptionById(s : Subscription): Observable<any> {
         return this.httpClient
             .get<any>(
@@ -137,6 +156,7 @@ export class SubscriptionService {
             )
             .pipe(catchError(this.handleError));
     }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 

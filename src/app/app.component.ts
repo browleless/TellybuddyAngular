@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { SessionService } from './service/session.service';
 
 import { Transaction } from './classes/transaction';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-root',
