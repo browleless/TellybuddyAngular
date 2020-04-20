@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatSnackBar, MatDialog } from '@angular/material';
+import {
+    MatSnackBar,
+    MatDialog,
+    MatPaginator,
+    MatTableDataSource,
+} from '@angular/material';
 
 import { Subscription } from 'src/app/classes/subscription';
 import { Bill } from 'src/app/classes/bill';
@@ -20,6 +25,8 @@ import { DialogBillPaymentComponent } from '../dialog-bill-payment/dialog-bill-p
     styleUrls: ['./bills.component.css'],
 })
 export class BillsComponent implements OnInit {
+    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+
     loaded: boolean = false;
     loadedBills: boolean = false;
     isMobile: boolean = false;
@@ -27,8 +34,10 @@ export class BillsComponent implements OnInit {
     isLaptop: boolean = false;
 
     subscriptions: Subscription[];
-    subscriptionBills: Bill[];
+    subscriptionBills = new MatTableDataSource([]);
     outstandingBills: Bill[];
+
+    displayedColumns: string[] = ['number', 'cycle', 'paymentDate', 'amount'];
 
     observables = [];
 
@@ -81,32 +90,40 @@ export class BillsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.subscriptionService.retrieveAllCustomerSubscriptions().subscribe(
-            (response) => {
-                this.subscriptions = response.subscriptions;
-                if (this.subscriptions.length) {
-                    this.subscriptions.forEach((subscription) => {
-                        this.observables.push(
-                            this.billService.retrieveSubscriptionOutstandingBills(
-                                subscription
-                            )
-                        );
-                    });
-                    forkJoin(this.observables).subscribe((result) => {
-                        for (let i = 0; i < result.length; i++) {
-                            this.subscriptions[i]['outstandingBills'] =
-                                result[i].bills;
-                        }
+        this.subscriptionService
+            .retrieveAllCustomerSubscriptionsWithBills()
+            .subscribe(
+                (response) => {
+                    this.subscriptions = response.subscriptions;
+                    if (this.subscriptions.length) {
+                        this.subscriptions.forEach((subscription) => {
+                            this.observables.push(
+                                this.billService.retrieveSubscriptionOutstandingBills(
+                                    subscription
+                                )
+                            );
+                        });
+                        forkJoin(this.observables).subscribe((result) => {
+                            for (let i = 0; i < result.length; i++) {
+                                this.subscriptions[i]['outstandingBills'] =
+                                    result[i].bills;
+                            }
+                            this.subscriptions.sort((a, b) => {
+                                return (
+                                    b.outstandingBills.length -
+                                    a.outstandingBills.length
+                                );
+                            });
+                            this.loaded = true;
+                        });
+                    } else {
                         this.loaded = true;
-                    });
-                } else {
-                    this.loaded = true;
+                    }
+                },
+                (error) => {
+                    console.log(error);
                 }
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+            );
 
         this.billService
             .retrieveCustomerOutstandingBills(
@@ -116,7 +133,25 @@ export class BillsComponent implements OnInit {
                 (response) => {
                     this.outstandingBills = response.bills;
                     this.outstandingBills.forEach(async (bill, index) => {
-                        await new Promise((r) => setTimeout(r, 750));
+                        bill.usageDetail.startDate = new Date(
+                            Date.parse(
+                                bill.usageDetail.startDate
+                                    .toString()
+                                    .substring(0, 19)
+                            ) +
+                                8 * 60 * 60 * 1000
+                        );
+                        bill.usageDetail.endDate = new Date(
+                            Date.parse(
+                                bill.usageDetail.endDate
+                                    .toString()
+                                    .substring(0, 19)
+                            ) +
+                                8 * 60 * 60 * 1000
+                        );
+                        while (!this.loaded) {
+                            await new Promise((r) => setTimeout(r, 250));
+                        }
                         this.usageCanvas = document.getElementById(
                             ('usageChart' + index).toString()
                         );
@@ -127,13 +162,16 @@ export class BillsComponent implements OnInit {
                                 datasets: [
                                     {
                                         data: [
-                                            bill.usageDetail.dataUsage %
-                                                bill.usageDetail
-                                                    .allowedDataUsage,
-                                            bill.usageDetail.allowedDataUsage -
-                                                (bill.usageDetail.dataUsage %
-                                                    bill.usageDetail
-                                                        .allowedDataUsage),
+                                            bill.usageDetail.dataUsage >
+                                            bill.usageDetail.allowedDataUsage
+                                                ? bill.usageDetail
+                                                      .allowedDataUsage
+                                                : bill.usageDetail.dataUsage,
+                                            bill.usageDetail.dataUsage >
+                                            bill.usageDetail.allowedDataUsage
+                                                ? 0
+                                                : bill.usageDetail
+                                                      .allowedDataUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail.allowedDataUsage /
@@ -146,13 +184,16 @@ export class BillsComponent implements OnInit {
                                     },
                                     {
                                         data: [
-                                            bill.usageDetail.smsUsage %
-                                                bill.usageDetail
-                                                    .allowedSmsUsage,
-                                            bill.usageDetail.allowedSmsUsage -
-                                                (bill.usageDetail.smsUsage %
-                                                    bill.usageDetail
-                                                        .allowedSmsUsage),
+                                            bill.usageDetail.smsUsage >
+                                            bill.usageDetail.allowedSmsUsage
+                                                ? bill.usageDetail
+                                                      .allowedSmsUsage
+                                                : bill.usageDetail.smsUsage,
+                                            bill.usageDetail.smsUsage >
+                                            bill.usageDetail.allowedSmsUsage
+                                                ? 0
+                                                : bill.usageDetail
+                                                      .allowedSmsUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail.allowedSmsUsage /
@@ -165,15 +206,19 @@ export class BillsComponent implements OnInit {
                                     },
                                     {
                                         data: [
-                                            bill.usageDetail.talktimeUsage %
-                                                bill.usageDetail
-                                                    .allowedTalktimeUsage,
+                                            bill.usageDetail.talktimeUsage >
                                             bill.usageDetail
-                                                .allowedTalktimeUsage -
-                                                (bill.usageDetail
-                                                    .talktimeUsage %
-                                                    bill.usageDetail
-                                                        .allowedTalktimeUsage),
+                                                .allowedTalktimeUsage
+                                                ? bill.usageDetail
+                                                      .allowedTalktimeUsage
+                                                : bill.usageDetail
+                                                      .talktimeUsage,
+                                            bill.usageDetail.talktimeUsage >
+                                            bill.usageDetail
+                                                .allowedTalktimeUsage
+                                                ? 0
+                                                : bill.usageDetail
+                                                      .allowedTalktimeUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail
@@ -206,8 +251,39 @@ export class BillsComponent implements OnInit {
             .retrieveSubscriptionBills(this.subscriptions[index])
             .subscribe(
                 (response) => {
-                    this.subscriptionBills = response.bills;
+                    response.bills.forEach((bill) => {
+                        bill.usageDetail.startDate = new Date(
+                            Date.parse(
+                                bill.usageDetail.startDate
+                                    .toString()
+                                    .substring(0, 19)
+                            ) +
+                                8 * 60 * 60 * 1000
+                        );
+                        bill.usageDetail.endDate = new Date(
+                            Date.parse(
+                                bill.usageDetail.endDate
+                                    .toString()
+                                    .substring(0, 19)
+                            ) +
+                                8 * 60 * 60 * 1000
+                        );
+                        if (bill.payment) {
+                            bill.payment.datePaid = new Date(
+                                Date.parse(
+                                    bill.payment.datePaid
+                                        .toString()
+                                        .substring(0, 19)
+                                ) +
+                                    8 * 60 * 60 * 1000
+                            );
+                        }
+                    });
                     this.loadedBills = true;
+                    this.subscriptionBills = new MatTableDataSource(
+                        response.bills
+                    );
+                    this.subscriptionBills.paginator = this.paginator;
                 },
                 (error) => {
                     console.log(error);
@@ -226,7 +302,7 @@ export class BillsComponent implements OnInit {
             if (paid) {
                 this.loaded = false;
                 this.subscriptions = new Array();
-                this.subscriptionBills = new Array();
+                this.subscriptionBills = new MatTableDataSource();
                 this.outstandingBills = new Array();
                 this.observables = new Array();
 

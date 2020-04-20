@@ -35,6 +35,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -124,6 +125,7 @@ import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dia
         MatListModule,
         MatStepperModule,
         MatTooltipModule,
+        MatPaginatorModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
