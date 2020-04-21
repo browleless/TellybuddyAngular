@@ -6,8 +6,8 @@ export class UsageDetail {
     talktimeUsage: number;
     smsUsage: number;
     dataUsage: number;
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
     bill: Bill;
     subscription: Subscription;
     allowedTalktimeUsage: number;
@@ -19,8 +19,8 @@ export class UsageDetail {
         talktimeUsage?: number,
         smsUsage?: number,
         dataUsage?: number,
-        startDate?: string,
-        endDate?: string,
+        startDate?: Date,
+        endDate?: Date,
         bill?: Bill,
         subscription?: Subscription,
         allowedTalktimeUsage?: number,

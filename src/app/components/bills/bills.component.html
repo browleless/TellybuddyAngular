@@ -1,14 +1,43 @@
-<div style="text-align: left; padding: 0 17.5% 0 17.5%; margin-top: 3%;">
-    <h1>My Bills</h1>
-</div>
-
 <div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
     <div *ngIf="!loaded">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
-    <div *ngIf="loaded">
+    <div *ngIf="loaded && !subscriptions.length" style="text-align: center;">
+        <h1>
+            No bills found!
+        </h1>
+        <img
+            style="margin-top: 85px; margin-bottom: 85px;"
+            height="170px"
+            width="170px"
+            src="https://image.flaticon.com/icons/svg/743/743233.svg"
+        />
         <div>
-            <h1>Outstanding</h1>
+            You do not have any bill payments due nor any past bills for
+            viewing!
+        </div>
+        <div style="margin-top: 5px;">
+            Wait for us to notify you of your first bill via email before
+            checking back here!
+        </div>
+    </div>
+    <div *ngIf="loaded && subscriptions.length">
+        <div style="text-align: center;">
+            <h1>My Bills</h1>
+            <p>View and manage your bills here!</p>
+        </div>
+        <h1>Outstanding</h1>
+        <div style="text-align: center;" *ngIf="!outstandingBills.length">
+            <img
+                height="100px"
+                width="100px"
+                src="https://image.flaticon.com/icons/svg/1533/1533913.svg"
+            />
+            <div style="margin-top: 15px;">
+                All bills paid!
+            </div>
+        </div>
+        <div *ngIf="outstandingBills.length">
             <mat-grid-list
                 [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
                 rowHeight="522.5px"
@@ -38,14 +67,10 @@
                         <mat-card-content>
                             <div style="margin: 10px 0 5px 0;">
                                 {{
-                                    bill.usageDetail.startDate.substring(0, 19)
-                                        | date: 'dd MMM'
+                                    bill.usageDetail.startDate | date: 'dd MMM'
                                 }}
                                 –
-                                {{
-                                    bill.usageDetail.endDate.substring(0, 19)
-                                        | date: 'dd MMM'
-                                }}
+                                {{ bill.usageDetail.endDate | date: 'dd MMM' }}
                             </div>
                             <div style="height: 129px;">
                                 <canvas id="usageChart{{ i }}"></canvas>
@@ -100,7 +125,12 @@
                             <div>
                                 <mat-grid-list rowHeight="30" cols="3">
                                     <mat-grid-tile>
-                                        {{ bill.usageDetail.dataUsage }} /
+                                        {{
+                                            bill.usageDetail.dataUsage.toFixed(
+                                                2
+                                            )
+                                        }}
+                                        /
                                         {{ bill.usageDetail.allowedDataUsage }}
                                         GBs
                                     </mat-grid-tile>
@@ -110,7 +140,12 @@
                                         SMS
                                     </mat-grid-tile>
                                     <mat-grid-tile>
-                                        {{ bill.usageDetail.talktimeUsage }} /
+                                        {{
+                                            bill.usageDetail.talktimeUsage.toFixed(
+                                                1
+                                            )
+                                        }}
+                                        /
                                         {{
                                             bill.usageDetail
                                                 .allowedTalktimeUsage
@@ -198,7 +233,15 @@
                             <mat-icon>signal_cellular_alt</mat-icon>
                             &nbsp;
                             {{ i + 1 }}: &nbsp;{{ subscription.plan.name }} ({{
-                                subscription.phoneNumber.phoneNumber
+                                subscription.phoneNumber.phoneNumber.substring(
+                                    0,
+                                    4
+                                )
+                            }}
+                            {{
+                                subscription.phoneNumber.phoneNumber.substring(
+                                    4
+                                )
                             }})
                         </mat-panel-title>
                         <mat-panel-description>
@@ -226,10 +269,84 @@
                             style="margin: 0 auto;"
                         ></mat-spinner>
                     </div>
-                    <div *ngIf="loadedBills">
-                        <div *ngFor="let bill of subscriptionBills">
-                            {{ bill.price | currency }}
-                        </div>
+                    <div [hidden]="!loadedBills">
+                        <mat-table [dataSource]="subscriptionBills">
+                            <ng-container matColumnDef="number">
+                                <mat-header-cell *matHeaderCellDef>
+                                    Ref.
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let bill">
+                                    {{ bill.billId }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="cycle">
+                                <mat-header-cell *matHeaderCellDef>
+                                    Billing Cycle
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let bill">
+                                    {{
+                                        bill.usageDetail.startDate
+                                            | date: 'dd MMM'
+                                    }}
+                                    –
+                                    {{
+                                        bill.usageDetail.endDate
+                                            | date: 'dd MMM'
+                                    }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="paymentDate">
+                                <mat-header-cell *matHeaderCellDef>
+                                    Date Paid
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let bill">
+                                    <span *ngIf="!bill.payment">
+                                        N.A.
+                                    </span>
+                                    <span *ngIf="bill.payment">
+                                        {{
+                                            bill.payment.datePaid
+                                                | date: 'dd MMM, h:mm a'
+                                        }}
+                                    </span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="amount">
+                                <mat-header-cell *matHeaderCellDef>
+                                    Amount
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let bill">
+                                    <span *ngIf="!bill.payment">
+                                        {{
+                                            (bill.price +
+                                                bill.addOnPrice +
+                                                bill.exceedPenaltyPrice) *
+                                                ((100 -
+                                                    bill.familyDiscountRate) /
+                                                    100) | currency
+                                        }}
+                                    </span>
+                                    <span *ngIf="bill.payment">{{
+                                        +bill.payment.amount | currency
+                                    }}</span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row
+                                *matHeaderRowDef="displayedColumns"
+                            ></mat-header-row>
+                            <mat-row
+                                *matRowDef="let row; columns: displayedColumns"
+                            ></mat-row>
+                        </mat-table>
+
+                        <mat-paginator
+                            [pageSizeOptions]="[5, 10, 20]"
+                            showFirstLastButtons
+                        ></mat-paginator>
                     </div>
                 </mat-expansion-panel>
             </mat-accordion>

@@ -37,6 +37,8 @@ export class DialogConfigureNewPlanComponent implements OnInit {
 
     ngOnInit() {
         this.loaded = false;
+        this.selectedPhoneNumberIndex = -1;
+        this.selectedPhoneNumber = undefined;
         this.phoneNumberService.retrieveAllAvailablePhoneNumbers().subscribe(
             (response) => {
                 this.availablePhoneNumbers = response.phoneNumbers;

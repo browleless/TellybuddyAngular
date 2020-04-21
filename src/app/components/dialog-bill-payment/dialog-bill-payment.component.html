@@ -70,7 +70,9 @@
             </div>
         </div>
         <div>
-            <mat-slide-toggle (change)="toggleLoyaltyPoints($event.checked)"
+            <mat-slide-toggle
+                (change)="toggleLoyaltyPoints($event.checked)"
+                [disabled]="!sessionService.getCurrentCustomer().loyaltyPoints"
                 >Use Loyalty Points</mat-slide-toggle
             >
         </div>
@@ -100,6 +102,10 @@
                 (click)="handlePayment()"
                 matTooltip="Make Payment"
                 mat-icon-button
+                [disabled]="
+                    enteredCreditCardNumber.length !== 16 ||
+                    enteredCvv.length !== 3
+                "
             >
                 <mat-icon>payment</mat-icon>
             </button>

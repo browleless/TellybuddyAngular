@@ -56,19 +56,32 @@ export class SubscriptionService {
             .pipe(catchError(this.handleError));
     }
 
-
-    retrieveSubscriptionById(s : Subscription): Observable<any> {
+    retrieveAllCustomerSubscriptionsWithBills(): Observable<any> {
         return this.httpClient
             .get<any>(
                 this.baseUrl +
-                '/retrieveSubscription/' + s.subscriptionId + '?username=' +
-                this.sessionService.getUsername() +
-                '&password=' +
-                this.sessionService.getPassword()
+                    '/retrieveAllCustomerSubscriptionsWithBills?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
             )
             .pipe(catchError(this.handleError));
     }
-    
+
+    retrieveSubscriptionById(s: Subscription): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveSubscription/' +
+                    s.subscriptionId +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
+            )
+            .pipe(catchError(this.handleError));
+    }
+
     allocateAddOnUnits(
         subscriptionToUpdate: Subscription,
         dataUnits: number,
@@ -92,7 +105,7 @@ export class SubscriptionService {
             )
             .pipe(catchError(this.handleError));
     }
-    
+
     allocateQuizExtraUnits(
         subscriptionToUpdate: Subscription,
         dataUnits: number,
@@ -140,7 +153,7 @@ export class SubscriptionService {
             .pipe(catchError(this.handleError));
     }
     terminateSubscription(
-        subscriptionToTerminate: Subscription,
+        subscriptionToTerminate: Subscription
     ): Observable<any> {
         let terminateSubscriptionReq = {
             username: this.sessionService.getUsername(),

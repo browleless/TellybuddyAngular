@@ -1,9 +1,9 @@
-.mat-card{
-    display:flex;
+.mat-card {
+    display: flex;
     flex-direction: column;
-  }
-  
-  .mat-card-content{
+}
+
+.mat-card-content {
     flex-grow: 5;
     overflow: auto;
-  }
+}

@@ -204,6 +204,7 @@ import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-rec
         MatListModule,
         MatStepperModule,
         MatTooltipModule,
+        MatPaginatorModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
