@@ -39,6 +39,12 @@ export class ProductService {
     );
   }
 
+  retrieveProduct(productId: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + '/retrieveProduct/' + productId).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let errorMessage: string = '';
 

@@ -64,6 +64,8 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
 
 import { BillsComponent } from './components/bills/bills.component';
 import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dialog-bill-payment.component';
+import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
+import { DialogConfigureContractPlanComponent } from './components/dialog-configure-contract-plan/dialog-configure-contract-plan.component';
 
 @NgModule({
     declarations: [
@@ -91,6 +93,8 @@ import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dia
         DialogAddonSubscriptionUnits,
         BillsComponent,
         DialogBillPaymentComponent,
+        BundlePlansComponent,
+        DialogConfigureContractPlanComponent,
     ],
     imports: [
         BrowserModule,
@@ -135,6 +139,7 @@ import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dia
         DialogAmendSubscriptionUnits,
         DialogAddonSubscriptionUnits,
         DialogBillPaymentComponent,
+        DialogConfigureContractPlanComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

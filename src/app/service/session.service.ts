@@ -8,8 +8,13 @@ import { TransactionLineItem } from '../classes/transaction-line-item';
 })
 export class SessionService {
     currentCart: Transaction;
+    //new
+    // deletedBundleItem1: TransactionLineItem;
+    // deletedBundleItem2: TransactionLineItem;
+    // deletedIndex1: number;
+    // deletedIndex2: number;
 
-    constructor() { }
+    constructor() {}
 
     getIsLogin(): boolean {
         if (sessionStorage.isLogin == 'true') {
@@ -82,6 +87,38 @@ export class SessionService {
         sessionStorage.currentCart = JSON.stringify(currentCart);
     }
 
+    getDeletedBundleItem1(): TransactionLineItem {
+        return JSON.parse(sessionStorage.deletedBundleItem1);
+    }
+
+    setDeletedBundleItem1(deletedBundleItem1: TransactionLineItem) {
+        sessionStorage.deletedBundleItem1 = JSON.stringify(deletedBundleItem1);
+    }
+
+    getDeletedBundleItem2(): TransactionLineItem {
+        return JSON.parse(sessionStorage.deletedBundleItem2);
+    }
+
+    setDeletedBundleItem2(deletedBundleItem2: TransactionLineItem) {
+        sessionStorage.deletedBundleItem2 = JSON.stringify(deletedBundleItem2);
+    }
+
+    getDeletedBundleIndex1(): number {
+        return sessionStorage.deletedBundleIndex1;
+    }
+
+    setDeletedBundleIndex1(deletedBundleIndex1: number): void {
+        sessionStorage.deletedBundleIndex1 = deletedBundleIndex1;
+    }
+
+    getDeletedBundleIndex2(): number {
+        return sessionStorage.deletedBundleIndex2;
+    }
+
+    setDeletedBundleIndex2(deletedBundleIndex2: number): void {
+        sessionStorage.deletedBundleIndex1 = deletedBundleIndex2;
+    }
+
     addToCart(newLineItem: TransactionLineItem): void {
         this.currentCart = this.getCart();
         this.currentCart.transactionLineItems.push(newLineItem);
@@ -97,6 +134,62 @@ export class SessionService {
         this.setCart(this.currentCart);
     }
 
+    removeBundleFromCart(index1: number, index2: number): void {
+        this.currentCart = this.getCart();
+        this.setDeletedBundleIndex1(index1);
+        this.setDeletedBundleIndex2(index2);
+        this.setDeletedBundleItem1(
+            this.currentCart.transactionLineItems[index1]
+        );
+        this.setDeletedBundleItem2(
+            this.currentCart.transactionLineItems[index2]
+        );
+
+        this.currentCart.transactionLineItems.splice(index1, 2);
+
+        this.setCart(this.currentCart);
+    }
+
+    removeBundleFromCartNoParams(): void {
+        this.currentCart = this.getCart();
+        this.setDeletedBundleIndex1(
+            this.currentCart.transactionLineItems.length - 2
+        );
+        this.setDeletedBundleItem1(
+            this.currentCart.transactionLineItems[this.getDeletedBundleIndex1()]
+        );
+
+        this.setDeletedBundleIndex2(
+            this.currentCart.transactionLineItems.length - 1
+        );
+        this.setDeletedBundleItem2(
+            this.currentCart.transactionLineItems[this.getDeletedBundleIndex2()]
+        );
+
+        this.currentCart.transactionLineItems.splice(
+            this.currentCart.transactionLineItems.length - 1,
+            1
+        );
+        this.currentCart.transactionLineItems.splice(
+            this.currentCart.transactionLineItems.length - 1,
+            1
+        );
+
+        this.setCart(this.currentCart);
+    }
+
+    undoRemoveBundleFromCart(): void {
+        this.currentCart = this.getCart();
+        this.currentCart.transactionLineItems.splice(
+            this.getDeletedBundleIndex1(),
+            0,
+            this.getDeletedBundleItem1(),
+            this.getDeletedBundleItem2()
+        );
+
+        this.setCart(this.currentCart);
+    }
+
     updateLineItemQuantity(lineItemIndex: number, newQuantity: number): void {
         this.currentCart = this.getCart();
         this.currentCart.transactionLineItems[
@@ -104,12 +197,9 @@ export class SessionService {
         ].quantity = newQuantity;
 
         //newly add
-        this.currentCart.transactionLineItems[
-            lineItemIndex
-        ].subtotal = this.currentCart.transactionLineItems[
-            lineItemIndex
-        ].quantity * this.currentCart.transactionLineItems[
-            lineItemIndex].price;
+        this.currentCart.transactionLineItems[lineItemIndex].subtotal =
+            this.currentCart.transactionLineItems[lineItemIndex].quantity *
+            this.currentCart.transactionLineItems[lineItemIndex].price;
 
         this.setCart(this.currentCart);
     }

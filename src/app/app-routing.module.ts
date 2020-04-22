@@ -14,6 +14,7 @@ import { SubscriptionsComponent } from './components/subscriptions/subscriptions
 import { AccountComponent } from './components/account/account.component';
 import { ViewTransactionComponent } from './components/transaction-view/transaction-view.component';
 import { BillsComponent } from './components/bills/bills.component';
+import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
 
 const routes: Routes = [
     {
@@ -27,7 +28,10 @@ const routes: Routes = [
     { path: 'plans', component: PlansComponent },
     { path: 'subscriptions', component: SubscriptionsComponent },
     { path: 'account', component: AccountComponent },
-    { path: 'transaction-view/:transactionId', component: ViewTransactionComponent },
+    {
+        path: 'transaction-view/:transactionId',
+        component: ViewTransactionComponent,
+    },
     { path: 'cart', component: CartComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'products', component: ProductsComponent },
@@ -35,6 +39,7 @@ const routes: Routes = [
     { path: 'additionalUnits', component: EarnAdditionalUnitsComponent },
     { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
     { path: 'bills', component: BillsComponent },
+    { path: 'bundlePlans/:productId', component: BundlePlansComponent },
 ];
 
 @NgModule({

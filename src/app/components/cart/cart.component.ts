@@ -6,6 +6,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { SessionService } from 'src/app/service/session.service';
 
 import { Transaction } from 'src/app/classes/transaction';
+import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 
 @Component({
     selector: 'app-cart',
@@ -88,19 +89,68 @@ export class CartComponent implements OnInit {
     }
 
     deleteLineItem(lineItemIndex: number): void {
-        this.sessionService.removeFromCart(lineItemIndex);
-        this.transaction = this.sessionService.getCart();
-        const snackBarRef = this.snackBar.open(
-            'Item removed from cart successfully!',
-            'Undo',
-            {
-                duration: 4500,
+        //check if the lineItem is a bundle
+        // remove 2 line items if it belongs to a bundle
+        let deletedSuccessfully: boolean = false;
+
+        let lineItems: TransactionLineItem[] = this.sessionService.getCart()
+            .transactionLineItems;
+
+        let lineItemToDelete: TransactionLineItem = lineItems[lineItemIndex];
+        // console.log(lineItemIndex);
+        // console.log(lineItemToDelete.subscription.isContract);
+        if (lineItemToDelete.subscription != undefined && lineItemToDelete.subscription.isContract) {
+            if (lineItemToDelete.price == lineItemToDelete.productItem.price) {
+                this.sessionService.removeBundleFromCart(
+                    lineItemIndex,
+                    lineItemIndex + 1
+                );
+                this.transaction = this.sessionService.getCart();
+                const snackBarRef = this.snackBar.open(
+                    'Bundle (Mobile + Contract Plan1 removed from cart successfully!',
+                    'Undo',
+                    {
+                        duration: 4500,
+                    }
+                );
+                snackBarRef.onAction().subscribe(() => {
+                    this.sessionService.undoRemoveBundleFromCart();
+                    this.transaction = this.sessionService.getCart();
+                });
+            } else {
+                this.sessionService.removeBundleFromCart(
+                    lineItemIndex - 1,
+                    lineItemIndex
+                );
+                this.transaction = this.sessionService.getCart();
+                const snackBarRef = this.snackBar.open(
+                    'Bundle (Mobile + Contract Plan) removed from cart successfully!',
+                    'Undo',
+                    {
+                        duration: 4500,
+                    }
+                );
+                snackBarRef.onAction().subscribe(() => {
+                    this.sessionService.undoRemoveBundleFromCart();
+                    this.transaction = this.sessionService.getCart();
+                });
             }
-        );
-        snackBarRef.onAction().subscribe(() => {
-            this.sessionService.undoDeleteFromCart();
+        } else {
+            // single line item
+            this.sessionService.removeFromCart(lineItemIndex);
             this.transaction = this.sessionService.getCart();
-        });
+            const snackBarRef = this.snackBar.open(
+                'Item removed from cart successfully!',
+                'Undo',
+                {
+                    duration: 4500,
+                }
+            );
+            snackBarRef.onAction().subscribe(() => {
+                this.sessionService.undoDeleteFromCart();
+                this.transaction = this.sessionService.getCart();
+            });
+        }
     }
 
     clearCart(): void {
