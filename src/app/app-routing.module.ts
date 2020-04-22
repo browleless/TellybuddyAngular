@@ -19,6 +19,7 @@ import { AccountComponent } from './components/account/account.component';
 import { ViewTransactionComponent } from './components/transaction-view/transaction-view.component';
 import { BillsComponent } from './components/bills/bills.component';
 import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
+import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 
 const routes: Routes = [
     {
@@ -57,6 +58,7 @@ const routes: Routes = [
     { path: 'additionalUnits/:quizId', component: QuizAttemptComponent },
     { path: 'bills', component: BillsComponent },
     { path: 'bundlePlans/:productId', component: BundlePlansComponent },
+    { path: 'viewallproducts', component: ViewAllProductsComponent },
 ];
 
 @NgModule({
