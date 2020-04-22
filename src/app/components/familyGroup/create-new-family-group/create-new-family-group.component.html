@@ -1,0 +1,58 @@
+<div *ngIf="!customer.isApproved">
+    Please wait for customer approval first
+</div>
+<div *ngIf="customer.isApproved">
+    <h2>Create your family group today!</h2>
+    <mat-card style="background-color:powderblue;">
+        <p>Hey there! Welcome to family group</p>
+        <p>In family group, you can create a family group or get invited by your family members to the a group.</p>
+        <p>Family group is a maximum of 5 members and minimum of 2 members to enjoy exclusive discount and sharing of
+            units for all members</p>
+        <mat-divider></mat-divider>
+        <br>
+        <p>To get started, please fill in the form below</p>
+    </mat-card>
+
+    <mat-vertical-stepper [linear]="isLinear" #stepper>
+        <mat-step [stepControl]="verifyAddressFormGroup">
+            <form [formGroup]="verifyAddressFormGroup">
+                <ng-template matStepLabel>Verify your postal code</ng-template>
+                <mat-form-field>
+                    <mat-label>Postal Code</mat-label>
+                    <!-- 需要改回只读postalCode，因为只有approved的customer才可以创建新的家庭组 -->
+                    <div *ngIf="customer.postalCode == null">
+                        <input matInput value={{customer.newPostalCode}} formControlName="firstCtrl" required>
+                    </div>
+                    <div *ngIf="customer.postalCode != null">
+                        <input matInput value={{customer.postalCode}} formControlName="firstCtrl" required>
+                    </div>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperNext>Verified</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step [stepControl]="descriptionFormGroup">
+            <form [formGroup]="descriptionFormGroup">
+                <ng-template matStepLabel>Fill out family group descriptions</ng-template>
+                <mat-form-field>
+                    <mat-label>Description</mat-label>
+                    <input matInput [(ngModel)]="newFamilyGroup.description" formControlName="secondCtrl"
+                        placeholder="The pak family" required>
+                </mat-form-field>
+                <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button matStepperNext>Next</button>
+                </div>
+            </form>
+        </mat-step>
+        <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>You are now done.</p>
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button (click)="createFamilyGroup()">Create</button>
+            </div>
+        </mat-step>
+    </mat-vertical-stepper>
+</div>

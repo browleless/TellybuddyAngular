@@ -8,6 +8,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { Customer } from '../classes/customer';
+import { SessionService } from './session.service';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -19,7 +20,10 @@ const httpOptions = {
 export class CustomerService {
     baseUrl: string = '/api/Customer';
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient,
+        private sessionService: SessionService
+    ) {}
 
     customerLogin(username: string, password: string): Observable<any> {
         return this.httpClient
@@ -60,6 +64,34 @@ export class CustomerService {
                 this.baseUrl + '/changePassword',
                 changePasswordReq,
                 httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveCurrentCustomer(): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveCurrentCustomer?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword()
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveCustomerFromFamilyGroupId(familyGroupId: number): Observable<any> {
+        return this.httpClient
+            .get<any>(
+                this.baseUrl +
+                    '/retrieveCustomerFromFamilyGroupId/' +
+                    familyGroupId +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword() +
+                    '&familyGroupId=' +
+                    familyGroupId
             )
             .pipe(catchError(this.handleError));
     }

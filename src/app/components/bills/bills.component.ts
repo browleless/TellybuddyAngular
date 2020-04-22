@@ -171,7 +171,8 @@ export class BillsComponent implements OnInit {
                                             bill.usageDetail.allowedDataUsage
                                                 ? 0
                                                 : bill.usageDetail
-                                                      .allowedDataUsage,
+                                                      .allowedDataUsage -
+                                                  bill.usageDetail.dataUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail.allowedDataUsage /
@@ -193,7 +194,8 @@ export class BillsComponent implements OnInit {
                                             bill.usageDetail.allowedSmsUsage
                                                 ? 0
                                                 : bill.usageDetail
-                                                      .allowedSmsUsage,
+                                                      .allowedSmsUsage -
+                                                  bill.usageDetail.smsUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail.allowedSmsUsage /
@@ -218,7 +220,9 @@ export class BillsComponent implements OnInit {
                                                 .allowedTalktimeUsage
                                                 ? 0
                                                 : bill.usageDetail
-                                                      .allowedTalktimeUsage,
+                                                      .allowedTalktimeUsage -
+                                                  bill.usageDetail
+                                                      .talktimeUsage,
                                         ],
                                         backgroundColor: [
                                             bill.usageDetail
