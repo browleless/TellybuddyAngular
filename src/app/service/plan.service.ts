@@ -21,6 +21,12 @@ export class PlanService {
             .pipe(catchError(this.handleError));
     }
 
+    retrieveAllActiveFlashPlans(): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/retrieveAllActiveFlashPlans')
+            .pipe(catchError(this.handleError));
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 

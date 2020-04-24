@@ -1,0 +1,153 @@
+<div style="padding: 0 15% 0 15%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+
+    <div *ngIf="loaded">
+        <div style="text-align: center;">
+            <h1>Tellybuddy Promotions</h1>
+            <p style="margin-bottom: 14px;">
+                Check out our promotions now!
+            </p>
+            <p style="color: red; font-size: small;">
+                <i>*Note that Promotional Plans/Products are not eligible for Bundle Plans!
+                </i>
+            </p>
+
+        </div>
+
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab label="Flash Plans">
+
+                <div *ngIf="flashPlans == undefined || flashPlans.length == 0">
+                    <h2 style="text-align: center;">No Flash Plans offered now. Check back again next time!</h2>
+                    <img style="display: block; margin-left: auto; margin-right: auto;"
+                        src="https://cdn1.iconfinder.com/data/icons/simple-set-of-emoji-faces/100/Artboard_91-512.png" />
+                </div>
+
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="420px">
+                    <mat-grid-tile *ngFor="let plan of flashPlans; let i = index">
+                        <mat-card mat-ripple class="mat-elevation-z8" (click)="openDialogPlan(i)"
+                            matTooltip="I want this!">
+                            <mat-card-title style="text-align: center;">
+                                {{ plan.name }}
+                            </mat-card-title>
+                            <mat-card-subtitle style="text-align: center;">
+                                <p style="color: red;">Promotional Price: ${{ plan.price }}</p>
+                            </mat-card-subtitle>
+                            <mat-card-content>
+                                <div style="
+                                    margin: 15px 0 25px 0;
+                                    display: inline-block;
+                                    font-size: 350%;
+                                    font-weight: bold;
+                                    border-radius: 50%;
+                                    padding: 15px 25px 15px 25px;
+                                    background-color: #f04393;
+                                    color: white;
+                                    align-content: center;
+                                    vertical-align: middle;
+                                ">
+                                    {{ plan.totalBasicUnits }}
+                                    <div style="
+                                        padding: 0;
+                                        font-size: initial;
+                                        font-weight: normal;
+                                        text-align: center;
+                                    ">
+                                        Units
+                                    </div>
+                                </div>
+                                <div style="padding-bottom: 10px; text-align: center; font-size: medium;">
+                                    Plan Conversion Rates:
+                                </div>
+                                <div style="padding: 10px 0 10px 0; text-align: center;">
+                                    Data: {{ plan.dataConversionRate / 1000 }} GB / unit
+                                </div>
+                                <div style="padding: 10px 0 10px 0; text-align: center;">
+                                    SMS: {{ plan.talktimeConversionRate }} min / unit
+                                </div>
+                                <div style="padding: 10px 0 10px 0; text-align: center;">
+                                    Talktime: {{ plan.smsConversionRate }} SMS / unit
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-tab>
+
+
+
+            <mat-tab label="Flash Deals (Mobile Devices)">
+
+                <div *ngIf="flashLuxury == undefined || flashLuxury.length == 0">
+                    <h2 style="text-align: center;">No Discounted Mobile Devices offered now. Check back again next time!</h2>
+                    <img style="display: block; margin-left: auto; margin-right: auto;"
+                        src="https://cdn1.iconfinder.com/data/icons/simple-set-of-emoji-faces/100/Artboard_91-512.png" />
+                </div>
+
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="472px"
+                    gutterSize="20px">
+                    <mat-grid-tile *ngFor="let luxury of flashLuxury, let i = index">
+                        <mat-card mat-ripple class="mat-elevation-z8" (click)="addLuxuryProductToCart(i)">
+                            <mat-card-title>
+                                <div style="text-align:center;">
+                                    {{ luxury.name }}
+                                </div>
+                            </mat-card-title>
+                            <mat-card-subtitle style="text-align: center;">
+                                <s>Original Price: ${{ luxury.price }}</s>
+                                <p style="color: red;">Promotional Price: ${{ luxury.discountPrice }}</p>
+                            </mat-card-subtitle>
+                            <img mat-card-image src="assets/productImages/{{ luxury.productImagePath }}">
+                            <mat-card-content>
+                                <div style="height: 40px">
+                                    Description: {{ luxury.description }}
+                                </div>
+                            </mat-card-content>
+
+                        </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-tab>
+
+
+
+            <mat-tab label="Flash Deals (Accessories)">
+
+                <div *ngIf="flashNormal == undefined || flashNormal.length == 0">
+                    <h2 style="text-align: center;">No Discounted Accessories offered now. Check back again next time!</h2>
+                    <img style="display: block; margin-left: auto; margin-right: auto;"
+                        src="https://cdn1.iconfinder.com/data/icons/simple-set-of-emoji-faces/100/Artboard_91-512.png" />
+                </div>
+
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="510px"
+                    gutterSize="24px">
+                    <mat-grid-tile *ngFor="let product of flashNormal, let i = index">
+                        <mat-card mat-ripple class="mat-elevation-z8" (click)="addNormalProductToCart(i)"
+                            style="width: 285px;">
+                            <mat-card-title>
+                                <div style="text-align:center;">
+                                    {{ product.name }}
+                                </div>
+                            </mat-card-title>
+                            <mat-card-subtitle style="text-align: center;">
+                                <s>Original Price: ${{ product.price }}</s>
+                                <p style="color: red;">Promotional Price: ${{ product.discountPrice }}</p>
+                            </mat-card-subtitle>
+                            <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
+                                style="width: 300px; height: 300px">
+                            <mat-card-content>
+                                <div style="height: 58px">
+                                    Description: {{ product.description }}
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                        <mat-divider></mat-divider>
+                        <br /><br />
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

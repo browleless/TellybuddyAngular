@@ -93,6 +93,7 @@ import { DialogConfigureContractPlanComponent } from './components/dialog-config
 import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-donate-units/dialog-donate-units.component';
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
+import { PromotionsComponent } from './components/promotions/promotions.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -130,6 +131,7 @@ import { ViewAllProductsComponent } from './components/view-all-products/view-al
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
         ViewAllProductsComponent,
+        PromotionsComponent,
     ],
     imports: [
         BrowserAnimationsModule,

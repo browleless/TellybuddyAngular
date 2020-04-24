@@ -38,6 +38,18 @@ export class ProductService {
             .pipe(catchError(this.handleError));
     }
 
+    retrieveAllDiscountedNormalProducts(): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/retrieveAllDiscountedNormalProducts')
+            .pipe(catchError(this.handleError));
+    }
+
+    retrieveAllDiscountedLuxuryProducts(): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/retrieveAllDiscountedLuxuryProducts')
+            .pipe(catchError(this.handleError));
+    }
+
     retrieveProduct(productId: number): Observable<any> {
         return this.httpClient
             .get<any>(this.baseUrl + '/retrieveProduct/' + productId)
@@ -59,6 +71,21 @@ export class ProductService {
             )
             .pipe(catchError(this.handleError));
     }
+
+    filterProductsByCategory(categoryId: number): Observable<any> {
+        return this.httpClient
+            .get<any>(this.baseUrl + '/filterProductsByCategory/' + categoryId)
+            .pipe(catchError(this.handleError));
+    }
+
+    // filterProductsByTags(tagIds: number[], condition: string): Observable<any> {
+    //     return this.httpClient
+    //         .get<any>(this.baseUrl + '/filterProductsByTags/' + categoryId)
+    //         .pipe(catchError(this.handleError));
+
+    //         let params = new HttpParams();
+
+    // }
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
