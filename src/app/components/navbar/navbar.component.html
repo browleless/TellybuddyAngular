@@ -10,6 +10,9 @@
         </button>
         <mat-menu [hasBackdrop]="false" #firstMenu="matMenu">
             <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)">
+                <button mat-menu-item routerLink="/viewallproducts">
+                    All Products
+                </button>
                 <button mat-menu-item routerLink="/luxuryproducts">
                     Mobile Devices
                 </button>

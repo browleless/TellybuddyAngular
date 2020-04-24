@@ -1,0 +1,104 @@
+<div>
+  <div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;" *ngIf="!loaded">
+    <mat-spinner style="margin: 0 auto;"></mat-spinner>
+  </div>
+  <div *ngIf="loaded">
+
+    <mat-drawer-container>
+      <mat-drawer style="width: 42%; height: 100%;" mode="side" opened>
+        <div style="
+                        font-size: larger;
+                        margin-bottom: 35px;
+                        font-weight: 420;
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                    ">
+          <br /><br />
+          You selected:
+          <br />
+          {{ selectedProduct.name }}
+          <br /><br />
+          <img src="assets/productImages/{{ selectedProduct.productImagePath }}" style="width: 420px; height: 420px;" />
+
+          <mat-divider></mat-divider>
+
+          <s>
+            <p style="font-size: large;">Original Price of Mobile Device: ${{selectedProduct.price}}</p>
+          </s>
+
+          <p style="font-size: larger; color: red;">Special Bundle Price of Mobile Device:
+            {{selectedProduct.price * 0.8 | currency}}</p>
+
+          <p style="font-size: medium; font-weight: 250;">Description: {{ selectedProduct.description }}</p>
+          <br />
+        </div>
+      </mat-drawer>
+
+
+      <mat-drawer-content
+        style="height:100%; padding-top: 50px; font-size: larger; font-weight: 500; text-align: center;">
+        Choose your plan now!
+        <p style="font-size: small; color: red;"><i>*Note that this is a 2 year bundle contract plan</i> </p>
+        <br />
+        <!-- <mat-grid-tile> -->
+
+        <mat-expansion-panel *ngFor="let plan of plans; let i = index" style="display: list-item;" openAll>
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-size: larger">
+              ${{ plan.price }} SIM plan
+            </mat-panel-title>
+            <mat-panel-description>
+              Known as the "{{ plan.name }}"
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <div style="
+                margin: 15px;
+                display: inline-block;
+                font-size: 250%;
+                font-weight: bold;
+                border-radius: 95%;
+                padding: 15px;
+                background-color: #f04393;
+                color: white;
+                
+            ">
+            {{ plan.totalBasicUnits }}
+            <div style="
+                    padding: 0;
+                    font-size: initial;
+                    font-weight: normal;
+                ">
+              Units
+            </div>
+          </div>
+
+          <div style="padding-bottom: 10px;">
+            Plan Conversion Rates:
+          </div>
+          <div style="padding: 10px 0 10px 0;">
+            Data: {{ plan.dataConversionRate / 1000 }} GB / unit
+          </div>
+          <div style="padding: 10px 0 10px 0;">
+            SMS: {{ plan.talktimeConversionRate }} min / unit
+          </div>
+          <div style="padding: 10px 0 10px 0;">
+            Talktime: {{ plan.smsConversionRate }} SMS / unit
+          </div>
+          <br />
+
+          <button mat-raised-button color="primary" (click)="openDialog(i)"
+            style="align-content: center;">Select</button>
+
+        </mat-expansion-panel>
+
+        <!-- </mat-grid-tile> -->
+      </mat-drawer-content>
+
+
+
+
+    </mat-drawer-container>
+  </div>
+</div>

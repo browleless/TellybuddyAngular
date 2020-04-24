@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { DialogConfigureNewPlanData } from './dialog-configure-new-plan-data';
+import { DialogConfigureContractPlanData } from './dialog-configure-contract-plan-data';
 
 import { PhoneNumber } from 'src/app/classes/phone-number';
 import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
@@ -10,11 +10,11 @@ import { SessionService } from 'src/app/service/session.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'app-dialog-configure-new-plan',
-    templateUrl: './dialog-configure-new-plan.component.html',
-    styleUrls: ['./dialog-configure-new-plan.component.css'],
+    selector: 'app-dialog-configure-contract-plan',
+    templateUrl: './dialog-configure-contract-plan.component.html',
+    styleUrls: ['./dialog-configure-contract-plan.component.css'],
 })
-export class DialogConfigureNewPlanComponent implements OnInit {
+export class DialogConfigureContractPlanComponent implements OnInit {
     @ViewChild('dataSlider', { static: false }) dataSlider;
     @ViewChild('smsSlider', { static: false }) smsSlider;
     @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
@@ -27,9 +27,12 @@ export class DialogConfigureNewPlanComponent implements OnInit {
     talktimeUnits: number = 0;
     loaded: boolean = false;
 
+    newMobileLineItem: TransactionLineItem;
+    newPlanLineItem: TransactionLineItem;
+
     constructor(
-        public dialogRef: MatDialogRef<DialogConfigureNewPlanComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: DialogConfigureNewPlanData,
+        public dialogRef: MatDialogRef<DialogConfigureContractPlanComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: DialogConfigureContractPlanData,
         private phoneNumberService: PhoneNumberService,
         public sessionService: SessionService,
         private snackBar: MatSnackBar
@@ -93,8 +96,54 @@ export class DialogConfigureNewPlanComponent implements OnInit {
         }
     }
 
-    addPlanToCart(): void {
-        let newLineItem: TransactionLineItem = {
+    getRemainingUnits(): number {
+        return (
+            this.data.selectedPlan.totalBasicUnits -
+            this.dataUnits -
+            this.smsUnits -
+            this.talktimeUnits
+        );
+    }
+
+    onExitClick(): void {
+        this.dialogRef.close();
+    }
+
+    completeBundlePlan(): void {
+        let mobileLineItem: TransactionLineItem = {
+            product: undefined,
+            transactionLineItemId: undefined,
+            price: this.data.selectedProduct.price,
+            quantity: 1,
+            subtotal: this.data.selectedProduct.price,
+            transaction: undefined,
+            subscription: undefined,
+            productItem: {
+                productItemId: undefined,
+                serialNumber: undefined,
+                price: this.data.selectedProduct.price,
+                luxuryProduct: {
+                    serialNumber: undefined,
+                    productItems: undefined,
+                    productId: this.data.selectedProduct.productId,
+                    skuCode: this.data.selectedProduct.skuCode,
+                    name: this.data.selectedProduct.name,
+                    description: this.data.selectedProduct.description,
+                    price: this.data.selectedProduct.price,
+                    quantityOnHand: this.data.selectedProduct.quantityOnHand,
+                    reorderQuantity: this.data.selectedProduct.reorderQuantity,
+                    productImagePath: this.data.selectedProduct
+                        .productImagePath,
+                    tags: this.data.selectedProduct.tags,
+                    category: this.data.selectedProduct.category,
+                    dealStartTime: this.data.selectedProduct.dealStartTime,
+                    dealEndTime: this.data.selectedProduct.dealEndTime,
+                    discountPrice: this.data.selectedProduct.discountPrice,
+                },
+            },
+        };
+
+        let planLineItem: TransactionLineItem = {
             subscription: {
                 subscriptionId: undefined,
                 dataUnits: {
@@ -111,7 +160,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
                 subscriptionEndDate: undefined,
                 customer: undefined,
                 isActive: undefined,
-                isContract: false,
+                isContract: true,
                 usageDetails: undefined,
                 phoneNumber: this.selectedPhoneNumber,
                 plan: this.data.selectedPlan,
@@ -126,12 +175,32 @@ export class DialogConfigureNewPlanComponent implements OnInit {
             subtotal: this.data.selectedPlan.price,
         };
 
-        this.sessionService.addToCart(newLineItem);
+        mobileLineItem.subscription = planLineItem.subscription;
+        planLineItem.productItem = mobileLineItem.productItem;
+
+        this.newMobileLineItem = mobileLineItem;
+        this.newPlanLineItem = planLineItem;
+
+        //give 20% discount to the mobile device
+        var discountedHandSet: number = parseFloat((this.newMobileLineItem.price * 0.8).toFixed(2));
+        this.newMobileLineItem.price = discountedHandSet;
+        this.newMobileLineItem.subtotal = discountedHandSet;
+        this.newMobileLineItem.productItem.price = discountedHandSet;
+        this.newMobileLineItem.productItem.luxuryProduct.price = discountedHandSet;
+
+        //add to cart
+        this.addBundlePlanToCart(this.newPlanLineItem, this.newMobileLineItem);
+    }
+
+    addBundlePlanToCart(
+        newPlanLineItem: TransactionLineItem,
+        newMobileLineItem: TransactionLineItem
+    ): void {
+        this.sessionService.addToCart(newMobileLineItem);
+        this.sessionService.addToCart(newPlanLineItem);
 
         const snackBarRef = this.snackBar.open(
-            'Successfully added "' +
-                this.data.selectedPlan.name +
-                '" SIM plan to the cart!',
+            'Successfully added Bundle to the cart!',
             'Undo',
             {
                 duration: 4500,
@@ -139,22 +208,7 @@ export class DialogConfigureNewPlanComponent implements OnInit {
         );
 
         snackBarRef.onAction().subscribe(() => {
-            this.sessionService.undoAddToCart();
+            this.sessionService.removeBundleFromCartNoParams();
         });
-
-        this.dialogRef.close();
-    }
-
-    getRemainingUnits(): number {
-        return (
-            this.data.selectedPlan.totalBasicUnits -
-            this.dataUnits -
-            this.smsUnits -
-            this.talktimeUnits
-        );
-    }
-
-    onExitClick(): void {
-        this.dialogRef.close();
     }
 }
