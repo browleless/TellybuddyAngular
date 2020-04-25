@@ -35,11 +35,14 @@
 
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true ">
-                            <div *ngIf="member.ownerOfFamilyGroup == false"> -->
-                        <button mat-raised-button color="primary" (click)="removeMember(i)">
-                            Remove this memeber
-                        </button>
+                        <div *ngIf="currentCustomer.ownerOfFamilyGroup == true ">
+                            <div *ngIf="member.ownerOfFamilyGroup == false">
+
+                                <button mat-raised-button color="primary" (click)="removeMember(i)">
+                                    Remove this memeber
+                                </button>
+                            </div>
+                        </div>
                         <!-- </div>
                         </div> -->
                         <!-- <div *ngIf="activeSubscriptionsUnderThatCustomer == null">

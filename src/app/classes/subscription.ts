@@ -33,6 +33,7 @@ export class Subscription {
     };
     subscriptionStatusEnum: SubscriptionStatusEnum;
     isActive: boolean;
+    isContract: boolean;
     subscriptionStartDate: Date;
     subscriptionEndDate: Date;
     customer: Customer;
@@ -47,6 +48,7 @@ export class Subscription {
         smsUnits?: Object,
         subscriptionStatusEnum?: SubscriptionStatusEnum,
         isActive?: boolean,
+        isContract?: boolean,
         subscriptionStartDate?: Date,
         subscriptionEndDate?: Date,
         customer?: Customer,
@@ -62,6 +64,7 @@ export class Subscription {
         this.subscriptionEndDate = subscriptionEndDate;
         this.subscriptionStatusEnum = subscriptionStatusEnum;
         this.isActive = isActive;
+        this.isContract = isContract;
         this.subscriptionStartDate = subscriptionStartDate;
         this.customer = customer;
         this.usageDetails = usageDetails;

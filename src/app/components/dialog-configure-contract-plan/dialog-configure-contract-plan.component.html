@@ -1,0 +1,109 @@
+<div mat-dialog-title>
+    <div>
+        Configure: {{ data.selectedPlan.name }} Plan
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div>
+    <div mat-dialog-content style="height: auto;">
+        <div style="margin-bottom: 16px;">
+            Please choose a number:
+            <button mat-icon-button (click)="ngOnInit()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+        </div>
+        <div style="width: 487.75px;" *ngIf="!loaded">
+            <mat-spinner style="margin: 0 auto;" diameter="30"></mat-spinner>
+        </div>
+        <mat-chip-list *ngIf="loaded">
+            <mat-chip *ngFor="
+                    let availablePhoneNumber of availablePhoneNumbers;
+                    let i = index
+                " style="cursor: pointer;" [ngClass]="
+                    selectedPhoneNumberIndex === i ? 'mat-chip-selected' : ''
+                " (click)="selectPhoneNumber(i)">
+                {{ availablePhoneNumber.phoneNumber.substring(0, 4) }}
+                {{ availablePhoneNumber.phoneNumber.substring(4) }}
+            </mat-chip>
+        </mat-chip-list>
+        <p style="padding-top: 10px;">Set your units allocations:</p>
+        <div>
+            <div style="float: left;">
+                <div>
+                    Data Units:
+                    <mat-slider #dataSlider [max]="data.selectedPlan.totalBasicUnits" thumbLabel
+                        (change)="handleDataSliderChange($event.value)" (input)="
+                            $event.value - dataUnits <= getRemainingUnits()
+                                ? (dataUnits = $event.value)
+                                : $event.value <= dataUnits
+                                ? (dataUnits = $event.value)
+                                : (dataUnits = dataUnits)
+                        "></mat-slider>
+                    {{
+                        (data.selectedPlan.dataConversionRate * dataUnits) /
+                            1000
+                    }}
+                    GB
+                </div>
+                <div>
+                    SMS Units:
+                    <mat-slider #smsSlider [max]="data.selectedPlan.totalBasicUnits" thumbLabel
+                        (change)="handleSmsSliderChange($event.value)" (input)="
+                            $event.value - smsUnits <= getRemainingUnits()
+                                ? (smsUnits = $event.value)
+                                : $event.value <= smsUnits
+                                ? (smsUnits = $event.value)
+                                : (smsUnits = smsUnits)
+                        "></mat-slider>
+                    {{ data.selectedPlan.smsConversionRate * smsUnits }}
+                    SMS
+                </div>
+                <div>
+                    Talktime Units:
+                    <mat-slider #talktimeSlider [max]="data.selectedPlan.totalBasicUnits" thumbLabel
+                        (change)="handleTalktimeSliderChange($event.value)" (input)="
+                            $event.value - talktimeUnits <= getRemainingUnits()
+                                ? (talktimeUnits = $event.value)
+                                : $event.value <= talktimeUnits
+                                ? (talktimeUnits = $event.value)
+                                : (talktimeUnits = talktimeUnits)
+                        "></mat-slider>
+                    {{
+                        data.selectedPlan.talktimeConversionRate * talktimeUnits
+                    }}
+                    mins
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <div style="
+                        align-self: center;
+                        margin: 15px 0 25px 0;
+                        display: inline-block;
+                        font-size: 350%;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        padding: 15px 25px 15px 25px;
+                        background-color: #f04393;
+                        color: white;
+                    ">
+                    {{ getRemainingUnits() }}
+                    <div style="
+                            padding: 0;
+                            font-size: initial;
+                            font-weight: normal;
+                        ">
+                        units left
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center; padding-top: 10px;">
+        <button [disabled]="!selectedPhoneNumber || !(getRemainingUnits() === 0)" mat-raised-button color="primary"
+            (click)="completeBundlePlan()">
+            Add Bundle to Cart
+        </button>
+    </div>
+</div>

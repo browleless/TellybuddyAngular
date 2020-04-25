@@ -1,0 +1,107 @@
+<div style="padding: 0 0 0 1%; margin-top: 3%;">
+    <div *ngIf="!loaded">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <div style="text-align: center;">
+            <h1>View All Products</h1>
+        </div>
+
+        <mat-drawer-container>
+            <mat-drawer style="width: 22%; height: 100%;" mode="side" opened>
+
+                <h3 style="margin-bottom: 15px;">
+                    Search Our Products By Name!
+                </h3>
+
+                <form style="margin-bottom: 30px;">
+                    <input type="text" (keyup)="searchProducts($event)" />
+                    &nbsp;&nbsp;
+                    <button mat-raised-button color="primary" (submit)="searchProducts($event)">Search</button>
+                </form>
+                <mat-divider></mat-divider>
+
+                <mat-tab-group>
+                    <mat-tab label="Filter By Tag(s)">
+                        <div *ngFor="let tag of tags" style="padding-top: 2%; line-height: 1.6;">
+                            <mat-checkbox (change)="filterByTags()" [(ngModel)]="displayProducts">
+                                {{tag.name}}
+                            </mat-checkbox>
+                        </div>
+                        <br /><br />
+                    </mat-tab>
+                    <mat-tab label="Filter By Category">
+                        <div *ngFor="let cat of categories, let i = index" style="padding-top: 2%; line-height: 1.6;">
+                            <mat-radio-button (change)="filterByCategory(i)">
+                                {{cat.name}}
+                            </mat-radio-button>
+                        </div>
+                        <br /><br />
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-drawer>
+
+            <mat-drawer-content style="padding-left: 2%; padding-right: 2%;">
+
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="500px"
+                    gutterSize="24px" [(ngModel)]="displayProducts">
+
+                    <div *ngIf="displayProducts.length == 0" style="text-align: center;">
+                        <h3>We couldn't find any products matching to your search results!</h3>
+                        <img src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
+                            style="height: 348px; width: 464px;" />
+                    </div>
+
+
+                    <div *ngIf="filterProductsByCategory != undefined">
+                        <mat-grid-tile *ngFor="let product of filterProductsByCategory, let i = index">
+                            <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)" style="width: 285px;">
+                                <mat-card-title>
+                                    <div style="text-align:center;">
+                                        {{ product.name }}
+                                    </div>
+                                </mat-card-title>
+                                <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
+                                    Price: ${{ product.price }}
+                                </mat-card-subtitle>
+                                <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
+                                    style="width: 285px; height: 285px;">
+                                <mat-card-content>
+                                    <div style="height: 58px">
+                                        Description: {{ product.description }}
+                                    </div>
+                                </mat-card-content>
+
+                            </mat-card>
+                        </mat-grid-tile>
+                    </div>
+
+
+
+                    <mat-grid-tile *ngFor="let product of displayProducts, let i = index">
+                        <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)">
+                            <mat-card-title>
+                                <div style="text-align:center;">
+                                    {{ product.name }}
+                                </div>
+                            </mat-card-title>
+                            <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
+                                Price: ${{ product.price }}
+                            </mat-card-subtitle>
+                            <img mat-card-image src="assets/productImages/{{ product.productImagePath }}">
+                            <mat-card-content>
+                                <div>
+                                    Description: {{ product.description }}
+                                </div>
+                            </mat-card-content>
+
+                        </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+
+            </mat-drawer-content>
+
+        </mat-drawer-container>
+
+    </div>
+</div>

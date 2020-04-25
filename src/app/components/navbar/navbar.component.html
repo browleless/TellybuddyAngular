@@ -10,6 +10,9 @@
         </button>
         <mat-menu [hasBackdrop]="false" #firstMenu="matMenu">
             <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)">
+                <button mat-menu-item routerLink="/viewallproducts">
+                    All Products
+                </button>
                 <button mat-menu-item routerLink="/luxuryproducts">
                     Mobile Devices
                 </button>
@@ -27,7 +30,7 @@
         </button>
         <mat-menu [hasBackdrop]="false" #secondMenu="matMenu">
             <div (mouseenter)="menuenter()" (mouseleave)="menuLeave(buttonTwoTrigger, buttonTwo)">
-                <button mat-menu-item>View Promotion Items</button>
+                <button mat-menu-item routerLink="/promotions">View Promotion Items</button>
                 <button routerLink="/additionalUnits" *ngIf="sessionService.getIsLogin() == true" mat-menu-item>
                     Earn Additional Units
                 </button>

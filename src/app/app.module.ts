@@ -87,9 +87,13 @@ import { DialogAddonSubscriptionUnits } from './components/dialog-addon-subscrip
 
 import { BillsComponent } from './components/bills/bills.component';
 import { DialogBillPaymentComponent } from './components/dialog-bill-payment/dialog-bill-payment.component';
+import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
+import { DialogConfigureContractPlanComponent } from './components/dialog-configure-contract-plan/dialog-configure-contract-plan.component';
 
 import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-donate-units/dialog-donate-units.component';
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
+import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
+import { PromotionsComponent } from './components/promotions/promotions.component';
 @NgModule({
     declarations: [
         AppComponent,
@@ -122,8 +126,12 @@ import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-rec
         DialogAddonSubscriptionUnits,
         BillsComponent,
         DialogBillPaymentComponent,
+        BundlePlansComponent,
+        DialogConfigureContractPlanComponent,
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
+        ViewAllProductsComponent,
+        PromotionsComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -215,6 +223,7 @@ import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-rec
         DialogAmendSubscriptionUnits,
         DialogAddonSubscriptionUnits,
         DialogBillPaymentComponent,
+        DialogConfigureContractPlanComponent,
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
     ],

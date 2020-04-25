@@ -44,6 +44,7 @@ export class DialogDonateUnitsComponent implements OnInit {
         },
         subscriptionStatusEnum: undefined,
         isActive: undefined,
+        isContract: undefined,
         subscriptionStartDate: undefined,
         subscriptionEndDate: undefined,
         customer: undefined,

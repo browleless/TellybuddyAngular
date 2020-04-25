@@ -127,8 +127,9 @@ export class ViewMembersComponent implements OnInit {
             .removeFamilyGroupMember(this.familyGroup, this.familyMembers[i])
             .subscribe(
                 (response) => {
+                    location.reload;
                     this.customerToRemove = this.familyMembers[i];
-
+                    
                     const snackBarRef = this.snackBar.open(
                         'Member removed successfully!',
                         'Undo',
@@ -136,7 +137,7 @@ export class ViewMembersComponent implements OnInit {
                             duration: 4500,
                         }
                     );
-                    //location.reload;
+                    
                     snackBarRef.onAction().subscribe(() => {
                         this.familyGroupService
                             .addFamilyGroupMember(
