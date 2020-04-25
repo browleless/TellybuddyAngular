@@ -67,6 +67,7 @@ export class ViewTransactionComponent implements OnInit {
                     "Your refund request has been submitted. Please allow us 7-10 days to process this request!", "Close",
                     {duration: 4500}
                 )
+                this.ngOnInit();
             },
             (error) => {
                 this.snackBar.open(
