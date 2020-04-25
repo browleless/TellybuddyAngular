@@ -102,4 +102,7 @@ export class LoginComponent implements OnInit {
             }
         });
     }
+    navigateToRegistration(): void {
+        this.router.navigate(['/registration']);
+    }
 }
