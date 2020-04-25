@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GestureConfig } from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -94,6 +95,10 @@ import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-dona
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
+
+
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -213,6 +218,7 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         MatStepperModule,
         MatTooltipModule,
         MatPaginatorModule,
+        NgbModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,

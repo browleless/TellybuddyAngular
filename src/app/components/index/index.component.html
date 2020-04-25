@@ -1,9 +1,22 @@
 <div>
-    <img
-        style="width: 100%;"
-        src="http://img.alicdn.com/tfs/TB1yZVAauL2gK0jSZFmSuw7iXXa.jpg#width=1920&height=700"
-    />
+    <ngb-alert *ngFor="announcement in announcements" [ngIf]="!staticAlertClosed" (close)="staticAlertClosed = true" style="margin-bottom: 0;text-align: center; font-weight: 700;" type="info" dismissible="true">
+        {{ announcement[index].content.substr(3,announcement[index].content.length-7) }}</ngb-alert>
+        
+    <ngb-carousel  style="width: 100%;">
+        <ng-template ngbSlide >
+          <div class="picsum-img-wrapper">
+            <img src="../../../assets/homePage/slide1.jpg"alt="Random first slide" style="width: 100%;">
+          </div>
+          
+        </ng-template>
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img src="../../../assets/homePage/slide2.jpg" alt="Random second slide"  style="width: 100%;">
+          </div>
 
+        </ng-template>
+      </ngb-carousel>
+      
     <h3 *ngIf="sessionService.getIsLogin() == false">
         some cool landing page
     </h3>
