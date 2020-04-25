@@ -21,7 +21,6 @@ export class IndexComponent implements OnInit {
 
     ngOnInit() {
         // setTimeout(() => this.staticAlertClosed = true, 20000);
-        this.staticAlertClosed = true;
         this.announcementService
             .retrieveAllAnnouncements()
             .subscribe((response) => {
