@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/service/session.service';
 import { AnnouncementService } from 'src/app/service/announcement.service';
 import { Announcement } from 'src/app/classes/announcement';
-import { NgbCarousel, NgbSlideEvent, NgbSlideEventDirection } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-index',
@@ -36,19 +35,5 @@ export class IndexComponent implements OnInit {
             (error) => {
                 console.log(error);
             };
-    }
-    changeSlide(event: NgbSlideEvent){
-        if(event.direction == NgbSlideEventDirection.LEFT){
-            this.left = null     
-            this.left = true;
-            console.log('left')
-            // @HostBinding 
-            // dom.queryselector
-            
-        } else{
-            this.left = null
-            this.left = false      
-            console.log('right')
-        }
     }
 }

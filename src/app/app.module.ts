@@ -8,7 +8,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GestureConfig } from '@angular/material';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -218,7 +217,6 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         MatStepperModule,
         MatTooltipModule,
         MatPaginatorModule,
-        NgbModule
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
@@ -234,6 +232,6 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         DialogReceiveUnitsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
-    bootstrap: [AppComponent],
+
 })
 export class AppModule {}
