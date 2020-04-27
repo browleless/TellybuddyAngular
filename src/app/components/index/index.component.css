@@ -1,0 +1,16 @@
+.links {
+    text-decoration: none;
+    color: #000000;
+}
+
+.links:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.mat-card {
+    width: calc(100% - 70px);
+    height: calc(100% - 70px);
+    border-radius: 0;
+    text-align: center;
+}
