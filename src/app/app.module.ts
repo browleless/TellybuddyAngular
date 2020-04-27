@@ -232,6 +232,6 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         DialogReceiveUnitsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
-
+    bootstrap: [AppComponent],
 })
 export class AppModule {}
