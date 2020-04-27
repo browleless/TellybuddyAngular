@@ -54,6 +54,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -95,9 +96,6 @@ import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-dona
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
-
-
-
 
 @NgModule({
     declarations: [
@@ -218,7 +216,8 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         MatStepperModule,
         MatTooltipModule,
         MatPaginatorModule,
-        NgbModule
+        NgbModule,
+        MatCarouselModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
