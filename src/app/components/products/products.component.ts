@@ -77,6 +77,7 @@ export class ProductsComponent implements OnInit {
             let li: TransactionLineItem = currentLineItems[index];
             if (
                 li.productItem == undefined &&
+                li.subscription === undefined &&
                 li.product.productId == this.selectedProduct.productId &&
                 li.price == this.selectedProduct.price
             ) {

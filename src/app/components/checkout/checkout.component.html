@@ -105,7 +105,17 @@
                                 "
                                 [matBadge]="transactionLineItem.quantity"
                             >
-                                <span *ngIf="transactionLineItem.subscription">
+                                <span
+                                    *ngIf="
+                                        (transactionLineItem.subscription &&
+                                            !transactionLineItem.productItem) ||
+                                        (transactionLineItem.productItem &&
+                                            transactionLineItem.subscription &&
+                                            transactionLineItem.price !=
+                                                transactionLineItem.productItem
+                                                    .price)
+                                    "
+                                >
                                     <img
                                         height="64px"
                                         width="64px"
@@ -126,7 +136,17 @@
                                     />
                                 </span>
 
-                                <span *ngIf="transactionLineItem.productItem">
+                                <span
+                                    *ngIf="
+                                        (transactionLineItem.productItem &&
+                                            !transactionLineItem.subscription) ||
+                                        (transactionLineItem.productItem &&
+                                            transactionLineItem.subscription &&
+                                            transactionLineItem.price ==
+                                                transactionLineItem.productItem
+                                                    .luxuryProduct.price)
+                                    "
+                                >
                                     <img
                                         height="64px"
                                         width="64px"
@@ -140,13 +160,33 @@
                             </div>
                         </td>
                         <td width="80%">
-                            <span *ngIf="transactionLineItem.subscription">
+                            <span
+                                *ngIf="
+                                    (transactionLineItem.subscription &&
+                                        !transactionLineItem.productItem) ||
+                                    (transactionLineItem.productItem &&
+                                        transactionLineItem.subscription &&
+                                        transactionLineItem.price !=
+                                            transactionLineItem.productItem
+                                                .price)
+                                "
+                            >
                                 {{ transactionLineItem.subscription.plan.name }}
                             </span>
                             <span *ngIf="transactionLineItem.product">
                                 {{ transactionLineItem.product.name }}
                             </span>
-                            <span *ngIf="transactionLineItem.productItem">
+                            <span
+                                *ngIf="
+                                    (transactionLineItem.productItem &&
+                                        !transactionLineItem.subscription) ||
+                                    (transactionLineItem.productItem &&
+                                        transactionLineItem.subscription &&
+                                        transactionLineItem.price ==
+                                            transactionLineItem.productItem
+                                                .luxuryProduct.price)
+                                "
+                            >
                                 {{
                                     transactionLineItem.productItem
                                         .luxuryProduct.name
