@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GestureConfig } from '@angular/material';
+import { CountdownModule } from 'ng2-date-countdown';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -216,6 +217,7 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         MatTooltipModule,
         MatPaginatorModule,
         MatCarouselModule,
+        CountdownModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
