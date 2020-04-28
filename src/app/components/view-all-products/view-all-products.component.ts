@@ -29,12 +29,12 @@ export class ViewAllProductsComponent implements OnInit {
     isLaptop: boolean = false;
 
     // user input
-    selectedTags: Tag[];
+    selectedTags: number[];
+    condition: string;
     searchInput: string;
     displayProducts: Product[];
     filterProductsByTags: Product[];
     filterProductsByCategory: Product[];
-    
 
     constructor(
         private router: Router,
@@ -104,6 +104,7 @@ export class ViewAllProductsComponent implements OnInit {
         );
 
         // this.filterProductsByCategory = new Array<Product>();
+        this.selectedTags = new Array<number>();
         this.filterProductsByTags = new Array<Product>();
     }
 
@@ -137,11 +138,9 @@ export class ViewAllProductsComponent implements OnInit {
         // this.displayedProducts = filteredResult;
     }
 
-    filterByTags(): void {}
-
     filterByCategory(index: number): void {
         let categoryId = this.categories[index].categoryId;
-        
+
         this.productService.filterProductsByCategory(categoryId).subscribe(
             (response) => {
                 this.filterProductsByCategory = response.products;
@@ -155,4 +154,49 @@ export class ViewAllProductsComponent implements OnInit {
 
         console.log('num of products: ' + this.filterProductsByCategory.length);
     }
+
+    selectTag(index: number): void {
+        let tagId = this.tags[index].tagId;
+        let removed: boolean = false;
+
+        for (let selected of this.selectedTags) {
+            if (selected == tagId) {
+                //remove it from selection
+                this.selectedTags.splice(selected, 1);
+                removed = true;
+            }
+        }
+
+        if (!removed) {
+            //add it into the list of selected tags
+            this.selectedTags.push(tagId);
+            console.log(
+                'console: added ' + this.tags[index].name + ' to selected'
+            );
+        }
+    }
+
+    filterByTags(): void {
+        console.log('string condition is: ' + this.condition);
+        console.log('num of tags selected: ' + this.selectedTags.length);
+        console.log('submit filter');
+        this.productService
+            .filterProductsByTags(this.selectedTags, this.condition)
+            .subscribe(
+                (response) => {
+                    this.displayProducts = response.products;
+                    this.displayProducts.sort((a, b) => a.price - b.price);
+                    this.loaded = true;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+    }
+
+    // resetAllTags(): void {
+    //     this.tags.forEach((tag) => {
+    //         tag.checked = false;
+    //       })
+    // }
 }
