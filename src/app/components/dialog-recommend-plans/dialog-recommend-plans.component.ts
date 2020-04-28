@@ -44,10 +44,6 @@ export class DialogRecommendPlansComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    // goToBundlePlans(): void {
-    //     this.router.navigate(['/bundlePlans'], {state: {data: {selectedLineItem}}});
-    // }
-
     closeDialogNoThanks(): void {
         this.selectedLineItem = this.data.lineItem;
         this.sessionService.addToCart(this.data.lineItem);
