@@ -25,6 +25,14 @@ export class CustomerService {
         private sessionService: SessionService
     ) {}
 
+    customerRegistration(customer: Customer): Observable<any> {
+        let createCustomerReq = {};
+        createCustomerReq['customer'] = customer;
+        return this.httpClient
+            .put<any>(this.baseUrl, createCustomerReq, httpOptions)
+            .pipe(catchError(this.handleError));
+    }
+
     customerLogin(username: string, password: string): Observable<any> {
         return this.httpClient
             .get<any>(

@@ -1,0 +1,15 @@
+.mat-card {
+    padding: 0;
+}
+
+.mat-card-title {
+    background: #3c4cad;
+    color: white;
+    padding: 16px;
+    margin: 0;
+    text-align: center;
+}
+
+.registration-form {
+    padding: 35px 35px 25px 35px;
+}
