@@ -1,0 +1,13 @@
+.align-headers .mat-expansion-panel-header-description {
+    flex-basis: 0;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+}

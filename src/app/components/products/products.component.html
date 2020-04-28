@@ -1,4 +1,4 @@
-<div style="padding: 0 10% 0 10%; margin-top: 3%;">
+<div style="padding: 0 17.5% 2% 17.5%; margin-top: 3%;">
     <div *ngIf="!loaded">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
@@ -9,28 +9,36 @@
                 Click on a product to add it to cart!
             </p>
         </div>
-        <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="500px" gutterSize="24px">
-            <mat-grid-tile *ngFor="let product of products, let i = index">
-                <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)" style="width: 285px;">
+        <mat-grid-list
+            [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+            rowHeight="430px"
+        >
+            <mat-grid-tile *ngFor="let product of products; let i = index">
+                <mat-card
+                    matTooltip="I want this!"
+                    mat-ripple
+                    class="mat-elevation-z8"
+                    (click)="addProductToCart(i)"
+                >
                     <mat-card-title>
-                        <div style="text-align:center;">
-                            {{ product.name }}
-                        </div>
+                        {{ product.name }}
                     </mat-card-title>
-                    <mat-card-subtitle style="text-align: center;">
+                    <mat-card-subtitle style="margin-top: 5px;">
                         Price: ${{ product.price }}
                     </mat-card-subtitle>
-                    <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
-                        style="width: 300px; height: 300px">
+                    <img
+                        mat-card-image
+                        src="assets/productImages/{{
+                            product.productImagePath
+                        }}"
+                        style="width: 220px; height: 220px;"
+                    />
                     <mat-card-content>
-                        <div style="height: 58px">
-                            Description: {{ product.description }}
+                        <div style="margin-top: 20px;">
+                            {{ product.description }}
                         </div>
                     </mat-card-content>
-
                 </mat-card>
-                <mat-divider></mat-divider>
-                <br /><br />
             </mat-grid-tile>
         </mat-grid-list>
     </div>

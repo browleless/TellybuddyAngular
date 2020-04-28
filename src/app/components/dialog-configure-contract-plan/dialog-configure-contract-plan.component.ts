@@ -182,7 +182,9 @@ export class DialogConfigureContractPlanComponent implements OnInit {
         this.newPlanLineItem = planLineItem;
 
         //give 20% discount to the mobile device
-        var discountedHandSet: number = parseFloat((this.newMobileLineItem.price * 0.8).toFixed(2));
+        var discountedHandSet: number = parseFloat(
+            (this.newMobileLineItem.price * 0.8).toFixed(2)
+        );
         this.newMobileLineItem.price = discountedHandSet;
         this.newMobileLineItem.subtotal = discountedHandSet;
         this.newMobileLineItem.productItem.price = discountedHandSet;
@@ -206,6 +208,8 @@ export class DialogConfigureContractPlanComponent implements OnInit {
                 duration: 4500,
             }
         );
+
+        this.dialogRef.close();
 
         snackBarRef.onAction().subscribe(() => {
             this.sessionService.removeBundleFromCartNoParams();
