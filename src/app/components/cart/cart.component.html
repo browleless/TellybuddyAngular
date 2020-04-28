@@ -51,6 +51,24 @@
                 </th>
                 <td style="text-align: center;" mat-cell *matCellDef="let transactionLineItem">
                     {{ transactionLineItem.price | currency }}
+                    &nbsp;
+                    <p *ngIf="transactionLineItem.product != undefined && 
+                    transactionLineItem.product.discountPrice == transactionLineItem.price"
+                        style="color: red;">
+                        <i>(*Discounted Price)</i>
+                    </p>
+
+                    <p *ngIf="transactionLineItem.productItem != undefined && 
+                    transactionLineItem.price == transactionLineItem.productItem.luxuryProduct.discountPrice"
+                        style="color: red;">
+                        <i>(*Discounted Price)</i>
+                    </p>
+
+                    <p *ngIf="transactionLineItem.subscription != undefined && 
+                    transactionLineItem.subscription.plan.startTime != undefined" style="color: red;">
+                        <i>(*Discounted Price)</i>
+                    </p>
+
                 </td>
             </ng-container>
 

@@ -198,8 +198,9 @@ export class CheckoutComponent implements OnInit {
             ];
         }
 
-        transaction.totalPrice =
-            this.getTotalCost() * ((100 - this.discountRate) / 100);
+        transaction.totalPrice = parseFloat(
+            (this.getTotalCost() * ((100 - this.discountRate) / 100)).toFixed(2)
+        );
 
         const payment = {
             paymentId: undefined,

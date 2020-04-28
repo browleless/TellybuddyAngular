@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GestureConfig } from '@angular/material';
+import { CountdownModule } from 'ng2-date-countdown';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
@@ -53,6 +54,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatCarouselModule } from '@ngmodule/material-carousel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,7 +95,12 @@ import { DialogConfigureContractPlanComponent } from './components/dialog-config
 import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-donate-units/dialog-donate-units.component';
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
+<<<<<<< HEAD
 import { RegistrationComponent } from './components/registration/registration.component';
+=======
+import { PromotionsComponent } from './components/promotions/promotions.component';
+
+>>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
 @NgModule({
     declarations: [
         AppComponent,
@@ -131,7 +138,11 @@ import { RegistrationComponent } from './components/registration/registration.co
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
         ViewAllProductsComponent,
+<<<<<<< HEAD
         RegistrationComponent,
+=======
+        PromotionsComponent,
+>>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
     ],
     imports: [
         BrowserAnimationsModule,
@@ -213,7 +224,12 @@ import { RegistrationComponent } from './components/registration/registration.co
         MatStepperModule,
         MatTooltipModule,
         MatPaginatorModule,
+<<<<<<< HEAD
         FormsModule,
+=======
+        MatCarouselModule,
+        CountdownModule,
+>>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
     ],
     entryComponents: [
         DialogForgotPasswordComponent,

@@ -4,96 +4,241 @@
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 55%; padding: 3% 2% 0 17.5%;" mode="side" opened>
-                <div style="
+            <mat-drawer
+                style="width: 55%; padding: 3% 2% 0 17.5%;"
+                mode="side"
+                opened
+            >
+                <div
+                    style="
                         font-size: x-large;
                         margin-bottom: 35px;
                         font-weight: 500;
-                    ">
+                    "
+                >
                     Payment Details
                 </div>
                 <div style="width: 90%;">
                     <mat-form-field style="width: 100%;" appearance="outline">
                         <mat-label>Credit Card Number</mat-label>
-                        <input matInput type="text" minlength="16" maxlength="16" [(ngModel)]="enteredCreditCardNumber"
-                            numbersOnly />
+                        <input
+                            matInput
+                            type="text"
+                            minlength="16"
+                            maxlength="16"
+                            [(ngModel)]="enteredCreditCardNumber"
+                            numbersOnly
+                        />
                     </mat-form-field>
                 </div>
                 <div style="margin-top: 10px; width: 90%;">
                     <div style="float: left;">
-                        <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-form-field
+                            style="width: 100%;"
+                            appearance="outline"
+                        >
                             <mat-label>CVV</mat-label>
-                            <input matInput type="text" minlength="3" maxlength="3" [(ngModel)]="enteredCvv"
-                                numbersOnly />
+                            <input
+                                matInput
+                                type="text"
+                                minlength="3"
+                                maxlength="3"
+                                [(ngModel)]="enteredCvv"
+                                numbersOnly
+                            />
                         </mat-form-field>
                     </div>
                     <div style="text-align: right;">
-                        <mat-form-field style="width: 50%;" appearance="outline">
+                        <mat-form-field
+                            style="width: 50%;"
+                            appearance="outline"
+                        >
                             <mat-label>Expiry Date</mat-label>
-                            <input matInput [matDatepicker]="dp" [formControl]="creditCardExpiry" />
-                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                            <mat-datepicker #dp startView="multi-year" (yearSelected)="chosenYearHandler($event)"
-                                (monthSelected)="chosenMonthHandler($event, dp)" panelClass="example-month-picker">
+                            <input
+                                matInput
+                                [matDatepicker]="dp"
+                                [formControl]="creditCardExpiry"
+                            />
+                            <mat-datepicker-toggle
+                                matSuffix
+                                [for]="dp"
+                            ></mat-datepicker-toggle>
+                            <mat-datepicker
+                                #dp
+                                startView="multi-year"
+                                (yearSelected)="chosenYearHandler($event)"
+                                (monthSelected)="chosenMonthHandler($event, dp)"
+                                panelClass="example-month-picker"
+                            >
                             </mat-datepicker>
                         </mat-form-field>
                     </div>
                 </div>
                 <div style="margin-top: 50px; width: 90%; text-align: right;">
-                    <button (click)="handleCartCheckout()" mat-raised-button color="accent" [disabled]="
+                    <button
+                        (click)="handleCartCheckout()"
+                        mat-raised-button
+                        color="accent"
+                        [disabled]="
                             enteredCreditCardNumber.length !== 16 ||
                             enteredCvv.length !== 3
-                        ">
+                        "
+                    >
                         Confirm Payment
                     </button>
                 </div>
             </mat-drawer>
             <mat-drawer-content style="height: 85vh; padding: 3% 17.5% 0 2%;">
                 <table>
-                    <tr *ngFor="
+                    <tr
+                        *ngFor="
                             let transactionLineItem of transaction.transactionLineItems
-                        ">
+                        "
+                    >
                         <td style="padding: 15px 15px 0 15px;" width="20%">
-                            <div style="
+                            <div
+                                style="
                                     width: 64px;
                                     height: 64px;
                                     border-radius: 8px;
                                     border: 1px rgba(0, 0, 0, 0.1) solid;
-                                " [matBadge]="transactionLineItem.quantity">
-
-                                <span *ngIf="transactionLineItem.subscription">
-                                    <img height="64px" width="64px" style="border-radius: 8px;"
-                                        src="https://i7.uihere.com/icons/659/717/224/pie-chart-93988e912b34b5246c58434d999aa30d.png">
+                                "
+                                [matBadge]="transactionLineItem.quantity"
+                            >
+                                <span
+                                    *ngIf="
+                                        (transactionLineItem.subscription &&
+                                            !transactionLineItem.productItem) ||
+                                        (transactionLineItem.productItem &&
+                                            transactionLineItem.subscription &&
+                                            transactionLineItem.price !=
+                                                transactionLineItem.productItem
+                                                    .price)
+                                    "
+                                >
+                                    <img
+                                        height="64px"
+                                        width="64px"
+                                        style="border-radius: 8px;"
+                                        src="https://i7.uihere.com/icons/659/717/224/pie-chart-93988e912b34b5246c58434d999aa30d.png"
+                                    />
                                 </span>
 
                                 <span *ngIf="transactionLineItem.product">
-                                    <img height="64px" width="64px" style="border-radius: 8px;"
-                                        src="assets/productImages/{{ transactionLineItem.product.productImagePath }}">
+                                    <img
+                                        height="64px"
+                                        width="64px"
+                                        style="border-radius: 8px;"
+                                        src="assets/productImages/{{
+                                            transactionLineItem.product
+                                                .productImagePath
+                                        }}"
+                                    />
                                 </span>
 
-                                <span *ngIf="transactionLineItem.productItem">
-                                    <img height="64px" width="64px" style="border-radius: 8px;"
-                                        src="assets/productImages/{{ transactionLineItem.productItem.luxuryProduct.productImagePath }}">
+                                <span
+                                    *ngIf="
+                                        (transactionLineItem.productItem &&
+                                            !transactionLineItem.subscription) ||
+                                        (transactionLineItem.productItem &&
+                                            transactionLineItem.subscription &&
+                                            transactionLineItem.price ==
+                                                transactionLineItem.productItem
+                                                    .luxuryProduct.price)
+                                    "
+                                >
+                                    <img
+                                        height="64px"
+                                        width="64px"
+                                        style="border-radius: 8px;"
+                                        src="assets/productImages/{{
+                                            transactionLineItem.productItem
+                                                .luxuryProduct.productImagePath
+                                        }}"
+                                    />
                                 </span>
-
                             </div>
                         </td>
                         <td width="80%">
-                            <span *ngIf="transactionLineItem.subscription">
+                            <span
+                                *ngIf="
+                                    (transactionLineItem.subscription &&
+                                        !transactionLineItem.productItem) ||
+                                    (transactionLineItem.productItem &&
+                                        transactionLineItem.subscription &&
+                                        transactionLineItem.price !=
+                                            transactionLineItem.productItem
+                                                .price)
+                                "
+                            >
                                 {{ transactionLineItem.subscription.plan.name }}
                             </span>
                             <span *ngIf="transactionLineItem.product">
                                 {{ transactionLineItem.product.name }}
                             </span>
-                            <span *ngIf="transactionLineItem.productItem">
-                                {{ transactionLineItem.productItem.luxuryProduct.name }}
+                            <span
+                                *ngIf="
+                                    (transactionLineItem.productItem &&
+                                        !transactionLineItem.subscription) ||
+                                    (transactionLineItem.productItem &&
+                                        transactionLineItem.subscription &&
+                                        transactionLineItem.price ==
+                                            transactionLineItem.productItem
+                                                .luxuryProduct.price)
+                                "
+                            >
+                                {{
+                                    transactionLineItem.productItem
+                                        .luxuryProduct.name
+                                }}
                             </span>
                         </td>
                         <td style="padding-right: 17.5px;">
-                            <span *ngIf="transactionLineItem.subscription || transactionLineItem.productItem">
+                            <span
+                                *ngIf="
+                                    (transactionLineItem.subscription ||
+                                        transactionLineItem.productItem) &&
+                                    selectedDiscountCode
+                                "
+                            >
+                                {{
+                                    transactionLineItem.price *
+                                        ((100 - this.discountRate) / 100)
+                                        | currency
+                                }}
+                            </span>
+
+                            <span
+                                [class]="
+                                    selectedDiscountCode ? 'discounted' : ''
+                                "
+                                *ngIf="
+                                    transactionLineItem.subscription ||
+                                    transactionLineItem.productItem
+                                "
+                            >
                                 {{ transactionLineItem.price | currency }}
                             </span>
 
-                            <span *ngIf="transactionLineItem.product">
+                            <span
+                                *ngIf="
+                                    transactionLineItem.product &&
+                                    selectedDiscountCode
+                                "
+                            >
+                                {{
+                                    transactionLineItem.subtotal *
+                                        ((100 - this.discountRate) / 100)
+                                        | currency
+                                }}
+                            </span>
+
+                            <span
+                                [class]="
+                                    selectedDiscountCode ? 'discounted' : ''
+                                "
+                                *ngIf="transactionLineItem.product"
+                            >
                                 {{ transactionLineItem.subtotal | currency }}
                             </span>
                         </td>
@@ -101,24 +246,46 @@
                 </table>
                 <mat-divider style="margin-top: 15px;"></mat-divider>
                 <div>
-                    <mat-form-field style="margin: 10px 0 10px 15px; width: 92.5%;" appearance="outline">
+                    <mat-form-field
+                        style="margin: 10px 0 10px 15px; width: 92.5%;"
+                        appearance="outline"
+                    >
                         <mat-label>Discount Code</mat-label>
-                        <input style="text-transform: uppercase;" matInput type="text" minlength="6" maxlength="16"
-                            [(ngModel)]="enteredDiscountCode" (ngModelChange)="
+                        <input
+                            style="text-transform: uppercase;"
+                            matInput
+                            type="text"
+                            minlength="6"
+                            maxlength="16"
+                            [(ngModel)]="enteredDiscountCode"
+                            (ngModelChange)="
                                 enteredDiscountCode = enteredDiscountCode.toUpperCase()
-                            " />
-                        <mat-icon style="cursor: pointer;" (click)="validateDiscountCode()" matSuffix>
-                            check_circle_outline</mat-icon>
+                            "
+                        />
+                        <mat-icon
+                            style="cursor: pointer;"
+                            (click)="validateDiscountCode()"
+                            matSuffix
+                        >
+                            check_circle_outline</mat-icon
+                        >
                     </mat-form-field>
-                    <div style="
+                    <div
+                        style="
                             margin-left: 15px;
                             margin-bottom: 15px;
                             width: fit-content;
-                        " *ngIf="discountRate">
+                        "
+                        *ngIf="discountRate"
+                    >
                         <mat-chip-list>
                             <mat-chip selected color="accent">
                                 "{{ selectedDiscountCode }}"
-                                <mat-icon matChipRemove (click)="removeDiscount()">cancel</mat-icon>
+                                <mat-icon
+                                    matChipRemove
+                                    (click)="removeDiscount()"
+                                    >cancel</mat-icon
+                                >
                             </mat-chip>
                         </mat-chip-list>
                     </div>
@@ -132,7 +299,10 @@
                         {{ getTotalCost() | currency }}
                     </div>
                 </div>
-                <div *ngIf="discountRate" style="margin: 20px 0 20px 0; padding: 0 17.5px 0 17.5px;">
+                <div
+                    *ngIf="discountRate"
+                    style="margin: 20px 0 20px 0; padding: 0 17.5px 0 17.5px;"
+                >
                     <div style="float: left;">
                         Discount:
                     </div>
@@ -145,11 +315,13 @@
                     <div style="float: left;">
                         Total:
                     </div>
-                    <div style="
+                    <div
+                        style="
                             text-align: right;
                             font-size: large;
                             font-weight: bold;
-                        ">
+                        "
+                    >
                         {{
                             getTotalCost() * ((100 - this.discountRate) / 100)
                                 | currency

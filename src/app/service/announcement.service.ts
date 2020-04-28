@@ -7,25 +7,39 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { Subscription } from '../classes/subscription';
+import { Customer } from '../classes/customer';
+
+import { SessionService } from './session.service';
+
+const httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+};
+
 @Injectable({
     providedIn: 'root',
 })
-export class PlanService {
-    baseUrl: string = '/api/Plan';
+export class AnnouncementService {
+    baseUrl: string = '/api/Announcement';
 
-    constructor(private httpClient: HttpClient) {}
+    constructor(
+        private httpClient: HttpClient,
+        private sessionService: SessionService
+    ) {}
 
-    retrieveAllPlans(): Observable<any> {
+    retrieveAllAnnouncements(): Observable<any> {
         return this.httpClient
-            .get<any>(this.baseUrl + '/retrieveAllPlans')
+            .get<any>(
+                this.baseUrl + '/retrieveAllActiveAnnouncementsForCustomers' + '?username=' +
+                
+                this.sessionService.getUsername() +
+                '&password=' +
+                this.sessionService.getPassword()
+            )
             .pipe(catchError(this.handleError));
     }
 
-    retrieveAllActiveFlashPlans(): Observable<any> {
-        return this.httpClient
-            .get<any>(this.baseUrl + '/retrieveAllActiveFlashPlans')
-            .pipe(catchError(this.handleError));
-    }
+    
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';

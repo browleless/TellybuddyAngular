@@ -1,4 +1,7 @@
-<div style="text-align: center; padding: 0 17.5% 0 17.5%; margin-top: 3%;">
+<div
+    style="text-align: center; padding: 0 17.5% 0 17.5%; margin-top: 3%;"
+    *ngIf="subscriptions.length !== 0"
+>
     <h1>My Subscriptions</h1>
     <p style="margin-bottom: 30px;">
         Manage your subscriptions here!
@@ -217,5 +220,22 @@
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
+    </div>
+    <div style="text-align: center;" *ngIf="subscriptions.length === 0">
+        <h1>
+            No subscriptions found!
+        </h1>
+        <img
+            height="350px"
+            width="350px"
+            src="https://image.freepik.com/free-vector/sad-emoji_53876-25516.jpg"
+        />
+        <p>
+            You are unable to earn any additional units, subscribe to our plans
+            today!
+        </p>
+        <a mat-raised-button color="accent" routerLink="/plans">
+            Check out our Plans!
+        </a>
     </div>
 </div>

@@ -29,10 +29,12 @@ export class ViewAllProductsComponent implements OnInit {
     isLaptop: boolean = false;
 
     // user input
-    selectedCategories: Category[];
     selectedTags: Tag[];
     searchInput: string;
-    displayedProducts: Product[];
+    displayProducts: Product[];
+    filterProductsByTags: Product[];
+    filterProductsByCategory: Product[];
+    
 
     constructor(
         private router: Router,
@@ -69,8 +71,9 @@ export class ViewAllProductsComponent implements OnInit {
         this.productService.retrieveAllProducts().subscribe(
             (response) => {
                 this.products = response.products;
-                this.displayedProducts = response.products;
+                this.displayProducts = response.products;
                 this.products.sort((a, b) => a.price - b.price);
+                this.displayProducts.sort((a, b) => a.price - b.price);
                 this.loaded = true;
             },
             (error) => {
@@ -99,13 +102,17 @@ export class ViewAllProductsComponent implements OnInit {
                 console.log(error);
             }
         );
+
+        // this.filterProductsByCategory = new Array<Product>();
+        this.filterProductsByTags = new Array<Product>();
     }
 
     searchProducts(event: any): void {
         this.searchInput = event.target.value;
+        console.log(this.searchInput);
         this.productService.searchProductsByName(this.searchInput).subscribe(
             (response) => {
-                this.displayedProducts = response.products;
+                this.displayProducts = response.products;
                 this.products.sort((a, b) => a.price - b.price);
                 this.loaded = true;
             },
@@ -132,5 +139,20 @@ export class ViewAllProductsComponent implements OnInit {
 
     filterByTags(): void {}
 
-    filterByCategory(): void {}
+    filterByCategory(index: number): void {
+        let categoryId = this.categories[index].categoryId;
+        
+        this.productService.filterProductsByCategory(categoryId).subscribe(
+            (response) => {
+                this.filterProductsByCategory = response.products;
+                this.products.sort((a, b) => a.price - b.price);
+                this.loaded = true;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+
+        console.log('num of products: ' + this.filterProductsByCategory.length);
+    }
 }

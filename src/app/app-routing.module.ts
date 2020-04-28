@@ -20,7 +20,11 @@ import { ViewTransactionComponent } from './components/transaction-view/transact
 import { BillsComponent } from './components/bills/bills.component';
 import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
+<<<<<<< HEAD
 import { RegistrationComponent } from './components/registration/registration.component';
+=======
+import { PromotionsComponent } from './components/promotions/promotions.component';
+>>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
 
 const routes: Routes = [
     {
@@ -61,6 +65,7 @@ const routes: Routes = [
     { path: 'bills', component: BillsComponent },
     { path: 'bundlePlans/:productId', component: BundlePlansComponent },
     { path: 'viewallproducts', component: ViewAllProductsComponent },
+    { path: 'promotions', component: PromotionsComponent },
 ];
 
 @NgModule({

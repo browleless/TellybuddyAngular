@@ -1,3 +1,8 @@
 ::ng-deep .mat-form-field-wrapper {
     padding: 0;
 }
+
+.discounted {
+    text-decoration: line-through;
+    font-size: smaller;
+}

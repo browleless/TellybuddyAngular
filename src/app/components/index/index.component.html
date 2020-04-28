@@ -1,16 +1,223 @@
 <div>
-    <img
-        style="width: 100%;"
-        src="http://img.alicdn.com/tfs/TB1yZVAauL2gK0jSZFmSuw7iXXa.jpg#width=1920&height=700"
-    />
-
-    <h3 *ngIf="sessionService.getIsLogin() == false">
-        some cool landing page
-    </h3>
-
-    <h3 *ngIf="sessionService.getIsLogin() == true">
-        Welcome back,
-        {{ sessionService.getCurrentCustomer().firstName.toUpperCase() }}
-        {{ sessionService.getCurrentCustomer().lastName.toUpperCase() }}
-    </h3>
+    <div *ngIf="!loaded" style="margin-top: 3%;">
+        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+    </div>
+    <div *ngIf="loaded">
+        <section>
+            <mat-carousel
+                timings="400ms ease-in"
+                [autoplay]="true"
+                interval="5000"
+                color="accent"
+                maxWidth="auto"
+                proportion="40"
+                slides="5"
+                [loop]="true"
+                [hideArrows]="false"
+                [hideIndicators]="false"
+                [useKeyboard]="true"
+                [useMouseWheel]="false"
+            >
+                <mat-carousel-slide
+                    [hideOverlay]="true"
+                    image="../../../assets/homePage/slide1.jpg"
+                >
+                </mat-carousel-slide>
+                <mat-carousel-slide
+                    [hideOverlay]="true"
+                    image="../../../assets/homePage/slide2.jpg"
+                >
+                </mat-carousel-slide>
+            </mat-carousel>
+        </section>
+        <section>
+            <div style="margin-top: 2.25%; margin-left: 6.5%;">
+                <h2 style="margin: 0;">
+                    <button (click)="loadDiscountCodes()" mat-icon-button>
+                        <mat-icon>refresh</mat-icon>
+                    </button>
+                    Grab the latest discount codes while they last!
+                </h2>
+            </div>
+            <div *ngIf="!loadedDiscountCodes" style="padding: 60px 0;">
+                <mat-spinner style="margin: 0 auto;"></mat-spinner>
+            </div>
+            <div *ngIf="loadedDiscountCodes" style="margin: 0 5%;">
+                <mat-grid-list
+                    rowHeight="450"
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                >
+                    <mat-grid-tile
+                        *ngFor="let discountCode of availableDiscountCodes"
+                    >
+                        <mat-card>
+                            <mat-card-title style="margin-bottom: 30px;">
+                                {{ discountCode.discountCode }}
+                            </mat-card-title>
+                            <mat-card-content>
+                                <div
+                                    style="
+                                        font-size: x-large;
+                                        position: absolute;
+                                        top: 33%;
+                                        left: 45%;
+                                    "
+                                >
+                                    {{ discountCode.discountRate }}%
+                                </div>
+                                <mat-progress-spinner
+                                    style="
+                                        margin: 0 auto;
+                                        padding-bottom: 17.5px;
+                                    "
+                                    mode="determinate"
+                                    value="100"
+                                >
+                                </mat-progress-spinner>
+                                <countdown
+                                    units="Days | Hours | Minutes | Seconds"
+                                    [end]="discountCode.expiryDate"
+                                ></countdown>
+                            </mat-card-content>
+                            <mat-card-actions
+                                style="float: right; padding: 0 35px;"
+                            >
+                                <button
+                                    (click)="
+                                        copyToClipboard(
+                                            discountCode.discountCode
+                                        )
+                                    "
+                                    matTooltip="Copy!"
+                                    mat-icon-button
+                                >
+                                    <mat-icon>filter_none</mat-icon>
+                                </button>
+                            </mat-card-actions>
+                        </mat-card>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+        </section>
+        <section style="background-color: #f6f6f6;">
+            <mat-grid-list
+                rowHeight="300"
+                [cols]="isMobile ? 1 : isTablet ? 2 : 4"
+            >
+                <mat-grid-tile>
+                    <div style="position: absolute; left: 80px; top: 50px;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">
+                            Tellybuddy
+                        </div>
+                        <a
+                            href="http://localhost:8080/tellybuddy-war"
+                            target="_blank"
+                            class="links"
+                            >Corporate Login</a
+                        >
+                        <br />
+                        <a class="links">About</a>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div
+                        style="
+                            position: absolute;
+                            left: 0;
+                            top: 50px;
+                            width: 100%;
+                        "
+                    >
+                        <div style="font-size: 24px;">
+                            Payment Methods
+                        </div>
+                        <div>
+                            <img
+                                height="80px"
+                                width="80px"
+                                src="../../../assets/homePage/visa.png"
+                                style="margin-right: 25px;"
+                            />
+                            <img
+                                height="80px"
+                                width="80px"
+                                src="../../../assets/homePage/mastercard.png"
+                                style="margin-right: 25px;"
+                            />
+                            <img
+                                height="80px"
+                                width="80px"
+                                src="../../../assets/homePage/amex.png"
+                            />
+                        </div>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div
+                        style="
+                            position: absolute;
+                            left: 0;
+                            top: 50px;
+                            width: 100%;
+                        "
+                    >
+                        <div style="font-size: 24px; margin-bottom: 10px;">
+                            Delivery Partners
+                        </div>
+                        <div>
+                            <img
+                                src="../../../assets/homePage/ninjavan.svg"
+                                style="
+                                    margin-right: 25px;
+                                    width: 120px;
+                                    height: auto;
+                                "
+                            />
+                            <img
+                                src="../../../assets/homePage/singpost.png"
+                                style="
+                                    margin-right: 25px;
+                                    width: 120px;
+                                    height: auto;
+                                "
+                            />
+                            <img
+                                src="../../../assets/homePage/cj-logistics.png"
+                                style="width: 120px; height: auto;"
+                            />
+                        </div>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div style="position: absolute; left: 0; top: 50px;">
+                        <div style="font-size: 24px; margin-bottom: 10px;">
+                            Download the App
+                        </div>
+                        <div>
+                            <img
+                                src="../../../assets/homePage/google-play.png"
+                                style="
+                                    margin-right: 25px;
+                                    width: 120px;
+                                    height: auto;
+                                "
+                            />
+                            <img
+                                src="../../../assets/homePage/app-store.png"
+                                style="
+                                    margin-right: 25px;
+                                    width: 120px;
+                                    height: auto;
+                                "
+                            />
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-divider></mat-divider>
+            <div style="padding: 25px 50px;">
+                © Tellybuddy 2020. All rights reserved.
+            </div>
+        </section>
+    </div>
 </div>
