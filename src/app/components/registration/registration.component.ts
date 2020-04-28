@@ -6,6 +6,13 @@ import { SessionService } from 'src/app/service/session.service';
 import { Announcement } from 'src/app/classes/announcement';
 import { Bill } from 'src/app/classes/bill';
 import { MatSnackBar } from '@angular/material';
+import {
+    ValidatorFn,
+    FormGroup,
+    ValidationErrors,
+    FormBuilder,
+    Validators,
+} from '@angular/forms';
 
 @Component({
     selector: 'app-registration',
@@ -24,17 +31,32 @@ export class RegistrationComponent implements OnInit {
     age: number;
     firstName: string;
     lastName: string;
+    formGroup: FormGroup;
 
     constructor(
         private customerService: CustomerService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
         public sessionService: SessionService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private formBuilder: FormBuilder
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        // this.formGroup = this.formBuilder.group({
+        //     password: ['', [Validators.required]],
+        //     password2: ['', [Validators.required]]
+        //   }, {validator: passwordMatchValidator});
+    }
+    //     get password() { return this.formGroup.get('password'); }
+    //   get password2() { return this.formGroup.get('password2'); }
 
+    //   onPasswordInput() {
+    //     if (this.formGroup.hasError('passwordMismatch'))
+    //       this.password2.setErrors([{'passwordMismatch': true}]);
+    //     else
+    //       this.password2.setErrors(null);
+    //   }
     registration(): void {
         let newCustomer: Customer = {
             announcements: undefined,
@@ -97,3 +119,9 @@ export class RegistrationComponent implements OnInit {
         reader.readAsDataURL(this.fileToUpload);
     }
 }
+// export const passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
+//     if (formGroup.get('password').value === formGroup.get('password2').value)
+//       return null;
+//     else
+//       return {passwordMismatch: true};
+//   };
