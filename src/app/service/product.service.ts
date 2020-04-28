@@ -78,14 +78,23 @@ export class ProductService {
             .pipe(catchError(this.handleError));
     }
 
-    // filterProductsByTags(tagIds: number[], condition: string): Observable<any> {
-    //     return this.httpClient
-    //         .get<any>(this.baseUrl + '/filterProductsByTags/' + categoryId)
-    //         .pipe(catchError(this.handleError));
+    filterProductsByTags(
+        selectedTagIds: number[],
+        selectedCondition: string
+    ): Observable<any> {
+        let retrieveProductsByTagsReq = {
+            tagIds: selectedTagIds,
+            condition: selectedCondition,
+        };
 
-    //         let params = new HttpParams();
-
-    // }
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/filterProductsByTags',
+                retrieveProductsByTagsReq,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
