@@ -36,19 +36,20 @@
                                 style="position: absolute; top: 0; left: 200; height:20px;" mode="buffer">
                             </mat-progress-bar>
                             <mat-progress-bar class="topBar" style="position: absolute; top: 0; left: 200; height:20px;"
-                                mode="determinate" value="{{ 100/1000 * familyGroup.donatedUnits }}">
+                                mode="determinate" value="{{ 100/50 * familyGroup.donatedUnits }}">
                             </mat-progress-bar>
                         </div>
-                        <br/>
+                        <br />
                         <br>
-                        Maximum units in the pool: 1000
+                        Maximum units in the pool: 50
                         <div class="cards">
 
                             <mat-card mat-ripple class="mat-elevation-z8" (click)="openDonateDialog()">
                                 <mat-card-title>
                                     Donate units
                                 </mat-card-title>
-                                <img class="image" mat-card-image src="assets/familyGroupIcon/receive-hand-svgrepo-com.jpg">
+                                <img class="image" mat-card-image
+                                    src="assets/familyGroupIcon/receive-hand-svgrepo-com.jpg">
                                 <mat-card-content>
 
                                     <div style="padding-bottom: 10px;">
