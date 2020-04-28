@@ -61,10 +61,6 @@ export class DialogDonateUnitsComponent implements OnInit {
     dataLeft: number;
     talkTimeLeft: number;
 
-    // totalData: number = 0;
-    // totalTalkTime: number = 0;
-    // totalSMS: number = 0;
-
     constructor(
         private familyGroupService: FamilyGroupService,
         public dialogRef: MatDialogRef<DialogDonateUnitsComponent>,
@@ -78,49 +74,47 @@ export class DialogDonateUnitsComponent implements OnInit {
     }
 
     selectSubscription(subscription: Subscription): void {
-        console.log(this.selectedSubscription.subscriptionId);
-        // this.selectedSubscription = event.source.value;
         this.selectedSubscription = subscription;
         this.donatedTalkTime = 0;
         this.donatedData = 0;
         this.donatedSMS = 0;
-        // this.smsSlider = 0;
-        // this.talktimeSlider = 0;
-        // this.dataSlider = 0;
 
         this.dataLeft = 0;
         this.talkTimeLeft = 0;
         this.smsLeft = 0;
 
-        this.dataLeft =
+        this.dataLeft = Math.floor(
             this.selectedSubscription.dataUnits['allocated'] +
-            this.selectedSubscription.dataUnits['addOn'] +
-            this.selectedSubscription.dataUnits['familyGroup'] +
-            this.selectedSubscription.dataUnits['quizExtraUnits'] -
-            this.selectedSubscription.dataUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].dataUsage;
+                this.selectedSubscription.dataUnits['addOn'] +
+                this.selectedSubscription.dataUnits['familyGroup'] +
+                this.selectedSubscription.dataUnits['quizExtraUnits'] -
+                this.selectedSubscription.dataUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].dataUsage
+        );
 
-        this.talkTimeLeft =
+        this.talkTimeLeft = Math.floor(
             this.selectedSubscription.talkTimeUnits['allocated'] +
-            this.selectedSubscription.talkTimeUnits['addOn'] +
-            this.selectedSubscription.talkTimeUnits['familyGroup'] +
-            this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
-            this.selectedSubscription.talkTimeUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].talktimeUsage;
+                this.selectedSubscription.talkTimeUnits['addOn'] +
+                this.selectedSubscription.talkTimeUnits['familyGroup'] +
+                this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
+                this.selectedSubscription.talkTimeUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].talktimeUsage
+        );
 
-        this.smsLeft =
+        this.smsLeft = Math.floor(
             this.selectedSubscription.smsUnits['allocated'] +
-            this.selectedSubscription.smsUnits['addOn'] +
-            this.selectedSubscription.smsUnits['familyGroup'] +
-            this.selectedSubscription.smsUnits['quizExtraUnits'] -
-            this.selectedSubscription.smsUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].smsUsage;
+                this.selectedSubscription.smsUnits['addOn'] +
+                this.selectedSubscription.smsUnits['familyGroup'] +
+                this.selectedSubscription.smsUnits['quizExtraUnits'] -
+                this.selectedSubscription.smsUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].smsUsage
+        );
     }
 
     handleDataSliderChange(value: number): void {

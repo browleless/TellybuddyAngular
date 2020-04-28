@@ -32,7 +32,6 @@ export class IndexComponent implements OnInit {
     constructor(
         private router: Router,
         public sessionService: SessionService,
-        public announcementService: AnnouncementService,
         private discountCodeService: DiscountCodeService,
         private breakpointObserver: BreakpointObserver,
         private snackBar: MatSnackBar
@@ -72,15 +71,6 @@ export class IndexComponent implements OnInit {
                     this.isLaptop = false;
                 }
             });
-
-        this.announcementService
-            .retrieveAllAnnouncements()
-            .subscribe((response) => {
-                this.announcements = response.announcements;
-            }),
-            (error) => {
-                console.log(error);
-            };
 
         this.loadDiscountCodes();
     }

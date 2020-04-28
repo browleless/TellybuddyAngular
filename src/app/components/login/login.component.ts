@@ -7,6 +7,7 @@ import { CustomerService } from 'src/app/service/customer.service';
 import { Customer } from 'src/app/classes/customer';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogForgotPasswordComponent } from '../dialog-forgot-password/dialog-forgot-password.component';
+import { AnnouncementService } from 'src/app/service/announcement.service';
 
 @Component({
     selector: 'app-login',
@@ -26,7 +27,8 @@ export class LoginComponent implements OnInit {
         public sessionService: SessionService,
         private customerService: CustomerService,
         private snackBar: MatSnackBar,
-        public dialog: MatDialog
+        public dialog: MatDialog,
+        private announcementService: AnnouncementService
     ) {
         this.loginError = false;
     }
@@ -43,21 +45,35 @@ export class LoginComponent implements OnInit {
                 (response) => {
                     let customer: Customer = response.customer;
                     if (customer != null) {
-                        this.sessionService.setIsLogin(true);
-                        this.sessionService.setCurrentCustomer(customer);
-                        this.loginError = false;
+                        this.announcementService
+                            .retrieveAllAnnouncements()
+                            .subscribe(
+                                (response) => {
+                                    this.sessionService.setAnnouncements(
+                                        response.announcements
+                                    );
+                                    this.sessionService.setIsLogin(true);
+                                    this.sessionService.setCurrentCustomer(
+                                        customer
+                                    );
+                                    this.loginError = false;
 
-                        this.router.navigate(['/index']);
-                        this.snackBar.open(
-                            'Welcome to Tellybuddy, ' +
-                                this.sessionService.getCurrentCustomer()
-                                    .firstName +
-                                '!',
-                            'Close',
-                            {
-                                duration: 4500,
-                            }
-                        );
+                                    this.router.navigate(['/index']);
+                                    this.snackBar.open(
+                                        'Welcome to Tellybuddy, ' +
+                                            this.sessionService.getCurrentCustomer()
+                                                .firstName +
+                                            '!',
+                                        'Close',
+                                        {
+                                            duration: 4500,
+                                        }
+                                    );
+                                },
+                                (error) => {
+                                    console.log(error);
+                                }
+                            );
                     } else {
                         this.loginError = true;
                     }
