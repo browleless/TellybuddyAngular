@@ -95,12 +95,9 @@ import { DialogConfigureContractPlanComponent } from './components/dialog-config
 import { DialogDonateUnitsComponent } from './components/familyGroup/dialog-donate-units/dialog-donate-units.component';
 import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-receive-units/dialog-receive-units.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
-<<<<<<< HEAD
 import { RegistrationComponent } from './components/registration/registration.component';
-=======
 import { PromotionsComponent } from './components/promotions/promotions.component';
 
->>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
 @NgModule({
     declarations: [
         AppComponent,
@@ -138,11 +135,8 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
         ViewAllProductsComponent,
-<<<<<<< HEAD
         RegistrationComponent,
-=======
         PromotionsComponent,
->>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
     ],
     imports: [
         BrowserAnimationsModule,
@@ -224,12 +218,9 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         MatStepperModule,
         MatTooltipModule,
         MatPaginatorModule,
-<<<<<<< HEAD
         FormsModule,
-=======
         MatCarouselModule,
         CountdownModule,
->>>>>>> 33e846adb66631dc40a8c1624d4c9de8eccf15a3
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
