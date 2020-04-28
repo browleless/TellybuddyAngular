@@ -63,7 +63,7 @@ export class PlansComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.planService.retrieveAllPlans().subscribe(
+        this.planService.retrieveAllNormalPlans().subscribe(
             (response) => {
                 this.plans = response.plans;
                 this.plans.sort((a, b) => a.price - b.price);

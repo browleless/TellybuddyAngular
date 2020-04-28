@@ -103,7 +103,7 @@ export class BundlePlansComponent implements OnInit {
         );
 
         this.loaded = false;
-        this.planService.retrieveAllPlans().subscribe(
+        this.planService.retrieveAllNormalPlans().subscribe(
             (response) => {
                 this.plans = response.plans;
                 this.plans.sort((a, b) => a.price - b.price);
