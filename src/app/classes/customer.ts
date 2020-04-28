@@ -38,6 +38,7 @@ export class Customer {
     announcements: Announcement[];
     familyGroup: FamilyGroup;
     ownerOfFamilyGroup: boolean;
+    consecutiveMonths: number;
     constructor(
         customerId?: number,
         username?: string,
@@ -69,7 +70,8 @@ export class Customer {
         transactions?: Transaction[],
         announcements?: Announcement[],
         familyGroup?: FamilyGroup,
-        ownerOfFamilyGroup?: boolean
+        ownerOfFamilyGroup?: boolean,
+        consecutiveMonths?: number
     ) {
         this.loyaltyPoints = loyaltyPoints;
         this.customerStatusEnum = customerStatusEnum;
@@ -99,9 +101,10 @@ export class Customer {
         this.email = email;
         this.newNric = newNric;
         this.newNricImagePath = newNricImagePath;
-        this.customerStatusEnum = this.customerStatusEnum;
+        this.customerStatusEnum = customerStatusEnum;
         this.joinDate = joinDate;
         this.profilePhoto = profilePhoto;
         this.ownerOfFamilyGroup = ownerOfFamilyGroup;
+        this.consecutiveMonths = consecutiveMonths;
     }
 }

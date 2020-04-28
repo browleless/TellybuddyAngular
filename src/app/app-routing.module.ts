@@ -20,6 +20,7 @@ import { ViewTransactionComponent } from './components/transaction-view/transact
 import { BillsComponent } from './components/bills/bills.component';
 import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.component';
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
         pathMatch: 'full',
     },
     { path: 'index', component: IndexComponent },
+    { path: 'registration', component: RegistrationComponent },
     { path: 'login', component: LoginComponent },
     { path: 'resetPassword/:salt', component: ResetPasswordComponent },
     { path: 'plans', component: PlansComponent },
