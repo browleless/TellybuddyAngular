@@ -97,6 +97,7 @@ import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-rec
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
+import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view-announcement-details/dialog-view-announcement-details.component';
 
 @NgModule({
     declarations: [
@@ -137,6 +138,7 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         ViewAllProductsComponent,
         RegistrationComponent,
         PromotionsComponent,
+        DialogViewAnnouncementDetailsComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -234,6 +236,7 @@ import { PromotionsComponent } from './components/promotions/promotions.componen
         DialogConfigureContractPlanComponent,
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
+        DialogViewAnnouncementDetailsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

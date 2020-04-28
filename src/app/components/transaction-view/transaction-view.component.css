@@ -1,11 +1,15 @@
-::ng-deep .mat-horizontal-stepper-header{
+::ng-deep .mat-horizontal-stepper-header {
     pointer-events: none !important;
-  }
+}
 ::ng-deep .mat-horizontal-content-container {
-    padding:0 !important;
+    padding: 0 !important;
 }
 
 ::ng-deep .mat-card-header-text {
     width: 100%;
-    text-align: center; 
+    text-align: center;
+}
+
+.mat-card {
+    border-radius: 0;
 }

@@ -1,0 +1,18 @@
+<div mat-dialog-title>
+    <div>
+        {{ data.selectedAnnouncement.title }}
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div>
+    <div mat-dialog-content style="height: auto;">
+        <div style="margin: 20px 0;">
+            {{ removeHtmlTag(data.selectedAnnouncement.content) }}
+        </div>
+        <div style="font-style: italic; text-align: right;">
+            {{ data.selectedAnnouncement.postedDate | date: 'dd MMM h:mm a' }}
+        </div>
+    </div>
+</div>
