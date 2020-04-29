@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Customer } from '../classes/customer';
 import { Transaction } from '../classes/transaction';
 import { TransactionLineItem } from '../classes/transaction-line-item';
+import { Announcement } from '../classes/announcement';
 
 @Injectable({
     providedIn: 'root',
@@ -53,6 +54,15 @@ export class SessionService {
 
     setPassword(password: string): void {
         sessionStorage.password = password;
+    }
+
+    getAnnouncements(): Announcement[] {
+        return JSON.parse(sessionStorage.announcements);
+    }
+
+    setAnnouncements(announcements: Announcement[]): void {
+        console.log(announcements);
+        sessionStorage.announcements = JSON.stringify(announcements);
     }
 
     getClearedCart(): Transaction {

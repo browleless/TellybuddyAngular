@@ -65,14 +65,16 @@ export class ProductsComponent implements OnInit {
         );
     }
 
-    addProductToCart(index: number): void {
+    addProductToCart(i: number): void {
         let added: boolean = false;
-        this.selectedProduct = this.products[index];
+        this.selectedProduct = this.products[i];
 
         //check if normal product is already a lineItem in cart
         let currentTransaction: Transaction = this.sessionService.getCart();
         let currentLineItems: TransactionLineItem[] =
             currentTransaction.transactionLineItems;
+
+        let indexI: number;
         for (let index = 0; index < currentLineItems.length; index++) {
             let li: TransactionLineItem = currentLineItems[index];
             if (
@@ -87,6 +89,7 @@ export class ProductsComponent implements OnInit {
                     currentLineItems[index].quantity *
                     currentLineItems[index].price;
                 added = true;
+                indexI = index;
             }
         }
         currentTransaction.transactionLineItems = currentLineItems;
@@ -104,8 +107,8 @@ export class ProductsComponent implements OnInit {
 
         snackBarRef.onAction().subscribe(() => {
             this.sessionService.updateLineItemQuantity(
-                index,
-                currentLineItems[index].quantity - 1
+                indexI,
+                currentLineItems[indexI].quantity - 1
             );
         });
 

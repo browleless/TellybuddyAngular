@@ -99,6 +99,7 @@ import { ViewAllProductsComponent } from './components/view-all-products/view-al
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { AccountEditComponent } from './components/account/account-edit/account-edit.component';
+import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view-announcement-details/dialog-view-announcement-details.component';
 
 @NgModule({
     declarations: [
@@ -140,6 +141,7 @@ import { AccountEditComponent } from './components/account/account-edit/account-
         RegistrationComponent,
         PromotionsComponent,
         AccountEditComponent,
+        DialogViewAnnouncementDetailsComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -239,6 +241,7 @@ import { AccountEditComponent } from './components/account/account-edit/account-
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
         AccountEditComponent,
+        DialogViewAnnouncementDetailsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
     bootstrap: [AppComponent],

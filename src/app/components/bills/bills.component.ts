@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    OnInit,
+    ViewChild,
+    ViewChildren,
+    QueryList,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
@@ -25,7 +31,7 @@ import { DialogBillPaymentComponent } from '../dialog-bill-payment/dialog-bill-p
     styleUrls: ['./bills.component.css'],
 })
 export class BillsComponent implements OnInit {
-    @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
 
     loaded: boolean = false;
     loadedBills: boolean = false;
@@ -287,7 +293,9 @@ export class BillsComponent implements OnInit {
                     this.subscriptionBills = new MatTableDataSource(
                         response.bills
                     );
-                    this.subscriptionBills.paginator = this.paginator;
+                    this.subscriptionBills.paginator = this.paginator.toArray()[
+                        index
+                    ];
                 },
                 (error) => {
                     console.log(error);

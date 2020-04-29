@@ -118,22 +118,6 @@ export class LuxuryproductsComponent implements OnInit {
 
         this.lineItem = newLineItem;
 
-        // this.sessionService.addToCart(newLineItem);
-
-        // const snackBarRef = this.snackBar.open(
-        //   'Successfully added Product: "' +
-        //   this.selectedLuxury.name +
-        //   '" to the cart!',
-        //   'Undo',
-        //   {
-        //     duration: 4500,
-        //   }
-        // );
-
-        // snackBarRef.onAction().subscribe(() => {
-        //   this.sessionService.undoAddToCart();
-        // });
-
         this.dialog.open(DialogRecommendPlansComponent, {
             data: {
                 lineItem: newLineItem,

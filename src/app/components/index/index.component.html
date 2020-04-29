@@ -30,22 +30,37 @@
                 </mat-carousel-slide>
             </mat-carousel>
         </section>
-        <section>
-            <div style="margin-top: 2.25%; margin-left: 6.5%;">
+        <section style="background-color: #f6f6f6;">
+            <div style="padding-top: 2.25%; text-align: center;">
                 <h2 style="margin: 0;">
+                    Grab the latest discount codes while they last!
                     <button (click)="loadDiscountCodes()" mat-icon-button>
                         <mat-icon>refresh</mat-icon>
                     </button>
-                    Grab the latest discount codes while they last!
                 </h2>
             </div>
             <div *ngIf="!loadedDiscountCodes" style="padding: 60px 0;">
                 <mat-spinner style="margin: 0 auto;"></mat-spinner>
             </div>
             <div *ngIf="loadedDiscountCodes" style="margin: 0 5%;">
+                <div
+                    *ngIf="!availableDiscountCodes.length"
+                    style="margin-top: 2.25%; text-align: center;"
+                >
+                    <img
+                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg"
+                        height="130px"
+                        width="130px"
+                    />
+                    <div style="padding: 2.25% 0;">
+                        Looks like there are no available discount codes now,
+                        check back again soon!
+                    </div>
+                </div>
                 <mat-grid-list
                     rowHeight="450"
                     [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    *ngIf="availableDiscountCodes.length"
                 >
                     <mat-grid-tile
                         *ngFor="let discountCode of availableDiscountCodes"
@@ -99,6 +114,157 @@
                 </mat-grid-list>
             </div>
         </section>
+        <section>
+            <div
+                style="
+                    position: absolute;
+                    margin-left: 130px;
+                    margin-top: 12%;
+                    color: white;
+                "
+            >
+                <div style="font-size: xx-large; font-weight: 500;">
+                    iPhone SE
+                </div>
+                <div style="margin: 25px 0;">
+                    Small, compact, yet powerful at the same time. Introducing
+                    Apple's latest innovation.
+                </div>
+                <div>
+                    <button
+                        mat-raised-button
+                        color="accent"
+                        routerLink="/luxuryproducts"
+                    >
+                        Discover More
+                    </button>
+                </div>
+            </div>
+            <img
+                style="display: block; width: 100%; height: auto;"
+                src="../../../assets/homePage/banner1.png"
+            />
+        </section>
+        <section>
+            <div
+                style="
+                    position: absolute;
+                    margin-left: 130px;
+                    margin-top: 12%;
+                    left: 50%;
+                "
+            >
+                <div style="font-size: xx-large; font-weight: 500;">
+                    Always Stay Connected
+                </div>
+                <div style="margin: 25px 0;">
+                    With Tellybuddy plans, never be afraid of losing contact
+                    with your loved ones.
+                </div>
+                <div>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        routerLink="/plans"
+                    >
+                        Start Your Journey
+                    </button>
+                </div>
+            </div>
+            <img
+                style="display: block; width: 100%; height: auto;"
+                src="../../../assets/homePage/banner2.jpg"
+            />
+        </section>
+        <section>
+            <div
+                style="position: absolute; margin-left: 130px; margin-top: 12%;"
+            >
+                <div style="font-size: xx-large; font-weight: 500;">
+                    Samsung Galaxy S20 Series
+                </div>
+                <div style="margin: 25px 0;">
+                    Checkout Samsung's latest Galaxy Lineup, the S20 and S20+!
+                </div>
+                <div>
+                    <button
+                        mat-raised-button
+                        color="accent"
+                        routerLink="/luxuryproducts"
+                    >
+                        Take Me There
+                    </button>
+                </div>
+            </div>
+            <img
+                style="display: block; width: 100%; height: auto;"
+                src="../../../assets/homePage/banner3.jpg"
+            />
+        </section>
+        <section style="background-color: #1f2f98; color: white;">
+            <mat-grid-list
+                rowHeight="300"
+                [cols]="isMobile || isTablet ? 1 : 2"
+            >
+                <mat-grid-tile>
+                    <div style="text-align: center;">
+                        <div
+                            style="
+                                text-transform: uppercase;
+                                font-weight: bold;
+                                font-size: x-large;
+                            "
+                        >
+                            Tan Wee Kek
+                        </div>
+                        <div style="margin: 15px 150px; font-style: italic;">
+                            Switching to Tellybuddy was a phenomenal experience
+                            and I have not regretted since. The ability to tweak
+                            the plan units in accordance to my preferred usage
+                            habits provides great flexibility that no other
+                            current telco offers. Moreover, I can share any
+                            excess units I might not have utilized with my
+                            family members at no additional cost. I simply love
+                            it! ❤️
+                        </div>
+                        <div style="color: #ffd700;">
+                            ★★★★★
+                        </div>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <div style="position: absolute; left: 80px; top: 55px;">
+                        <div style="font-size: larger; margin-left: 10px;">
+                            Check out what our customers have to say about us!
+                        </div>
+                        <div style="margin: 40px 0 40px 10px;">
+                            This is an
+                            <span style="color: #ffd700;">
+                                honest review
+                            </span>
+                            from our beloved customer!
+                        </div>
+                        <div>
+                            <img
+                                width="206px"
+                                height="auto"
+                                src="../../../assets/homePage/seedly-review.webp"
+                                style="float: left;"
+                            />
+                        </div>
+                        <div style="margin-top: 72px;">
+                            <button
+                                mat-raised-button
+                                color="accent"
+                                routerLink="/plans"
+                            >
+                                Join Us Today
+                            </button>
+                        </div>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </section>
         <section style="background-color: #f6f6f6;">
             <mat-grid-list
                 rowHeight="300"
@@ -133,20 +299,20 @@
                         </div>
                         <div>
                             <img
-                                height="80px"
-                                width="80px"
+                                height="60px"
+                                width="60px"
                                 src="../../../assets/homePage/visa.png"
                                 style="margin-right: 25px;"
                             />
                             <img
-                                height="80px"
-                                width="80px"
+                                height="60px"
+                                width="60px"
                                 src="../../../assets/homePage/mastercard.png"
                                 style="margin-right: 25px;"
                             />
                             <img
-                                height="80px"
-                                width="80px"
+                                height="60px"
+                                width="60px"
                                 src="../../../assets/homePage/amex.png"
                             />
                         </div>

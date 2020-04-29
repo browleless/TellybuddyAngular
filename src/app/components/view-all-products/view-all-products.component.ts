@@ -3,16 +3,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogRecommendPlansComponent } from '../dialog-recommend-plans/dialog-recommend-plans.component';
 
 import { Product } from 'src/app/classes/product';
 import { ProductService } from 'src/app/service/product.service';
 import { CategoryService } from 'src/app/service/category.service';
 import { TagService } from 'src/app/service/tag.service';
+import { Transaction } from 'src/app/classes/transaction';
 import { TransactionLineItem } from 'src/app/classes/transaction-line-item';
 import { SessionService } from 'src/app/service/session.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from 'src/app/classes/category';
 import { Tag } from 'src/app/classes/tag';
+import { LuxuryProduct } from 'src/app/classes/luxury-product';
 
 @Component({
     selector: 'app-view-all-products',
@@ -21,6 +25,7 @@ import { Tag } from 'src/app/classes/tag';
 })
 export class ViewAllProductsComponent implements OnInit {
     products: Product[];
+    luxuryProducts: Product[];
     categories: Category[];
     tags: Tag[];
     loaded: boolean = false;
@@ -33,8 +38,9 @@ export class ViewAllProductsComponent implements OnInit {
     condition: string;
     searchInput: string;
     displayProducts: Product[];
-    filterProductsByTags: Product[];
-    filterProductsByCategory: Product[];
+    selectedProduct: Product;
+    // filterProductsByTags: Product[];
+    // filterProductsByCategory: Product[];
 
     constructor(
         private router: Router,
@@ -44,7 +50,8 @@ export class ViewAllProductsComponent implements OnInit {
         private tagService: TagService,
         private breakpointObserver: BreakpointObserver,
         private snackBar: MatSnackBar,
-        public sessionService: SessionService
+        public sessionService: SessionService,
+        public dialog: MatDialog
     ) {
         breakpointObserver
             .observe(['(max-width: 599px)'])
@@ -82,6 +89,18 @@ export class ViewAllProductsComponent implements OnInit {
         );
 
         this.loaded = false;
+        this.productService.retrieveAllLuxuryProducts().subscribe(
+            (response) => {
+                this.luxuryProducts = response.products;
+                this.luxuryProducts.sort((a, b) => a.price - b.price);
+                this.loaded = true;
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+
+        this.loaded = false;
         this.categoryService.retrieveAllCategories().subscribe(
             (response) => {
                 this.categories = response.categories;
@@ -103,9 +122,7 @@ export class ViewAllProductsComponent implements OnInit {
             }
         );
 
-        // this.filterProductsByCategory = new Array<Product>();
         this.selectedTags = new Array<number>();
-        this.filterProductsByTags = new Array<Product>();
     }
 
     searchProducts(event: any): void {
@@ -143,8 +160,8 @@ export class ViewAllProductsComponent implements OnInit {
 
         this.productService.filterProductsByCategory(categoryId).subscribe(
             (response) => {
-                this.filterProductsByCategory = response.products;
-                this.products.sort((a, b) => a.price - b.price);
+                this.displayProducts = response.products;
+                this.displayProducts.sort((a, b) => a.price - b.price);
                 this.loaded = true;
             },
             (error) => {
@@ -152,7 +169,7 @@ export class ViewAllProductsComponent implements OnInit {
             }
         );
 
-        console.log('num of products: ' + this.filterProductsByCategory.length);
+        console.log('num of products: ' + this.displayProducts.length);
     }
 
     selectTag(index: number): void {
@@ -194,9 +211,158 @@ export class ViewAllProductsComponent implements OnInit {
             );
     }
 
-    // resetAllTags(): void {
-    //     this.tags.forEach((tag) => {
-    //         tag.checked = false;
-    //       })
-    // }
+    selectProduct(index: number): void {
+        this.selectedProduct = this.displayProducts[index];
+        let isLuxury: boolean = false;
+
+        for (let luxury of this.luxuryProducts) {
+            if (this.selectedProduct.productId == luxury.productId) {
+                isLuxury = true;
+                this.addLuxuryProductToCart();
+            }
+        }
+
+        if (!isLuxury) {
+            this.addProductToCart();
+        }
+    }
+
+    addProductToCart(): void {
+        let added: boolean = false;
+
+        //check if normal product is already a lineItem in cart
+        let currentTransaction: Transaction = this.sessionService.getCart();
+        let currentLineItems: TransactionLineItem[] =
+            currentTransaction.transactionLineItems;
+
+        let indexI: number;
+        for (let index = 0; index < currentLineItems.length; index++) {
+            let li: TransactionLineItem = currentLineItems[index];
+            if (
+                li.productItem == undefined &&
+                li.subscription === undefined &&
+                li.product.productId == this.selectedProduct.productId &&
+                li.price == this.selectedProduct.price
+            ) {
+                currentLineItems[index].quantity =
+                    currentLineItems[index].quantity + 1;
+                currentLineItems[index].subtotal =
+                    currentLineItems[index].quantity *
+                    currentLineItems[index].price;
+                added = true;
+                indexI = index;
+            }
+        }
+        currentTransaction.transactionLineItems = currentLineItems;
+        this.sessionService.setCart(currentTransaction);
+
+        const snackBarRef = this.snackBar.open(
+            'Successfully increased quantity of Product: "' +
+                this.selectedProduct.name +
+                '" by 1 to the cart! Quantity can be adjusted in the cart!',
+            'Undo',
+            {
+                duration: 4500,
+            }
+        );
+
+        snackBarRef.onAction().subscribe(() => {
+            this.sessionService.updateLineItemQuantity(
+                indexI,
+                currentLineItems[indexI].quantity - 1
+            );
+        });
+
+        if (added == false) {
+            let newLineItem: TransactionLineItem = {
+                product: {
+                    productId: this.selectedProduct.productId,
+                    skuCode: this.selectedProduct.skuCode,
+                    name: this.selectedProduct.name,
+                    description: this.selectedProduct.description,
+                    price: this.selectedProduct.price,
+                    quantityOnHand: this.selectedProduct.quantityOnHand,
+                    reorderQuantity: this.selectedProduct.reorderQuantity,
+                    productImagePath: this.selectedProduct.productImagePath,
+                    tags: this.selectedProduct.tags,
+                    category: this.selectedProduct.category,
+                    dealStartTime: this.selectedProduct.dealStartTime,
+                    dealEndTime: this.selectedProduct.dealEndTime,
+                    discountPrice: this.selectedProduct.discountPrice,
+                },
+                transactionLineItemId: undefined,
+                price: this.selectedProduct.price,
+                quantity: 1,
+                subtotal: this.selectedProduct.price,
+                transaction: undefined,
+                subscription: undefined,
+                productItem: undefined,
+            };
+
+            this.sessionService.addToCart(newLineItem);
+
+            const snackBarRef = this.snackBar.open(
+                'Successfully added Product: "' +
+                    this.selectedProduct.name +
+                    '" to the cart! Quantity of product can be adjusted in the cart!',
+                'Undo',
+                {
+                    duration: 4500,
+                }
+            );
+
+            snackBarRef.onAction().subscribe(() => {
+                this.sessionService.undoAddToCart();
+            });
+        }
+    }
+
+    addLuxuryProductToCart(): void {
+        //type cast
+        let selectedLuxuryProd: LuxuryProduct;
+        selectedLuxuryProd = this.selectedProduct as LuxuryProduct;
+        // if (this.selectedLuxury instanceof LuxuryProduct) {
+        //   selectedLuxuryProd = this.selectedLuxury as LuxuryProduct;
+        // }
+
+        let newLineItem: TransactionLineItem = {
+            product: undefined,
+            transactionLineItemId: undefined,
+            price: this.selectedProduct.price,
+            quantity: 1,
+            subtotal: this.selectedProduct.price,
+            transaction: undefined,
+            subscription: undefined,
+            productItem: {
+                productItemId: undefined,
+                serialNumber: undefined,
+                price: selectedLuxuryProd.price,
+                luxuryProduct: {
+                    serialNumber: selectedLuxuryProd.serialNumber,
+                    productItems: undefined,
+                    productId: this.selectedProduct.productId,
+                    skuCode: this.selectedProduct.skuCode,
+                    name: this.selectedProduct.name,
+                    description: this.selectedProduct.description,
+                    price: this.selectedProduct.price,
+                    quantityOnHand: this.selectedProduct.quantityOnHand,
+                    reorderQuantity: this.selectedProduct.reorderQuantity,
+                    productImagePath: this.selectedProduct.productImagePath,
+                    tags: this.selectedProduct.tags,
+                    category: this.selectedProduct.category,
+                    dealStartTime: this.selectedProduct.dealStartTime,
+                    dealEndTime: this.selectedProduct.dealEndTime,
+                    discountPrice: this.selectedProduct.discountPrice,
+                },
+            },
+        };
+
+        this.dialog.open(DialogRecommendPlansComponent, {
+            data: {
+                lineItem: newLineItem,
+            },
+            height: '220px',
+            width: '460px',
+        });
+    }
 }
