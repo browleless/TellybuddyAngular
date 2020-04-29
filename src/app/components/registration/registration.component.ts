@@ -6,12 +6,15 @@ import { SessionService } from 'src/app/service/session.service';
 import { Announcement } from 'src/app/classes/announcement';
 import { Bill } from 'src/app/classes/bill';
 import { MatSnackBar } from '@angular/material';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import {
     ValidatorFn,
     FormGroup,
     ValidationErrors,
     FormBuilder,
     Validators,
+    FormControl,
+    AbstractControl,
 } from '@angular/forms';
 
 @Component({
@@ -31,7 +34,9 @@ export class RegistrationComponent implements OnInit {
     age: number;
     firstName: string;
     lastName: string;
-    formGroup: FormGroup;
+    confirmedPassword: string;
+    //formGroup: FormGroup;
+    registerForm: FormGroup;
 
     constructor(
         private customerService: CustomerService,
@@ -43,20 +48,24 @@ export class RegistrationComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        // this.formGroup = this.formBuilder.group({
-        //     password: ['', [Validators.required]],
-        //     password2: ['', [Validators.required]]
-        //   }, {validator: passwordMatchValidator});
+        // this.registerForm = new FormGroup(
+        //     {
+        //         password: new FormControl(null, [
+        //             Validators.required,
+        //             Validators.maxLength(32),
+        //         ]),
+        //         confirmPassword: new FormControl(null, [Validators.required]),
+        //     },
+        //     { validators: this.passwordConfirming }
+        // );
     }
-    //     get password() { return this.formGroup.get('password'); }
-    //   get password2() { return this.formGroup.get('password2'); }
 
-    //   onPasswordInput() {
-    //     if (this.formGroup.hasError('passwordMismatch'))
-    //       this.password2.setErrors([{'passwordMismatch': true}]);
-    //     else
-    //       this.password2.setErrors(null);
-    //   }
+    // passwordConfirming(c: AbstractControl): { invalid: boolean } {
+    //     if (c.get('password').value !== c.get('confirmPassword').value) {
+    //         return { invalid: true };
+    //     }
+    // }
+
     registration(): void {
         let newCustomer: Customer = {
             announcements: undefined,
@@ -79,14 +88,16 @@ export class RegistrationComponent implements OnInit {
             newAddress: this.newAddress,
             newPostalCode: this.newPostalCode,
             newNric: this.newNric,
-            newNricImagePath: undefined,
+            newNricBackImagePath: undefined,
+            newNricFrontImagePath: undefined,
             address: undefined,
             postalCode: undefined,
             nric: undefined,
             age: this.age,
             firstName: this.firstName,
             lastName: this.lastName,
-            nricImagePath: undefined,
+            nricFrontImagePath: undefined,
+            nricBackImagePath: undefined,
             creditCardExpiryDate: undefined,
             cvv: undefined,
             creditCardNumber: undefined,

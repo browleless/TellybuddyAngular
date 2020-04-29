@@ -49,17 +49,11 @@ const routes: Routes = [
     },
     { path: 'familyGroup/viewSettings', component: ViewSettingsComponent },
     { path: 'subscriptions', component: SubscriptionsComponent },
+    { path: 'account', component: AccountComponent },
     {
-        path: 'account',
-        component: AccountComponent,
-        children: [
-            {
-                path: 'account-edit/:customerId',
-                component: AccountEditComponent,
-            },
-        ],
+        path: 'account/account-edit',
+        component: AccountEditComponent,
     },
-    // { path: 'account/account-edit/:customerId', component: AccountEditComponent },
     {
         path: 'transaction-view/:transactionId',
         component: ViewTransactionComponent,

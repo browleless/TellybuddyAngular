@@ -55,6 +55,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -223,6 +224,7 @@ import { AccountEditComponent } from './components/account/account-edit/account-
         FormsModule,
         MatCarouselModule,
         CountdownModule,
+        ReactiveFormsModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,

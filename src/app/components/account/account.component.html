@@ -39,8 +39,7 @@
                                 </p>
                             </mat-card-content>
                             <mat-card-actions style="text-align: right; margin-bottom: 10px;">
-                                <button mat-button
-                                    [routerLink]="['account-edit', currentCustomer.customerId]">EDIT</button>
+                                <button mat-button (click)="updateParticulars()">EDIT</button>
                                 <!-- <button mat-button>EDIT</button> -->
                             </mat-card-actions>
                         </mat-card>
@@ -59,9 +58,9 @@
                                     Singapore: {{ currentCustomer.postalCode }}
                                 </p>
                             </mat-card-content>
-                            <mat-card-actions style="text-align: right; margin-bottom: 10px;">
+                            <!-- <mat-card-actions style="text-align: right; margin-bottom: 10px;">
                                 <button mat-button>EDIT</button>
-                            </mat-card-actions>
+                            </mat-card-actions> -->
                         </mat-card>
                     </mat-grid-tile>
                 </mat-grid-list>

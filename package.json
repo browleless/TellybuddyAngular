@@ -24,6 +24,7 @@
     "@angular/router": "~8.2.14",
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@ngmodule/material-carousel": "^0.6.0",
+    "@rxweb/reactive-form-validators": "^1.9.9-beta4",
     "animate.css": "^3.7.2",
     "chart.js": "^2.9.3",
     "hammerjs": "^2.0.8",

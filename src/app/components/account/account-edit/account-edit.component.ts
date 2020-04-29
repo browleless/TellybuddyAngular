@@ -1,23 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { slideInOutAnimation } from 'src/app/_animations/index';
 import { Customer } from 'src/app/classes/customer';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/service/customer.service';
+import { SessionService } from 'src/app/service/session.service';
 
 @Component({
     selector: 'app-account-edit',
     templateUrl: './account-edit.component.html',
     styleUrls: ['./account-edit.component.css'],
-    animations: [slideInOutAnimation],
-    host: { '[@slideInOutAnimation]': '' },
 })
 export class AccountEditComponent implements OnInit {
     customerToUpdate: Customer;
-
+    loaded: boolean;
+    password: string;
+    confirmedPassword: string;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private customerService: CustomerService
+        private customerService: CustomerService,
+        private sessionService: SessionService
     ) {}
 
     ngOnInit() {
@@ -31,6 +32,7 @@ export class AccountEditComponent implements OnInit {
                 );
             }
         );
+        this.loaded = true;
     }
 
     updateCustomer() {
@@ -47,5 +49,25 @@ export class AccountEditComponent implements OnInit {
                     );
                 }
             );
+        if (this.confirmedPassword != null) {
+            this.customerToUpdate.password = this.confirmedPassword;
+            this.customerService
+                .changePassword(this.customerToUpdate)
+                .subscribe(
+                    (response) => {
+                        this.sessionService.setPassword(this.confirmedPassword);
+                        this.router.navigate(['login']);
+                    },
+                    (error) => {
+                        console.log(
+                            '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                                error
+                        );
+                    }
+                );
+        }
+    }
+    navigateToAccount() {
+        this.router.navigate(['account']);
     }
 }

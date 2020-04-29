@@ -21,11 +21,11 @@ export class AccountComponent implements OnInit {
     allTransactions: Transaction[];
     transactions: Transaction[];
     sortedTransactions = {
-        "All" : [],
-       "Processing": [],
-       "Shipped": [],
-       "Delivered": [],
-       "Refunded": [],
+        All: [],
+        Processing: [],
+        Shipped: [],
+        Delivered: [],
+        Refunded: [],
     };
     loaded: boolean;
     tabs: string[] = ['All', 'Processing', 'Shipped', 'Delivered', 'Refunded'];
@@ -51,7 +51,7 @@ export class AccountComponent implements OnInit {
                 var shipped = [];
                 var delivered = [];
                 var refunded = [];
-                this.allTransactions.forEach(function(item) {
+                this.allTransactions.forEach(function (item) {
                     if (item.transactionStatusEnum == 'PROCESSING') {
                         processed.push(item);
                     } else if (item.transactionStatusEnum == 'SHIPPED') {
@@ -62,11 +62,11 @@ export class AccountComponent implements OnInit {
                         delivered.push(item);
                     }
                 });
-                this.sortedTransactions['All']= (this.allTransactions);
-                this.sortedTransactions['Processing']= (processed);
-                this.sortedTransactions['Shipped'] = (shipped);
-                this.sortedTransactions['Delivered']= (delivered);
-                this.sortedTransactions['Refunded'] = (refunded);
+                this.sortedTransactions['All'] = this.allTransactions;
+                this.sortedTransactions['Processing'] = processed;
+                this.sortedTransactions['Shipped'] = shipped;
+                this.sortedTransactions['Delivered'] = delivered;
+                this.sortedTransactions['Refunded'] = refunded;
 
                 function getTime(date?: string) {
                     return date != null ? new Date(date).getTime() : 0;
@@ -93,14 +93,19 @@ export class AccountComponent implements OnInit {
                 console.log(error);
             }
         );
-        
     }
+    updateParticulars() {
+        this.router.navigate(['account/account-edit']);
+    }
+
     manageTransaction(i: number) {
         this.router.navigate([
             'transaction-view/' + this.allTransactions[i].transactionId,
         ]);
     }
     filterTransactions(tabChangeEvent: MatTabChangeEvent) {
-        this.transactions = this.sortedTransactions[this.tabs[tabChangeEvent.index]];
+        this.transactions = this.sortedTransactions[
+            this.tabs[tabChangeEvent.index]
+        ];
     }
 }
