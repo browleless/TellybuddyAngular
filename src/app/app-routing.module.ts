@@ -22,6 +22,7 @@ import { BundlePlansComponent } from './components/bundle-plans/bundle-plans.com
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
+import { AccountEditComponent } from './components/account/account-edit/account-edit.component';
 
 const routes: Routes = [
     {
@@ -48,7 +49,17 @@ const routes: Routes = [
     },
     { path: 'familyGroup/viewSettings', component: ViewSettingsComponent },
     { path: 'subscriptions', component: SubscriptionsComponent },
-    { path: 'account', component: AccountComponent },
+    {
+        path: 'account',
+        component: AccountComponent,
+        children: [
+            {
+                path: 'account-edit/:customerId',
+                component: AccountEditComponent,
+            },
+        ],
+    },
+    // { path: 'account/account-edit/:customerId', component: AccountEditComponent },
     {
         path: 'transaction-view/:transactionId',
         component: ViewTransactionComponent,

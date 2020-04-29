@@ -16,6 +16,7 @@ export class DialogReceiveUnitsComponent implements OnInit {
     @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
     loaded: boolean = false;
     shakeIt = false;
+    remainingUnits: number;
     currentCustomerSubscription: Subscription[];
     selectedSubscription: Subscription = {
         subscriptionId: undefined,
@@ -75,77 +76,90 @@ export class DialogReceiveUnitsComponent implements OnInit {
 
     selectSubscription(event): void {
         this.selectedSubscription = event.source.value;
-        this.dataLeft =
+        this.dataLeft = Math.floor(
             this.selectedSubscription.dataUnits['allocated'] +
-            this.selectedSubscription.dataUnits['addOn'] +
-            this.selectedSubscription.dataUnits['familyGroup'] +
-            this.selectedSubscription.dataUnits['quizExtraUnits'] -
-            this.selectedSubscription.dataUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].dataUsage;
+                this.selectedSubscription.dataUnits['addOn'] +
+                this.selectedSubscription.dataUnits['familyGroup'] +
+                this.selectedSubscription.dataUnits['quizExtraUnits'] -
+                this.selectedSubscription.dataUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].dataUsage
+        );
 
-        this.talkTimeLeft =
+        this.talkTimeLeft = Math.floor(
             this.selectedSubscription.talkTimeUnits['allocated'] +
-            this.selectedSubscription.talkTimeUnits['addOn'] +
-            this.selectedSubscription.talkTimeUnits['familyGroup'] +
-            this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
-            this.selectedSubscription.talkTimeUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].talktimeUsage;
+                this.selectedSubscription.talkTimeUnits['addOn'] +
+                this.selectedSubscription.talkTimeUnits['familyGroup'] +
+                this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
+                this.selectedSubscription.talkTimeUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].talktimeUsage
+        );
 
-        this.smsLeft =
+        this.smsLeft = Math.floor(
             this.selectedSubscription.smsUnits['allocated'] +
-            this.selectedSubscription.smsUnits['addOn'] +
-            this.selectedSubscription.smsUnits['familyGroup'] +
-            this.selectedSubscription.smsUnits['quizExtraUnits'] -
-            this.selectedSubscription.smsUnits['donated'] -
-            this.selectedSubscription.usageDetails[
-                this.selectedSubscription.usageDetails.length - 1
-            ].smsUsage;
+                this.selectedSubscription.smsUnits['addOn'] +
+                this.selectedSubscription.smsUnits['familyGroup'] +
+                this.selectedSubscription.smsUnits['quizExtraUnits'] -
+                this.selectedSubscription.smsUnits['donated'] -
+                this.selectedSubscription.usageDetails[
+                    this.selectedSubscription.usageDetails.length - 1
+                ].smsUsage
+        );
     }
 
     handleDataSliderChange(value: number): void {
-        if (
-            value - this.receivedData <= this.getRemainingUnits() ||
-            value <= this.receivedData
-        ) {
-            this.receivedData = value;
-        } else {
-            this.dataSlider.value = this.receivedData;
-        }
+        // if (
+        //     value - this.receivedData <= this.getRemainingUnits() ||
+        //     value <= this.receivedData
+        // ) {
+        //     this.receivedData = value;
+        // } else {
+        //     this.dataSlider.value = this.receivedData;
+        // }
+        this.receivedData = value;
+        this.changeRemainingUnits(
+            this.data.currentFamilyGroup.donatedDataUnits,
+            value
+        );
     }
 
     handleSMSSliderChange(value: number): void {
-        if (
-            value - this.receivedSMS <= this.getRemainingUnits() ||
-            value <= this.receivedSMS
-        ) {
-            this.receivedSMS = value;
-        } else {
-            this.smsSlider.value = this.receivedSMS;
-        }
+        // if (
+        //     value - this.receivedSMS <= this.getRemainingUnits() ||
+        //     value <= this.receivedSMS
+        // ) {
+        //     this.receivedSMS = value;
+        // } else {
+        //     this.smsSlider.value = this.receivedSMS;
+        // }
+        this.receivedSMS = value;
+        this.changeRemainingUnits(
+            this.data.currentFamilyGroup.donatedSMSUnits,
+            value
+        );
     }
 
     handleTalkTimeSliderChange(value: number): void {
-        if (
-            value - this.receivedTalkTime <= this.getRemainingUnits() ||
-            value <= this.receivedTalkTime
-        ) {
-            this.receivedTalkTime = value;
-        } else {
-            this.talktimeSlider.value = this.receivedTalkTime;
-        }
+        // if (
+        //     value - this.receivedTalkTime <= this.getRemainingUnits() ||
+        //     value <= this.receivedTalkTime
+        // ) {
+        //     this.receivedTalkTime = value;
+        // } else {
+        //     this.talktimeSlider.value = this.receivedTalkTime;
+        // }
+        this.receivedTalkTime = value;
+        this.changeRemainingUnits(
+            this.data.currentFamilyGroup.donatedTalkTimeUnits,
+            value
+        );
     }
 
-    getRemainingUnits(): number {
-        return (
-            this.data.currentFamilyGroup.donatedUnits -
-            this.receivedData -
-            this.receivedSMS -
-            this.receivedTalkTime
-        );
+    changeRemainingUnits(left: number, value: number): void {
+        this.remainingUnits = left - value;
     }
 
     onExitClick(): void {

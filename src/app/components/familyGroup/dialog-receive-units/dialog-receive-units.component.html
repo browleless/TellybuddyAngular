@@ -10,12 +10,14 @@
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
     <div *ngIf="loaded">
-        <div *ngIf="data.currentFamilyGroup.donatedUnits == 0">
+        <div
+            *ngIf="data.currentFamilyGroup.donatedDataUnits+ data.currentFamilyGroup.donatedSMSUnits + data.currentFamilyGroup.donatedTalkTimeUnits == 0">
 
             <h2>No units left in the family group</h2>
 
         </div>
-        <div *ngIf="data.currentFamilyGroup.donatedUnits != 0">
+        <div
+            *ngIf=" data.currentFamilyGroup.donatedDataUnits+ data.currentFamilyGroup.donatedSMSUnits + data.currentFamilyGroup.donatedTalkTimeUnits != 0">
             <p>
                 <mat-form-field>
 
@@ -37,37 +39,22 @@
                     <div style="float: left;">
                         <div>
                             Data Units:
-                            <mat-slider #dataSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleDataSliderChange($event.value)" (input)="
-            $event.value - receivedData <= getRemainingUnits()
-                                ? (receivedData = $event.value)
-                                : $event.value <= dataUnits
-                                ? (receivedData = $event.value)
-                                : (receivedData = receivedData)">
+                            <mat-slider #dataSlider [max]="data.currentFamilyGroup.donatedDataUnits" thumbLabel
+                                (change)="handleDataSliderChange($event.value)">
                             </mat-slider>
                             Total Data Unit: {{receivedData + dataLeft}}
                         </div>
                         <div>
                             SMS Units:
-                            <mat-slider #smsSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleSMSSliderChange($event.value)" (input)="
-            $event.value - receivedSMS <= getRemainingUnits()
-                                ? (receivedSMS = $event.value)
-                                : $event.value <= receivedSMS
-                                ? (receivedSMS = $event.value)
-                                : (receivedSMS = receivedSMS)">
+                            <mat-slider #smsSlider [max]="data.currentFamilyGroup.donatedSMSUnits" thumbLabel
+                                (change)="handleSMSSliderChange($event.value)">
                             </mat-slider>
                             Total SMS Unit:{{receivedSMS + smsLeft}}
                         </div>
                         <div>
                             Talk Time Units:
-                            <mat-slider #talktimeSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleTalkTimeSliderChange($event.value)" (input)="
-            $event.value - receivedTalkTime <= getRemainingUnits()
-                                ? (receivedTalkTime = $event.value)
-                                : $event.value <= receivedTalkTime
-                                ? (receivedTalkTime = $event.value)
-                                : (receivedTalkTime = receivedTalkTime)">
+                            <mat-slider #talktimeSlider [max]="data.currentFamilyGroup.donatedTalkTimeUnits" thumbLabel
+                                (change)="handleTalkTimeSliderChange($event.value)">
                             </mat-slider>
                             Total Talk Time Unit: {{receivedTalkTime + talkTimeLeft}}
                         </div>
@@ -84,13 +71,13 @@
                             background-color: #f04393;
                             color: white;
                         ">
-                            {{ getRemainingUnits() }}
+                            {{ remainingUnits }}
                             <div style="
                                 padding: 0;
                                 font-size: initial;
                                 font-weight: normal;
                             ">
-                                units left
+                                units left in pool
                             </div>
                         </div>
                     </div>

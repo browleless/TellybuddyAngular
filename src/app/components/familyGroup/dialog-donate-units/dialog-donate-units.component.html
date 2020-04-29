@@ -30,25 +30,51 @@
             <div>
                 <div style="float: left;">
                     <div>
-                        Data Units:
-                        <mat-slider #dataSlider [max]="dataLeft" thumbLabel
-                            (change)="handleDataSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedData}} out of {{dataLeft}}
+                        <div *ngIf="dataLeft < 0">
+                            Data Units:
+                            <mat-slider #dataSlider [max]="0" thumbLabel
+                                (change)="handleDataSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedData}} out of {{dataLeft}}
+                        </div>
+                        <div *ngIf="dataLeft >= 0">
+                            Data Units:
+                            <mat-slider #dataSlider [max]="dataLeft" thumbLabel
+                                (change)="handleDataSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedData}} out of {{dataLeft}}
+                        </div>
                     </div>
                     <div>
-                        SMS Units:
-                        <mat-slider #smsSlider [max]="smsLeft" thumbLabel
-                            (change)="handleSMSSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedSMS}} out of {{smsLeft}}
+                        <div *ngIf="smsLeft < 0">
+                            SMS Units:
+                            <mat-slider #smsSlider [max]="0" thumbLabel (change)="handleSMSSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedSMS}} out of {{smsLeft}}
+                        </div>
+                        <div *ngIf="smsLeft >= 0">
+                            SMS Units:
+                            <mat-slider #smsSlider [max]="smsLeft" thumbLabel
+                                (change)="handleSMSSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedSMS}} out of {{smsLeft}}
+                        </div>
                     </div>
                     <div>
-                        Talk Time Units:
-                        <mat-slider #talktimeSlider [max]="talkTimeLeft" thumbLabel
-                            (change)="handleTalkTimeSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedTalkTime}} out of {{talkTimeLeft}}
+                        <div *ngIf="talkTimeLeft < 0">
+                            Talk Time Units:
+                            <mat-slider #talktimeSlider [max]="0" thumbLabel
+                                (change)="handleTalkTimeSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedTalkTime}} out of {{talkTimeLeft}}
+                        </div>
+                        <div *ngIf="talkTimeLeft >= 0">
+                            Talk Time Units:
+                            <mat-slider #talktimeSlider [max]="talkTimeLeft" thumbLabel
+                                (change)="handleTalkTimeSliderChange($event.value)">
+                            </mat-slider>
+                            Donated Unit: {{donatedTalkTime}} out of {{talkTimeLeft}}
+                        </div>
                     </div>
                 </div>
                 <div style="text-align: center;">
@@ -63,7 +89,7 @@
                         background-color: #f04393;
                         color: white;
                     ">
-                        {{donatedData + donatedSMS + donatedTalkTime}}
+                        {{donatedUnits}}
                         <div style="
                             padding: 0;
                             font-size: initial;

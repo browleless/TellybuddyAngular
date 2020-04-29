@@ -62,32 +62,68 @@
                                 <ng-container matColumnDef="SMS usage">
                                     <th mat-header-cell *matHeaderCellDef> SMS Usage </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <!-- <p>
-                                            <ngb-progressbar type="info" [value]="75" [striped]="true"
-                                                [animated]="true"><i>50%</i></ngb-progressbar>
-                                        </p> -->
-                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage}}
-                                        Out Of {{subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
+                                        <p *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage >= subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
+                                            + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated"
+                                            style="color: red;">
+                                            <i>{{subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage}}
+                                                Out Of
+                                                {{subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
+                                            + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated}}</i>
+                                        </p>
+                                        <p *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage < subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
+                                            + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated">
+                                            <i>{{subscription.usageDetails[subscription.usageDetails.length - 1].smsUsage}}
+                                                Out Of {{subscription.smsUnits.allocated + subscription.smsUnits.addOn + subscription.smsUnits.familyGroup 
                                     + subscription.smsUnits.quizExtraUnits - subscription.smsUnits.donated}}
+                                            </i>
+                                        </p>
                                     </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="Talk time usage">
                                     <th mat-header-cell *matHeaderCellDef> Talk Time Usage</th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage}}
-                                        Out Of
-                                        {{subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
+                                        <p *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage >= subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
+                                            + subscription.talkTimeUnits.quizExtraUnits - subscription.talkTimeUnits.donated"
+                                            style="color: red;">
+                                            <i>
+                                                {{subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage}}
+                                                Out Of
+                                                {{subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
                                       + subscription.talkTimeUnits.quizExtraUnits - subscription.talkTimeUnits.donated}}
+                                            </i>
+                                        </p>
+                                        <p
+                                            *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage < subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
+                                            + subscription.talkTimeUnits.quizExtraUnits - subscription.talkTimeUnits.donated">
+                                            <i>{{subscription.usageDetails[subscription.usageDetails.length - 1].talktimeUsage}}
+                                                Out Of
+                                                {{subscription.talkTimeUnits.allocated + subscription.talkTimeUnits.addOn + subscription.talkTimeUnits.familyGroup 
+                                      + subscription.talkTimeUnits.quizExtraUnits - subscription.talkTimeUnits.donated}}
+                                            </i>
+                                        </p>
                                     </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="Data usage">
                                     <th mat-header-cell *matHeaderCellDef> Data Usage</th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        {{subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage}}
-                                        Out Of {{subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
-                                      + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated}} </td>
+                                        <p *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage >= subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
+                                            + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated"
+                                            style="color: red;">
+                                            <i> {{subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage}}
+                                                Out Of {{subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
+                                      + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated}}
+                                            </i>
+                                        </p>
+                                        <p *ngIf="subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage < subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
+                                            + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated">
+                                            <i> {{subscription.usageDetails[subscription.usageDetails.length - 1].dataUsage}}
+                                                Out Of {{subscription.dataUnits.allocated + subscription.dataUnits.addOn + subscription.dataUnits.familyGroup 
+                                      + subscription.dataUnits.quizExtraUnits - subscription.dataUnits.donated}}
+                                            </i>
+                                        </p>
+                                    </td>
                                 </ng-container>
 
 
@@ -107,7 +143,8 @@
                     </mat-nav-list>
                 </div> -->
                 <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true"> -->
-                <button mat-raised-button style="margin-top: 20px;" color="primary" (click)="openDialog()">Add new family member</button>
+                <button mat-raised-button style="margin-top: 20px;" color="primary" (click)="openDialog()">Add new
+                    family member</button>
                 <!-- </div> -->
             </mat-sidenav-content>
 

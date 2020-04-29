@@ -56,6 +56,7 @@ export class DialogDonateUnitsComponent implements OnInit {
     donatedSMS: number = 0;
     donatedData: number = 0;
     donatedTalkTime: number = 0;
+    donatedUnits: number;
 
     smsLeft: number;
     dataLeft: number;
@@ -119,14 +120,21 @@ export class DialogDonateUnitsComponent implements OnInit {
 
     handleDataSliderChange(value: number): void {
         this.donatedData = value;
+        this.changeDonatedUnits(value);
     }
 
     handleSMSSliderChange(value: number): void {
         this.donatedSMS = value;
+        this.changeDonatedUnits(value);
     }
 
     handleTalkTimeSliderChange(value: number): void {
         this.donatedTalkTime = value;
+        this.changeDonatedUnits(value);
+    }
+
+    changeDonatedUnits(value: number): void {
+        this.donatedUnits = value;
     }
 
     onExitClick(): void {

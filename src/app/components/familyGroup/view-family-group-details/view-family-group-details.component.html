@@ -30,18 +30,40 @@
                         <h2> Welcome to the {{ familyGroup.description }}!</h2>
                         <mat-divider></mat-divider>
 
-                        <h1> Current units = {{ familyGroup.donatedUnits }}</h1>
+                        <h1> Current data units = {{ familyGroup.donatedDataUnits }}</h1>
                         <div style="position: relative;">
                             <mat-progress-bar class="bottomBar"
                                 style="position: absolute; top: 0; left: 200; height:20px;" mode="buffer">
                             </mat-progress-bar>
                             <mat-progress-bar class="topBar" style="position: absolute; top: 0; left: 200; height:20px;"
-                                mode="determinate" value="{{ 100/50 * familyGroup.donatedUnits }}">
+                                mode="determinate" value="{{ 100/50 * familyGroup.donatedDataUnits }}">
                             </mat-progress-bar>
                         </div>
-                        <br />
                         <br>
-                        Maximum units in the pool: 50
+                        <br>
+                        <h1> Current SMS units = {{ familyGroup.donatedSMSUnits }}</h1>
+                        <div style="position: relative;">
+                            <mat-progress-bar class="bottomBar"
+                                style="position: absolute; top: 0; left: 200; height:20px;" mode="buffer">
+                            </mat-progress-bar>
+                            <mat-progress-bar class="topBar" style="position: absolute; top: 0; left: 200; height:20px;"
+                                mode="determinate" value="{{ 100/50 * familyGroup.donatedSMSUnits }}">
+                            </mat-progress-bar>
+                        </div>
+                        <br>
+                        <br>
+                        <h1> Current Talk Time units = {{ familyGroup.donatedTalkTimeUnits }}</h1>
+                        <div style="position: relative;">
+                            <mat-progress-bar class="bottomBar"
+                                style="position: absolute; top: 0; left: 200; height:20px;" mode="buffer">
+                            </mat-progress-bar>
+                            <mat-progress-bar class="topBar" style="position: absolute; top: 0; left: 200; height:20px;"
+                                mode="determinate" value="{{ 100/50 * familyGroup.donatedTalkTimeUnits }}">
+                            </mat-progress-bar>
+                        </div>
+                        <br>
+                        <br>
+                        Maximum units in the each pool: 50
                         <div class="cards">
 
                             <mat-card mat-ripple class="mat-elevation-z8" (click)="openDonateDialog()">
