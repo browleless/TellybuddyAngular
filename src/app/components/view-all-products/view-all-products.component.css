@@ -1,0 +1,8 @@
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: black;
+    border-width: 1px;
+    background-color: #ffffff
+}
+::ng-deep button.mat-button .mat-button-base {
+    padding: 0;
+}

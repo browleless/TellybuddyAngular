@@ -1,29 +1,40 @@
-<div style="padding: 0 0 0 1%; margin-top: 3%;">
+<div style="padding: 0 0 0 1%;">
     <div *ngIf="!loaded">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
     <div *ngIf="loaded">
-        <div style="text-align: center;">
-            <h1>View All Products</h1>
-        </div>
-
         <mat-drawer-container>
             <mat-drawer style="width: 22%; height: 100%;" mode="side" opened>
+                <div style="margin: 15% 10% 5% ;">
 
-                <h3 style="margin-bottom: 15px;">
-                    Search Our Products By Name!
-                </h3>
-
-                <form style="margin-bottom: 30px;">
-                    <input type="text" (keyup)="searchProducts($event)" />
-                    &nbsp;&nbsp;
-                    <button mat-raised-button color="primary" (submit)="searchProducts($event)">Search</button>
-                </form>
+                    <h3 style="margin-bottom: 10px;">
+                        Search Our Products:
+                    </h3>
+    
+                    <form>
+                        <input type="text"  (keyup)="searchProducts($event)" />
+                        &nbsp;&nbsp;
+                        <button style="padding-left:0"
+                            mat-button
+                            color="rgba(0,0,0,0)"
+                            (submit)="searchProducts($event)"
+                        >
+                        <mat-icon>search</mat-icon>
+                        </button>
+                    </form>
+                </div>
                 <mat-divider></mat-divider>
 
-                <mat-tab-group>
-                    <mat-tab label="Filter By Tag(s)">
+                <!-- <mat-tab-group> -->
+                <mat-accordion multi="true" togglePosition = 'before'>
+                    <mat-expansion-panel class="mat-elevation-z0">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Filter By Tag(s)
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
 
+                        <!-- <mat-tab label="Filter By Tag(s)"> -->
                         <br />
                         <mat-form-field>
                             <mat-label>Select Filter Condition: </mat-label>
@@ -34,41 +45,84 @@
                         </mat-form-field>
                         <br />
 
-                        <div *ngFor="let tag of tags, let i = index" style="padding-top: 2%; line-height: 1.6;">
-                            <mat-checkbox (change)="selectTag(i)" [checked]="tag.checked">
-                                {{tag.name}}
+                        <div
+                            *ngFor="let tag of tags; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
+                            <mat-checkbox
+                            style="border: 1px;"
+                                (change)="selectTag(i)"
+                                [checked]="tag.checked"
+                            >
+                                {{ tag.name }}
                             </mat-checkbox>
                         </div>
                         <br />
 
-                        <p *ngIf="condition == undefined" style="color: red; font-size: small;"><i>*Please select a filter condition first!</i></p>
+                        <p
+                            *ngIf="condition == undefined"
+                            style="color: red; font-size: small;"
+                        >
+                            <i>*Please select a filter condition first!</i>
+                        </p>
 
-                        <button mat-raised-button color="primary" (click)="filterByTags()"
-                            [disabled]="condition == undefined">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="filterByTags()"
+                            [disabled]="condition == undefined"
+                        >
                             Show me the filtered results!
                         </button>
                         <br /><br />
-                    </mat-tab>
-                    <mat-tab label="Filter By Brand(s)">
-                        <div *ngFor="let cat of categories, let i = index" style="padding-top: 2%; line-height: 1.6;">
+                        <!-- </mat-tab> -->
+                        <!-- <mat-tab label="Filter By Brand(s)"> -->
+                    </mat-expansion-panel>
+                    <mat-expansion-panel class="mat-elevation-z0">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Filter By Brand(s)
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <div
+                            *ngFor="let cat of categories; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
                             <mat-checkbox (change)="filterByCategory(i)">
-                                {{cat.name}}
+                                {{ cat.name }}
                             </mat-checkbox>
                         </div>
                         <br /><br />
-                    </mat-tab>
-                </mat-tab-group>
+                        <!-- </mat-tab> -->
+                    </mat-expansion-panel>
+                </mat-accordion>
+                <!-- </mat-tab-group> -->
             </mat-drawer>
 
-            <mat-drawer-content style="padding-left: 2%; padding-right: 2%;">
-
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="500px"
-                    gutterSize="24px" [(ngModel)]="displayProducts">
-
-                    <div *ngIf="displayProducts.length == 0" style="text-align: center;">
-                        <h3>We couldn't find any products matching to your search results!</h3>
-                        <img src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
-                            style="height: 348px; width: 464px;" />
+            <mat-drawer-content style="padding: 2% 2% 0 2%;">
+                <div>
+                    <h1>View All Products</h1>
+                </div>
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="500px"
+                    gutterSize="24px"
+                    [(ngModel)]="displayProducts"
+                    name="view_products"
+                    ngDefaultControl
+                >
+                    <div
+                        *ngIf="displayProducts.length == 0"
+                        style="text-align: center;"
+                    >
+                        <h3>
+                            We couldn't find any products matching to your
+                            search results!
+                        </h3>
+                        <img
+                            src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
+                            style="height: 348px; width: 464px;"
+                        />
                     </div>
 
                     <!-- <div *ngIf="filterProductsByCategory != undefined">
@@ -95,32 +149,43 @@
                         </mat-grid-tile>
                     </div> -->
 
-
-
-                    <mat-grid-tile *ngFor="let product of displayProducts, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" (click)="selectProduct(i)">
-                            <mat-card-title>
-                                <div style="text-align:center;">
-                                    {{ product.name }}
-                                </div>
+                    <mat-grid-tile
+                        *ngFor="let product of displayProducts; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            (click)="selectProduct(i)"
+                            style="height: 100%;"
+                        >
+                            <mat-card-title
+                                style="text-align: center; margin-top: 10%;"
+                            >
+                                {{ product.name }}
                             </mat-card-title>
-                            <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
+                            <mat-card-subtitle
+                                style="
+                                    text-align: center;
+                                    padding: 10px 0 10px 0;
+                                    margin-bottom: 10px;
+                                "
+                            >
                                 Price: ${{ product.price }}
                             </mat-card-subtitle>
-                            <img mat-card-image src="assets/productImages/{{ product.productImagePath }}">
-                            <mat-card-content>
-                                <div>
-                                    Description: {{ product.description }}
-                                </div>
+                            <div style="width: 80%; margin: 0 auto;">
+                                <img
+                                    mat-card-image
+                                    src="assets/productImages/{{
+                                        product.productImagePath
+                                    }}"
+                                />
+                            </div>
+                            <mat-card-content style="text-align: center;">
+                                Description: {{ product.description }}
                             </mat-card-content>
-
                         </mat-card>
                     </mat-grid-tile>
                 </mat-grid-list>
-
             </mat-drawer-content>
-
         </mat-drawer-container>
-
     </div>
 </div>
