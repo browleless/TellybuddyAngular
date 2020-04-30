@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
         Delivered: [],
         Refunded: [],
     };
-    loaded: boolean;
+    loaded: boolean = false;
     tabs: string[] = ['All', 'Processing', 'Shipped', 'Delivered', 'Refunded'];
     displayedColumns: string[] = ['item', 'date', 'status', 'price', 'action'];
     currentCustomer: Customer;
@@ -55,6 +55,9 @@ export class AccountComponent implements OnInit {
         'date',
         'action',
     ];
+
+    profilePicture: any;
+    imageLoading: boolean = true;
 
     constructor(
         private router: Router,
@@ -152,6 +155,34 @@ export class AccountComponent implements OnInit {
                 this.loaded = true;
             },
             (error) => {
+                console.log(error);
+            }
+        );
+        this.getProfilePicture();
+    }
+
+    createImageFromBlob(image: Blob) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.profilePicture = reader.result;
+            },
+            false
+        );
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
+    getProfilePicture() {
+        this.customerService.retrieveProfilePicture().subscribe(
+            (data) => {
+                this.createImageFromBlob(data);
+                this.imageLoading = false;
+            },
+            (error) => {
+                this.imageLoading = true;
                 console.log(error);
             }
         );

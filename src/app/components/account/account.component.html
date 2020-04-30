@@ -1,22 +1,37 @@
 <div>
-    <div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;" *ngIf="!loaded">
+    <div *ngIf="!loaded" style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 25%; padding: 3% 2%;" mode="side" opened>
+            <mat-drawer
+                style="width: 20%; padding: 3% 2%; text-align: center;"
+                mode="side"
+                opened
+            >
+                <img
+                    style="width: 200px; height: 200px; border-radius: 50%;"
+                    *ngIf="imageLoading"
+                    src="../../../assets/account/noprofile2.jpg"
+                />
+
+                <img
+                    style="width: 200px; height: 200px; border-radius: 50%; border-width: 5px;"
+                    [src]="profilePicture"
+                    *ngIf="!imageLoading"
+                />
+                <mat-divider style="margin: 15px 0;"></mat-divider>
                 <div
                     style="
                         font-size: x-large;
-                        margin-left: 5%;
+                        text-align: center;
                         font-weight: 600;
-                        width:70%;
+                        
                     "
                 >
                     My Account
                 </div>
-                <mat-divider style="margin: 15px 0"></mat-divider>
-
+                <mat-divider style="margin: 15px 0;"></mat-divider>
                 <button mat-button routerLink="/subscriptions">
                     My Subscriptions
                 </button>
@@ -59,7 +74,6 @@
                                 >
                                     EDIT
                                 </button>
-                                <!-- <button mat-button>EDIT</button> -->
                             </mat-card-actions>
                         </mat-card>
                     </mat-grid-tile>

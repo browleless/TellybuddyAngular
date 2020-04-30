@@ -119,6 +119,18 @@ export class CustomerService {
             .pipe(catchError(this.handleError));
     }
 
+    retrieveProfilePicture(): Observable<Blob> {
+        return this.httpClient.get(
+            this.baseUrl +
+            '/retrieveProfilePicture' +
+            '?username=' +
+            this.sessionService.getUsername() +
+            '&password=' +
+            this.sessionService.getPassword(),
+            { responseType: 'blob' }
+            ).pipe(catchError(this.handleError));
+    }
+
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';
 
