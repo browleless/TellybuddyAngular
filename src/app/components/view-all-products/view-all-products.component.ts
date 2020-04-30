@@ -36,6 +36,7 @@ export class ViewAllProductsComponent implements OnInit {
     // user input
     selectedTags: number[];
     condition: string;
+    selectedCategories: number[];
     searchInput: string;
     displayProducts: Product[];
     selectedProduct: Product;
@@ -123,6 +124,7 @@ export class ViewAllProductsComponent implements OnInit {
         );
 
         this.selectedTags = new Array<number>();
+        this.selectedCategories = new Array<number>();
     }
 
     searchProducts(event: any): void {
@@ -155,19 +157,59 @@ export class ViewAllProductsComponent implements OnInit {
         // this.displayedProducts = filteredResult;
     }
 
-    filterByCategory(index: number): void {
+    selectCategory(index: number): void {
         let categoryId = this.categories[index].categoryId;
+        let removed: boolean = false;
 
-        this.productService.filterProductsByCategory(categoryId).subscribe(
-            (response) => {
-                this.displayProducts = response.products;
-                this.displayProducts.sort((a, b) => a.price - b.price);
-                this.loaded = true;
-            },
-            (error) => {
-                console.log(error);
+        for (let selected of this.selectedCategories) {
+            if (selected == categoryId) {
+                //remove it from selection
+                console.log('removed ' + this.categories[index].name);
+                this.selectedCategories.splice(selected, 1);
+                removed = true;
             }
-        );
+        }
+
+        if (!removed) {
+            //add it into the list of selected category
+            this.selectedCategories.push(categoryId);
+            console.log('console: added ' + this.categories[index].name);
+        }
+    }
+
+    filterByCategories(): void {
+        if (this.selectedCategories.length == 0) {
+            this.productService.retrieveAllProducts().subscribe(
+                (response) => {
+                    this.products = response.products;
+                    this.displayProducts = response.products;
+                    this.products.sort((a, b) => a.price - b.price);
+                    this.displayProducts.sort((a, b) => a.price - b.price);
+                    this.loaded = true;
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        } else {
+            // console.log(
+            //     'console: total selected categories: ' +
+            //         this.selectedCategories.length
+            // );
+
+            this.productService
+                .filterProductsByMultipleCategories(this.selectedCategories)
+                .subscribe(
+                    (response) => {
+                        this.displayProducts = response.products;
+                        this.displayProducts.sort((a, b) => a.price - b.price);
+                        this.loaded = true;
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
 
         console.log('num of products: ' + this.displayProducts.length);
     }
@@ -194,14 +236,16 @@ export class ViewAllProductsComponent implements OnInit {
     }
 
     filterByTags(): void {
-        console.log('string condition is: ' + this.condition);
-        console.log('num of tags selected: ' + this.selectedTags.length);
-        console.log('submit filter');
-        this.productService
-            .filterProductsByTags(this.selectedTags, this.condition)
-            .subscribe(
+        // console.log('string condition is: ' + this.condition);
+        // console.log('num of tags selected: ' + this.selectedTags.length);
+        // console.log('submit filter');
+
+        if (this.selectedTags.length == 0) {
+            this.productService.retrieveAllProducts().subscribe(
                 (response) => {
+                    this.products = response.products;
                     this.displayProducts = response.products;
+                    this.products.sort((a, b) => a.price - b.price);
                     this.displayProducts.sort((a, b) => a.price - b.price);
                     this.loaded = true;
                 },
@@ -209,6 +253,20 @@ export class ViewAllProductsComponent implements OnInit {
                     console.log(error);
                 }
             );
+        } else {
+            this.productService
+                .filterProductsByTags(this.selectedTags, this.condition)
+                .subscribe(
+                    (response) => {
+                        this.displayProducts = response.products;
+                        this.displayProducts.sort((a, b) => a.price - b.price);
+                        this.loaded = true;
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
     }
 
     selectProduct(index: number): void {

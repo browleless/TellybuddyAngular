@@ -41,7 +41,8 @@
                         </div>
                         <br />
 
-                        <p *ngIf="condition == undefined" style="color: red; font-size: small;"><i>*Please select a filter condition first!</i></p>
+                        <p *ngIf="condition == undefined" style="color: red; font-size: small;"><i>*Please select a
+                                filter condition first!</i></p>
 
                         <button mat-raised-button color="primary" (click)="filterByTags()"
                             [disabled]="condition == undefined">
@@ -51,11 +52,14 @@
                     </mat-tab>
                     <mat-tab label="Filter By Brand(s)">
                         <div *ngFor="let cat of categories, let i = index" style="padding-top: 2%; line-height: 1.6;">
-                            <mat-checkbox (change)="filterByCategory(i)">
+                            <mat-checkbox (change)="selectCategory(i)">
                                 {{cat.name}}
                             </mat-checkbox>
                         </div>
                         <br /><br />
+                        <button mat-raised-button color="primary" (click)="filterByCategories()">
+                            Show me the filtered results!
+                        </button>
                     </mat-tab>
                 </mat-tab-group>
             </mat-drawer>
