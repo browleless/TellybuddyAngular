@@ -76,6 +76,21 @@ export class CustomerService {
             .pipe(catchError(this.handleError));
     }
 
+    updateCustomerDetailsForCustomer(customer: Customer): Observable<any> {
+        let updateCustomerDetailsForCustomerReq = {
+            username: this.sessionService.getUsername(),
+            password: this.sessionService.getPassword(),
+        };
+        updateCustomerDetailsForCustomerReq['customer'] = customer;
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/updateCustomerDetailsForCustomer',
+                updateCustomerDetailsForCustomerReq,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
+
     retrieveCurrentCustomer(): Observable<any> {
         return this.httpClient
             .get<any>(

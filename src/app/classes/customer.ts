@@ -20,8 +20,10 @@ export class Customer {
     newPostalCode: string;
     nric: string;
     newNric: string;
-    nricImagePath: string;
-    newNricImagePath: string;
+    nricFrontImagePath: string;
+    nricBackImagePath: string;
+    newNricFrontImagePath: string;
+    newNricBackImagePath: string;
     profilePhoto: string;
     email: string;
     loyaltyPoints: number;
@@ -53,8 +55,10 @@ export class Customer {
         newPostalCode?: string,
         nric?: string,
         newNric?: string,
-        nricImagePath?: string,
-        newNricImagePath?: string,
+        nricFrontImagePath?: string,
+        nricBackImagePath?: string,
+        newNricFrontImagePath?: string,
+        newNricBackImagePath?: string,
         profilePhoto?: string,
         email?: string,
         loyaltyPoints?: number,
@@ -90,7 +94,8 @@ export class Customer {
         this.address = address;
         this.postalCode = postalCode;
         this.nric = nric;
-        this.nricImagePath = nricImagePath;
+        this.nricFrontImagePath = nricFrontImagePath;
+        this.nricBackImagePath = nricBackImagePath;
         this.customerId = customerId;
         this.username = username;
         this.firstName = firstName;
@@ -100,7 +105,8 @@ export class Customer {
         this.newPostalCode = newPostalCode;
         this.email = email;
         this.newNric = newNric;
-        this.newNricImagePath = newNricImagePath;
+        this.newNricFrontImagePath = newNricFrontImagePath;
+        this.newNricBackImagePath = newNricBackImagePath;
         this.customerStatusEnum = customerStatusEnum;
         this.joinDate = joinDate;
         this.profilePhoto = profilePhoto;

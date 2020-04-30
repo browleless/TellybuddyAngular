@@ -1,54 +1,95 @@
-<div style="padding: 0 17.5% 0 17.5%; margin-top: 3%;">
-
-    <div style="text-align: center;">
-        <h1>Tellybuddy FamilyGroup</h1>
-        <div *ngIf="!retrieveFamilyGroupError">
-            <mat-sidenav-container fullscreen>
-                <mat-sidenav mode="side" opened>
-                    <ul class="familyGroupMenu">
-                        <mat-nav-list>
-                            <a mat-list-item routerLink="/familyGroup/viewFamilyGroupDetails">
-                                Home</a>
-                            <a mat-list-item routerLink="/familyGroup/viewMembers">
-                                Members</a>
-                            <div *ngIf="ownerOfFamilyGroup">
-                                <a mat-list-item routerLink="/familyGroup/viewSettings">
-                                    Setting</a>
+<div *ngIf="!loaded" style="margin-top: 3%;">
+    <mat-spinner style="margin: 0 auto;"></mat-spinner>
+</div>
+<div *ngIf="loaded" style="text-align: center;">
+    <h1>Tellybuddy FamilyGroup</h1>
+    <div>
+        <mat-sidenav-container fullscreen>
+            <mat-sidenav mode="side" opened style="width: 25%; padding: 3% 2%;">
+                <div
+                    style="
+                        font-size: x-large;
+                        margin-bottom: 35px;
+                        font-weight: 600;
+                        width: 100%;
+                        text-align: center;
+                    "
+                >
+                    My Family Group
+                    <mat-divider style="margin-top: 10px;"></mat-divider>
+                    <button
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewFamilyGroupDetails"
+                    >
+                        Home
+                    </button>
+                    <br />
+                    <button
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewMembers"
+                    >
+                        Members
+                    </button>
+                    <br />
+                    <button
+                        *ngIf="
+                            sessionService.getCurrentCustomer()
+                                .ownerOfFamilyGroup
+                        "
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewSettings"
+                    >
+                        Settings
+                    </button>
+                </div>
+            </mat-sidenav>
+            <mat-sidenav-content style="padding: 3% 7.5%;">
+                <mat-card>
+                    <div style="text-align: center;">
+                        <form style="width: 80%;">
+                            <mat-form-field style="width: 80%;">
+                                <mat-label
+                                    >Update Family Group Description</mat-label
+                                >
+                                <textarea
+                                    matInput
+                                    [(ngModel)]="
+                                        familyGroupToPerformAction.description
+                                    "
+                                    value="{{
+                                        familyGroupToPerformAction.description
+                                    }}"
+                                    [ngModelOptions]="{ standalone: true }"
+                                    required
+                                    cdkTextareaAutosize
+                                    #autosize="cdkTextareaAutosize"
+                                    cdkAutosizeMinRows="5"
+                                    cdkAutosizeMaxRows="10"
+                                ></textarea>
+                            </mat-form-field>
+                            <div>
+                                <button
+                                    mat-button
+                                    (click)="updateFamilyGroup()"
+                                >
+                                    Update
+                                </button>
                             </div>
-                        </mat-nav-list>
-                    </ul>
-                </mat-sidenav>
-                <mat-sidenav-content>
-                    <br>
-                    <br>
-                    <br>
-                    <mat-card>
-                        <div style="text-align: center;">
-                            <form style="width: 80%;">
-                                <mat-form-field style="width:80%">
-                                    <mat-label>Update Family Group Description</mat-label>
-                                    <textarea matInput [(ngModel)]="familyGroupToPerformAction.description"
-                                        value={{familyGroupToPerformAction.description}}
-                                        [ngModelOptions]="{standalone: true}" required cdkTextareaAutosize
-                                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="5"
-                                        cdkAutosizeMaxRows="10"></textarea>
-                                </mat-form-field>
-                                <div>
-                                    <button mat-button (click)="updateFamilyGroup()">Update</button>
-                                </div>
-                            </form>
-                        </div>
-                    </mat-card>
-                    <section>
-                        <div>Delete the family group</div>
+                        </form>
+                    </div>
+                </mat-card>
+                <section>
+                    <div>Delete the family group</div>
 
-                        <!-- <button mat-raised-button (click)="openDialog()">Delete</button> -->
-                        <button mat-button (click)="deleteFamilyGroup()">Delete</button>
-                    </section>
-
-                </mat-sidenav-content>
-            </mat-sidenav-container>
-        </div>
+                    <!-- <button mat-raised-button (click)="openDialog()">Delete</button> -->
+                    <button mat-button (click)="deleteFamilyGroup()">
+                        Delete
+                    </button>
+                </section>
+            </mat-sidenav-content>
+        </mat-sidenav-container>
     </div>
-
 </div>

@@ -83,50 +83,42 @@ export class DialogDonateUnitsComponent implements OnInit {
         this.talkTimeLeft = 0;
         this.smsLeft = 0;
 
-        this.dataLeft = Math.floor(
+        this.dataLeft =
             this.selectedSubscription.dataUnits['allocated'] +
-                this.selectedSubscription.dataUnits['addOn'] +
-                this.selectedSubscription.dataUnits['familyGroup'] +
-                this.selectedSubscription.dataUnits['quizExtraUnits'] -
-                this.selectedSubscription.dataUnits['donated'] -
+            this.selectedSubscription.dataUnits['addOn'] +
+            this.selectedSubscription.dataUnits['familyGroup'] +
+            this.selectedSubscription.dataUnits['quizExtraUnits'] -
+            this.selectedSubscription.dataUnits['donated'] -
+            Math.floor(
                 this.selectedSubscription.usageDetails[
                     this.selectedSubscription.usageDetails.length - 1
-                ].dataUsage
-        );
+                ].dataUsage / this.selectedSubscription.plan.dataConversionRate
+            );
 
-        this.talkTimeLeft = Math.floor(
+        this.talkTimeLeft =
             this.selectedSubscription.talkTimeUnits['allocated'] +
-                this.selectedSubscription.talkTimeUnits['addOn'] +
-                this.selectedSubscription.talkTimeUnits['familyGroup'] +
-                this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
-                this.selectedSubscription.talkTimeUnits['donated'] -
+            this.selectedSubscription.talkTimeUnits['addOn'] +
+            this.selectedSubscription.talkTimeUnits['familyGroup'] +
+            this.selectedSubscription.talkTimeUnits['quizExtraUnits'] -
+            this.selectedSubscription.talkTimeUnits['donated'] -
+            Math.floor(
                 this.selectedSubscription.usageDetails[
                     this.selectedSubscription.usageDetails.length - 1
-                ].talktimeUsage
-        );
+                ].talktimeUsage /
+                    this.selectedSubscription.plan.talktimeConversionRate
+            );
 
-        this.smsLeft = Math.floor(
+        this.smsLeft =
             this.selectedSubscription.smsUnits['allocated'] +
-                this.selectedSubscription.smsUnits['addOn'] +
-                this.selectedSubscription.smsUnits['familyGroup'] +
-                this.selectedSubscription.smsUnits['quizExtraUnits'] -
-                this.selectedSubscription.smsUnits['donated'] -
+            this.selectedSubscription.smsUnits['addOn'] +
+            this.selectedSubscription.smsUnits['familyGroup'] +
+            this.selectedSubscription.smsUnits['quizExtraUnits'] -
+            this.selectedSubscription.smsUnits['donated'] -
+            Math.floor(
                 this.selectedSubscription.usageDetails[
                     this.selectedSubscription.usageDetails.length - 1
-                ].smsUsage
-        );
-    }
-
-    handleDataSliderChange(value: number): void {
-        this.donatedData = value;
-    }
-
-    handleSMSSliderChange(value: number): void {
-        this.donatedSMS = value;
-    }
-
-    handleTalkTimeSliderChange(value: number): void {
-        this.donatedTalkTime = value;
+                ].smsUsage / this.selectedSubscription.plan.smsConversionRate
+            );
     }
 
     onExitClick(): void {

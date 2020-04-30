@@ -1,87 +1,193 @@
-<div [ngClass]="{'dialog-class': true}">
-    <div mat-dialog-title>
+<div mat-dialog-title>
+    <div>
+        Donate Units
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>
+<div>
+    <mat-form-field>
+        <mat-label>Select a subscription you want to donate from</mat-label>
+        <mat-select>
+            <mat-option
+                (click)="selectSubscription(subscription)"
+                *ngFor="let subscription of currentCustomerSubscription"
+                [value]="subscription"
+                >{{ subscription.phoneNumber.phoneNumber }}</mat-option
+            >
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="dataLeft == null">
+        Please choose a subscription to donate
+    </div>
+    <div *ngIf="dataLeft != null">
+        <p>Select the units you want to donate:</p>
         <div>
-            <button style="float: right;" mat-icon-button (click)="onExitClick()">
-                <mat-icon>close</mat-icon>
-            </button>
+            Data Units:
+            <mat-slider
+                #dataSlider
+                [max]="dataLeft"
+                [disabled]="!dataLeft"
+                thumbLabel
+                (input)="donatedData = $event.value"
+            >
+            </mat-slider>
+            Remaining:
+            {{
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].dataUsage
+            }}
+            /
+            {{
+                ((dataLeft - donatedData) *
+                    selectedSubscription.plan.dataConversionRate) /
+                    1000
+            }}
+            GBs
         </div>
-    </div>
-    <div *ngIf="!loaded">
-        <mat-spinner style="margin: 0 auto;"></mat-spinner>
-    </div>
-    <div *ngIf="loaded">
-        <p>
-            <mat-form-field>
-
-                <mat-label>Select an subscription you want to donate units</mat-label>
-                <mat-select>
-                    <mat-option (click)="selectSubscription(subscription)" *ngFor="
-                  let subscription of currentCustomerSubscription" [value]="subscription">{{subscription.phoneNumber
-                      .phoneNumber}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-        </p>
-        <div *ngIf="dataLeft == null">
-            Please choose a subscription to donate
+        <div>
+            SMS Units:
+            <mat-slider
+                #smsSlider
+                [max]="smsLeft"
+                [disabled]="!smsLeft"
+                thumbLabel
+                (input)="donatedSMS = $event.value"
+            >
+            </mat-slider>
+            Remaining:
+            {{
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].smsUsage
+            }}
+            /
+            {{
+                (smsLeft - donatedSMS) *
+                    selectedSubscription.plan.talktimeConversionRate
+            }}
+            SMS
         </div>
-        <div *ngIf="dataLeft != null">
-            <p style="padding-top: 10px;">Select the units you want to donate:</p>
-            <div>
-                <div style="float: left;">
-                    <div>
-                        Data Units:
-                        <mat-slider #dataSlider [max]="dataLeft" thumbLabel
-                            (change)="handleDataSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedData}} out of {{dataLeft}}
-                    </div>
-                    <div>
-                        SMS Units:
-                        <mat-slider #smsSlider [max]="smsLeft" thumbLabel
-                            (change)="handleSMSSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedSMS}} out of {{smsLeft}}
-                    </div>
-                    <div>
-                        Talk Time Units:
-                        <mat-slider #talktimeSlider [max]="talkTimeLeft" thumbLabel
-                            (change)="handleTalkTimeSliderChange($event.value)">
-                        </mat-slider>
-                        Donated Unit: {{donatedTalkTime}} out of {{talkTimeLeft}}
-                    </div>
-                </div>
-                <div style="text-align: center;">
-                    <div style="
+        <div>
+            Talk Time Units:
+            <mat-slider
+                #talktimeSlider
+                [max]="talkTimeLeft"
+                [disabled]="!talkTimeLeft"
+                thumbLabel
+                (input)="donatedTalkTime = $event.value"
+            >
+            </mat-slider>
+            Remaining:
+            {{
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].talktimeUsage
+            }}
+            /
+            {{
+                (talkTimeLeft - donatedTalkTime) *
+                    selectedSubscription.plan.talktimeConversionRate
+            }}
+            mins
+        </div>
+        <div style="font-weight: 500; margin: 10px 0; font-size: large;">
+            Current Pool State
+        </div>
+        <div class="row">
+            <div class="column">
+                <div
+                    style="
                         align-self: center;
                         margin: 15px 0 25px 0;
                         display: inline-block;
                         font-size: 350%;
                         font-weight: bold;
                         border-radius: 50%;
-                        padding: 15px 25px 15px 25px;
-                        background-color: #f04393;
+                        padding: 5px 30px 5px 30px;
+                        background-color: #5874dc;
                         color: white;
-                    ">
-                        {{donatedData + donatedSMS + donatedTalkTime}}
-                        <div style="
+                    "
+                >
+                    {{ data.currentFamilyGroup.donatedDataUnits + donatedData }}
+                    <div
+                        style="
                             padding: 0;
                             font-size: initial;
                             font-weight: normal;
-                        ">
-
-                            Donated
-
-                        </div>
+                        "
+                    >
+                        Data
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div
+                    style="
+                        align-self: center;
+                        margin: 15px 0 25px 0;
+                        display: inline-block;
+                        font-size: 350%;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        padding: 5px 30px 5px 30px;
+                        background-color: #5874dc;
+                        color: white;
+                    "
+                >
+                    {{ data.currentFamilyGroup.donatedSMSUnits + donatedSMS }}
+                    <div
+                        style="
+                            padding: 0;
+                            font-size: initial;
+                            font-weight: normal;
+                        "
+                    >
+                        SMS
+                    </div>
+                </div>
+            </div>
+            <div class="column">
+                <div
+                    style="
+                        align-self: center;
+                        margin: 15px 0 25px 0;
+                        display: inline-block;
+                        font-size: 350%;
+                        font-weight: bold;
+                        border-radius: 50%;
+                        padding: 5px 30px 5px 30px;
+                        background-color: #5874dc;
+                        color: white;
+                    "
+                >
+                    {{
+                        data.currentFamilyGroup.donatedTalkTimeUnits +
+                            donatedTalkTime
+                    }}
+                    <div
+                        style="
+                            padding: 0;
+                            font-size: initial;
+                            font-weight: normal;
+                        "
+                    >
+                        Call
                     </div>
                 </div>
             </div>
         </div>
         <div style="text-align: center; padding-top: 10px;">
-            <button [disabled]="dataLeft == null" mat-raised-button color="primary" (click)="donate()">
+            <button
+                [disabled]="dataLeft == null"
+                mat-raised-button
+                color="primary"
+                (click)="donate()"
+            >
                 Donate
             </button>
         </div>
-
     </div>
 </div>

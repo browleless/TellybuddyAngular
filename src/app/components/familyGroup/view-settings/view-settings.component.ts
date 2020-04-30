@@ -15,7 +15,7 @@ import { MatDialog } from '@angular/material';
 export class ViewSettingsComponent implements OnInit {
     customer: Customer;
     familyGroupToPerformAction: FamilyGroup;
-    ownerOfFamilyGroup:boolean;
+    loaded: boolean = false;
 
     constructor(
         private router: Router,
@@ -28,20 +28,11 @@ export class ViewSettingsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.customerService.retrieveCurrentCustomer().subscribe(
-            (response) => {
-                this.customer = response.customer;
-                if(this.customer.ownerOfFamilyGroup){
-                    this.ownerOfFamilyGroup = true;
-                }
-            },
-            (error) => {
-                console.log('********** ViewSettingComponent.ts: ' + error);
-            }
-        );
+        this.customer = this.sessionService.getCurrentCustomer();
         this.familyGroupService.getFamilyGroupUnderThisCustomer().subscribe(
             (response) => {
                 this.familyGroupToPerformAction = response.familyGroup;
+                this.loaded = true;
             },
             (error) => {
                 console.log('********** ViewSettingComponent.ts: ' + error);
@@ -67,8 +58,7 @@ export class ViewSettingsComponent implements OnInit {
             .deleteFamilyGroup(this.familyGroupToPerformAction.familyGroupId)
             .subscribe(
                 (response) => {
-                    location.href =
-                        'familyGroup/viewFamilyGroupDetails';
+                    location.href = 'familyGroup/viewFamilyGroupDetails';
                 },
                 (error) => {
                     console.log(error);

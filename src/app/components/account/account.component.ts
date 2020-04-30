@@ -24,6 +24,7 @@ import * as Chart from 'chart.js';
 import { Announcement } from 'src/app/classes/announcement';
 import { DialogViewAnnouncementDetailsComponent } from '../dialog-view-announcement-details/dialog-view-announcement-details.component';
 import { AnnouncementService } from 'src/app/service/announcement.service';
+import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
     selector: 'app-transactions',
@@ -63,11 +64,17 @@ export class AccountComponent implements OnInit {
         private breakpointObserver: BreakpointObserver,
         public dialog: MatDialog,
         private snackBar: MatSnackBar,
-        private announcementService: AnnouncementService
+        private announcementService: AnnouncementService,
+        private customerService: CustomerService
     ) {}
 
     ngOnInit() {
-        this.currentCustomer = this.sessionService.getCurrentCustomer();
+        //this.currentCustomer = this.sessionService.getCurrentCustomer();
+
+        this.customerService.retrieveCurrentCustomer().subscribe((response) => {
+            this.sessionService.setCurrentCustomer(response.customer);
+            this.currentCustomer = this.sessionService.getCurrentCustomer();
+        });
         this.announcementService.retrieveAllAnnouncements().subscribe(
             (response) => {
                 response.announcements.forEach((announcement) => {
@@ -148,6 +155,9 @@ export class AccountComponent implements OnInit {
                 console.log(error);
             }
         );
+    }
+    updateParticulars() {
+        this.router.navigate(['account/account-edit']);
     }
     manageTransaction(transactionId: number) {
         this.router.navigate(['transaction-view/' + transactionId]);

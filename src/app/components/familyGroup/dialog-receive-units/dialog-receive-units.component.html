@@ -1,106 +1,219 @@
-<div [ngClass]="{'dialog-class': true}">
-    <div mat-dialog-title>
-        <div>
-            <button style="float: right;" mat-icon-button (click)="onExitClick()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </div>
+<div mat-dialog-title>
+    <div>
+        Receive Units
+        <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
-    <div *ngIf="!loaded">
-        <mat-spinner style="margin: 0 auto;"></mat-spinner>
+</div>
+<div>
+    <div
+        *ngIf="
+            data.currentFamilyGroup.donatedDataUnits +
+                data.currentFamilyGroup.donatedSMSUnits +
+                data.currentFamilyGroup.donatedTalkTimeUnits ==
+            0
+        "
+    >
+        <h2>No units left in the family group</h2>
     </div>
-    <div *ngIf="loaded">
-        <div *ngIf="data.currentFamilyGroup.donatedUnits == 0">
-
-            <h2>No units left in the family group</h2>
-
+    <div
+        *ngIf="
+            data.currentFamilyGroup.donatedDataUnits +
+                data.currentFamilyGroup.donatedSMSUnits +
+                data.currentFamilyGroup.donatedTalkTimeUnits !=
+            0
+        "
+    >
+        <mat-form-field>
+            <mat-label
+                >Select an subscription you want to receive units</mat-label
+            >
+            <mat-select>
+                <mat-option
+                    (onSelectionChange)="selectSubscription($event)"
+                    *ngFor="let subscription of currentCustomerSubscription"
+                    [value]="subscription"
+                    >{{ subscription.phoneNumber.phoneNumber }}</mat-option
+                >
+            </mat-select>
+        </mat-form-field>
+        <div *ngIf="dataLeft == null">
+            Please choose a subscription to receive
         </div>
-        <div *ngIf="data.currentFamilyGroup.donatedUnits != 0">
+        <div *ngIf="dataLeft != null">
             <p>
-                <mat-form-field>
-
-                    <mat-label>Select an subscription you want to receive units</mat-label>
-                    <mat-select>
-                        <mat-option (onSelectionChange)="selectSubscription($event)" *ngFor="
-                  let subscription of currentCustomerSubscription" [value]="subscription">{{subscription.phoneNumber
-                      .phoneNumber}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
+                Allocate the units you want to receive:
             </p>
-            <div *ngIf="dataLeft == null">
-                Please choose a subscription to donate
+            <div>
+                Data Units:
+                <mat-slider
+                    #dataSlider
+                    [max]="data.currentFamilyGroup.donatedDataUnits"
+                    thumbLabel
+                    (input)="receivedData = $event.value"
+                >
+                </mat-slider>
+                New:
+                {{
+                    selectedSubscription.usageDetails[
+                        selectedSubscription.usageDetails.length - 1
+                    ].dataUsage
+                }}
+                /
+                {{
+                    ((receivedData + dataLeft) *
+                        selectedSubscription.plan.dataConversionRate) /
+                        1000
+                }}
+                GBs
             </div>
-            <div *ngIf="dataLeft != null">
-                <p style="padding-top: 10px;">Allocate the units you want to receive:</p>
-                <div>
-                    <div style="float: left;">
-                        <div>
-                            Data Units:
-                            <mat-slider #dataSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleDataSliderChange($event.value)" (input)="
-            $event.value - receivedData <= getRemainingUnits()
-                                ? (receivedData = $event.value)
-                                : $event.value <= dataUnits
-                                ? (receivedData = $event.value)
-                                : (receivedData = receivedData)">
-                            </mat-slider>
-                            Total Data Unit: {{receivedData + dataLeft}}
-                        </div>
-                        <div>
-                            SMS Units:
-                            <mat-slider #smsSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleSMSSliderChange($event.value)" (input)="
-            $event.value - receivedSMS <= getRemainingUnits()
-                                ? (receivedSMS = $event.value)
-                                : $event.value <= receivedSMS
-                                ? (receivedSMS = $event.value)
-                                : (receivedSMS = receivedSMS)">
-                            </mat-slider>
-                            Total SMS Unit:{{receivedSMS + smsLeft}}
-                        </div>
-                        <div>
-                            Talk Time Units:
-                            <mat-slider #talktimeSlider [max]="data.currentFamilyGroup.donatedUnits" thumbLabel
-                                (change)="handleTalkTimeSliderChange($event.value)" (input)="
-            $event.value - receivedTalkTime <= getRemainingUnits()
-                                ? (receivedTalkTime = $event.value)
-                                : $event.value <= receivedTalkTime
-                                ? (receivedTalkTime = $event.value)
-                                : (receivedTalkTime = receivedTalkTime)">
-                            </mat-slider>
-                            Total Talk Time Unit: {{receivedTalkTime + talkTimeLeft}}
-                        </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <div style="
+            <div>
+                SMS Units:
+                <mat-slider
+                    #smsSlider
+                    [max]="data.currentFamilyGroup.donatedSMSUnits"
+                    thumbLabel
+                    (input)="receivedSMS = $event.value"
+                >
+                </mat-slider>
+                New:
+                {{
+                    selectedSubscription.usageDetails[
+                        selectedSubscription.usageDetails.length - 1
+                    ].smsUsage
+                }}
+                /
+                {{
+                    (receivedSMS + smsLeft) *
+                        selectedSubscription.plan.smsConversionRate
+                }}
+                SMS
+            </div>
+            <div>
+                Talk Time Units:
+                <mat-slider
+                    #talktimeSlider
+                    [max]="data.currentFamilyGroup.donatedTalkTimeUnits"
+                    thumbLabel
+                    (input)="receivedTalkTime = $event.value"
+                >
+                </mat-slider>
+                New:
+                {{
+                    selectedSubscription.usageDetails[
+                        selectedSubscription.usageDetails.length - 1
+                    ].talktimeUsage
+                }}
+                /
+                {{
+                    (receivedTalkTime + talkTimeLeft) *
+                        selectedSubscription.plan.talktimeConversionRate
+                }}
+                mins
+            </div>
+            <div style="font-weight: 500; margin: 10px 0; font-size: large;">
+                Current Pool State
+            </div>
+            <div class="row">
+                <div class="column">
+                    <div
+                        style="
                             align-self: center;
                             margin: 15px 0 25px 0;
                             display: inline-block;
                             font-size: 350%;
                             font-weight: bold;
                             border-radius: 50%;
-                            padding: 15px 25px 15px 25px;
-                            background-color: #f04393;
+                            padding: 5px 30px 5px 30px;
+                            background-color: #5874dc;
                             color: white;
-                        ">
-                            {{ getRemainingUnits() }}
-                            <div style="
+                        "
+                    >
+                        {{
+                            data.currentFamilyGroup.donatedDataUnits -
+                                receivedData
+                        }}
+                        <div
+                            style="
                                 padding: 0;
                                 font-size: initial;
                                 font-weight: normal;
-                            ">
-                                units left
-                            </div>
+                            "
+                        >
+                            Data
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div
+                        style="
+                            align-self: center;
+                            margin: 15px 0 25px 0;
+                            display: inline-block;
+                            font-size: 350%;
+                            font-weight: bold;
+                            border-radius: 50%;
+                            padding: 5px 30px 5px 30px;
+                            background-color: #5874dc;
+                            color: white;
+                        "
+                    >
+                        {{
+                            data.currentFamilyGroup.donatedSMSUnits -
+                                receivedSMS
+                        }}
+                        <div
+                            style="
+                                padding: 0;
+                                font-size: initial;
+                                font-weight: normal;
+                            "
+                        >
+                            SMS
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div
+                        style="
+                            align-self: center;
+                            margin: 15px 0 25px 0;
+                            display: inline-block;
+                            font-size: 350%;
+                            font-weight: bold;
+                            border-radius: 50%;
+                            padding: 5px 30px 5px 30px;
+                            background-color: #5874dc;
+                            color: white;
+                        "
+                    >
+                        {{
+                            data.currentFamilyGroup.donatedTalkTimeUnits -
+                                receivedTalkTime
+                        }}
+                        <div
+                            style="
+                                padding: 0;
+                                font-size: initial;
+                                font-weight: normal;
+                            "
+                        >
+                            Call
                         </div>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; padding-top: 10px;">
-                <button [disabled]="dataLeft == null" mat-raised-button color="primary" (click)="receive()">
-                    Receive
-                </button>
-            </div>
+        </div>
+        <div style="text-align: center; padding-top: 10px;">
+            <button
+                [disabled]="dataLeft == null"
+                mat-raised-button
+                color="primary"
+                (click)="receive()"
+            >
+                Receive
+            </button>
         </div>
     </div>
 </div>

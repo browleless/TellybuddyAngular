@@ -5,50 +5,73 @@
         <form class="registration-form">
 
 
-            <mat-form-field style="width: 100%; padding-bottom: 0;">
+            <mat-form-field style="width: 100%; ">
                 <mat-label>First name</mat-label>
                 <input name="firstName" type="text" matInput placeholder="First Name" [(ngModel)]="firstName"
                     required />
             </mat-form-field>
+
+
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Last name</mat-label>
                 <input name="lastName" type="text" matInput placeholder="Last Name" [(ngModel)]="lastName" required />
             </mat-form-field>
+
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Age</mat-label>
                 <input name="age" type="text" matInput placeholder="Age" [(ngModel)]="age" required />
             </mat-form-field>
+
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Address</mat-label>
                 <input name="address" type="text" matInput placeholder="Address" [(ngModel)]="newAddress" required />
             </mat-form-field>
+
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Postal Code</mat-label>
                 <input name="postalCode" type="text" matInput placeholder="Postal Code" [(ngModel)]="newPostalCode"
                     required />
             </mat-form-field>
+
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>NRIC</mat-label>
                 <input name="nric" type="text" matInput placeholder="NRIC" [(ngModel)]="newNric" required />
             </mat-form-field>
+
             <mat-form-field style="width: 100%;">
                 <mat-label>Username</mat-label>
                 <input name="username" type="text" matInput placeholder="Username" [(ngModel)]="username" required />
             </mat-form-field>
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Email</mat-label>
                 <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="email" required />
             </mat-form-field>
+
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Password</mat-label>
                 <input name="password" type="password" matInput placeholder="Password" [(ngModel)]="password"
-                    required />
+                    class="form-control" required />
+
             </mat-form-field>
-            <mat-form-field style="width: 100%; padding-bottom: 0;">
+
+            <mat-form-field style="width: 100%; padding-bottom: 0;" class="form-group">
                 <mat-label>Re-enter password</mat-label>
-                <input name="password" type="password" matInput placeholder="Re-Enter Password" [(ngModel)]="password"
-                    required />
+                <input name="password" type="password" matInput placeholder="Re-Enter Password"
+                    [(ngModel)]="confirmedPassword" class="form-control" required />
             </mat-form-field>
+
+            <div *ngIf="password != null && password != confirmedPassword" style="color: red;">
+                <strong>Password does not match!</strong>
+            </div>
+            <br>
+
+
             <mat-label>Upload NRIC Front</mat-label>
             <input #Image type="file" (change)="handleFileInput($event.target.files)" required />
             <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image">
@@ -66,7 +89,7 @@
                         color: white;
                         width: 100%;
                         font-size: medium;
-                    " mat-button (click)="registration()">
+                    " mat-button [disabled]="password != confirmedPassword" (click)="registration()">
                     Register
                 </button>
             </div>

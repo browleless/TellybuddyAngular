@@ -30,6 +30,7 @@ export class ViewMembersComponent implements OnInit {
         'Talk time usage',
         'Data usage',
     ];
+    loaded: boolean = false;
 
     constructor(
         public sessionService: SessionService,
@@ -44,6 +45,7 @@ export class ViewMembersComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.currentCustomer = this.sessionService.getCurrentCustomer();
         this.familyGroupService.getFamilyGroupUnderThisCustomer().subscribe(
             (response) => {
                 this.familyGroup = response.familyGroup;
@@ -54,6 +56,7 @@ export class ViewMembersComponent implements OnInit {
                     .subscribe(
                         (response) => {
                             this.familyMembers = response.customers;
+                            this.loaded = true;
                         },
                         (error) => {
                             console.log(
@@ -62,37 +65,6 @@ export class ViewMembersComponent implements OnInit {
                             );
                         }
                     );
-            },
-            (error) => {
-                console.log(
-                    '********** ViewFamilyGroupDetailsComponent.ts: ' + error
-                );
-            }
-        );
-        this.customerService.retrieveCurrentCustomer().subscribe(
-            (response) => {
-                this.currentCustomer = response.customer;
-                // this.subscriptionService
-                //     .retrieveActiveSubscriptionUnderCustomer(
-                //         this.currentCustomer.customerId
-                //     )
-                //     .subscribe(
-                //         (response) => {
-                //             this.subscriptions = response.activeSubscriptions;
-                //             // this.selectedSubscription = this.subscriptions[0];
-                //         },
-                //         (error) => {
-                //             console.log(
-                //                 '********** ViewFamilyGroupDetailsComponent.ts: ' +
-                //                     error
-                //             );
-                //         }
-                //     );
-                if (this.currentCustomer.ownerOfFamilyGroup) {
-                    this.ownerOfFamilyGroup = true;
-                } else {
-                    this.ownerOfFamilyGroup = false;
-                }
             },
             (error) => {
                 console.log(
@@ -129,7 +101,7 @@ export class ViewMembersComponent implements OnInit {
                 (response) => {
                     location.reload;
                     this.customerToRemove = this.familyMembers[i];
-                    
+
                     const snackBarRef = this.snackBar.open(
                         'Member removed successfully!',
                         'Undo',
@@ -137,7 +109,7 @@ export class ViewMembersComponent implements OnInit {
                             duration: 4500,
                         }
                     );
-                    
+
                     snackBarRef.onAction().subscribe(() => {
                         this.familyGroupService
                             .addFamilyGroupMember(

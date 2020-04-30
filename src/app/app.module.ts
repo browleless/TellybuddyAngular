@@ -55,6 +55,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
+import { RxReactiveFormsModule } from '@rxweb/reactive-form-validators';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -97,6 +98,7 @@ import { DialogReceiveUnitsComponent } from './components/familyGroup/dialog-rec
 import { ViewAllProductsComponent } from './components/view-all-products/view-all-products.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
+import { AccountEditComponent } from './components/account/account-edit/account-edit.component';
 import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view-announcement-details/dialog-view-announcement-details.component';
 
 @NgModule({
@@ -138,6 +140,7 @@ import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view
         ViewAllProductsComponent,
         RegistrationComponent,
         PromotionsComponent,
+        AccountEditComponent,
         DialogViewAnnouncementDetailsComponent,
     ],
     imports: [
@@ -223,6 +226,7 @@ import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view
         FormsModule,
         MatCarouselModule,
         CountdownModule,
+        ReactiveFormsModule,
     ],
     entryComponents: [
         DialogForgotPasswordComponent,
@@ -236,6 +240,7 @@ import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view
         DialogConfigureContractPlanComponent,
         DialogDonateUnitsComponent,
         DialogReceiveUnitsComponent,
+        AccountEditComponent,
         DialogViewAnnouncementDetailsComponent,
     ],
     providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],

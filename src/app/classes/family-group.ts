@@ -3,7 +3,9 @@ export class FamilyGroup {
     familyGroupId: number;
     description: string;
     numberOfMembers: number;
-    donatedUnits: number;
+    donatedDataUnits: number;
+    donatedSMSUnits: number;
+    donatedTalkTimeUnits: number;
     discountRate: number;
     customers: Customer[];
 
@@ -11,14 +13,18 @@ export class FamilyGroup {
         familyGroupId?: number,
         description?: string,
         numberOfMembers?: number,
-        donatedUnits?: number,
+        donatedDataUnits?: number,
+        donatedTalkTimeUnits?: number,
+        donatedSMSUnits?: number,
         discountRate?: number,
         customers?: Customer[]
     ) {
         this.numberOfMembers = numberOfMembers;
         this.familyGroupId = familyGroupId;
         this.description = description;
-        this.donatedUnits = donatedUnits;
+        this.donatedDataUnits = donatedDataUnits;
+        this.donatedSMSUnits = donatedSMSUnits;
+        this.donatedTalkTimeUnits = donatedTalkTimeUnits;
         this.discountRate = discountRate;
         this.customers = customers;
     }
