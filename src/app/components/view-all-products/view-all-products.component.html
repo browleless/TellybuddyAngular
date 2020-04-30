@@ -75,34 +75,9 @@
                             style="height: 348px; width: 464px;" />
                     </div>
 
-                    <!-- <div *ngIf="filterProductsByCategory != undefined">
-                        <mat-grid-tile *ngFor="let product of filterProductsByCategory, let i = index">
-                            <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)"
-                                style="width: 285px;">
-                                <mat-card-title>
-                                    <div style="text-align:center;">
-                                        {{ product.name }}
-                                    </div>
-                                </mat-card-title>
-                                <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
-                                    Price: ${{ product.price }}
-                                </mat-card-subtitle>
-                                <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
-                                    style="width: 285px; height: 285px;">
-                                <mat-card-content>
-                                    <div style="height: 58px">
-                                        Description: {{ product.description }}
-                                    </div>
-                                </mat-card-content>
-
-                            </mat-card>
-                        </mat-grid-tile>
-                    </div> -->
-
-
-
                     <mat-grid-tile *ngFor="let product of displayProducts, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" (click)="selectProduct(i)">
+                        <mat-card mat-ripple matTooltip="I want this!" class="mat-elevation-z8"
+                            (click)="selectProduct(i)">
                             <mat-card-title>
                                 <div style="text-align:center;">
                                     {{ product.name }}
@@ -113,7 +88,7 @@
                             </mat-card-subtitle>
                             <img mat-card-image src="assets/productImages/{{ product.productImagePath }}">
                             <mat-card-content>
-                                <div>
+                                <div style="margin-top: 10px;">
                                     Description: {{ product.description }}
                                 </div>
                             </mat-card-content>
