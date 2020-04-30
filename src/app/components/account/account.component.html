@@ -4,32 +4,51 @@
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 25%; padding: 3% 2% 0 5%;" mode="side" opened>
-                <div style="
+            <mat-drawer style="width: 25%; padding: 3% 2%;" mode="side" opened>
+                <div
+                    style="
                         font-size: x-large;
                         margin-bottom: 35px;
                         font-weight: 600;
                         width: 100%;
                         text-align: center;
-                    ">
+                    "
+                >
                     My Account
-                    <mat-divider></mat-divider>
+                    <mat-divider style="margin-top: 10px;"></mat-divider>
 
-                    <button mat-button routerLink="/subscriptions">
+                    <button
+                        style="width: 100%;"
+                        mat-button
+                        routerLink="/subscriptions"
+                    >
                         My Subscriptions
                     </button>
                     <br />
-                    <button mat-button routerLink="/bills">My Bills</button>
+                    <button style="width: 100%;" mat-button routerLink="/bills">
+                        My Bills
+                    </button>
                 </div>
             </mat-drawer>
 
-            <mat-drawer-content style="height: calc(100vh - padding); padding: 3% 17.5% 3% 2%;">
+            <mat-drawer-content
+                style="height: calc(100vh - padding); padding: 3% 17.5% 3% 2%;"
+            >
                 <mat-grid-list cols="5" gutterSize="10" rowHeight="6em">
-                    <mat-grid-tile colspan="2" [rowspan]="1.5" class="mat-elevation-z2" style="width: 100%;">
+                    <mat-grid-tile
+                        colspan="2"
+                        [rowspan]="1.5"
+                        class="mat-elevation-z2"
+                        style="width: 100%;"
+                    >
                         <mat-card style="width: 100%; height: 100%;">
-                            <mat-card-title style="padding: 15px 0 0 5px;">Personal Profile</mat-card-title>
+                            <mat-card-title style="padding: 15px 0 0 5px;"
+                                >Personal Profile</mat-card-title
+                            >
                             <mat-divider></mat-divider>
-                            <mat-card-subtitle style="padding: 10px 0 0 5px; margin-bottom: 0;">My Particulars
+                            <mat-card-subtitle
+                                style="padding: 10px 0 0 5px; margin-bottom: 0;"
+                                >My Particulars
                             </mat-card-subtitle>
                             <mat-card-content style="padding: 5px 5px;">
                                 <p>
@@ -38,18 +57,34 @@
                                     {{ currentCustomer.email }}
                                 </p>
                             </mat-card-content>
-                            <mat-card-actions style="text-align: right; margin-bottom: 10px;">
-                                <button mat-button (click)="updateParticulars()">EDIT</button>
+                            <mat-card-actions
+                                style="text-align: right; margin-bottom: 10px;"
+                            >
+                                <button
+                                    mat-button
+                                    (click)="updateParticulars()"
+                                >
+                                    EDIT
+                                </button>
                                 <!-- <button mat-button>EDIT</button> -->
                             </mat-card-actions>
                         </mat-card>
                     </mat-grid-tile>
 
-                    <mat-grid-tile colspan="3" [rowspan]="1.5" class="mat-elevation-z2" style="width: 100%;">
+                    <mat-grid-tile
+                        colspan="3"
+                        [rowspan]="1.5"
+                        class="mat-elevation-z2"
+                        style="width: 100%;"
+                    >
                         <mat-card style="width: 100%; height: 100%;">
-                            <mat-card-title style="padding: 15px 0 0 5px;">Address Book</mat-card-title>
+                            <mat-card-title style="padding: 15px 0 0 5px;"
+                                >Address Book</mat-card-title
+                            >
                             <mat-divider></mat-divider>
-                            <mat-card-subtitle style="padding: 10px 0 0 5px; margin-bottom: 0;">Default Shipping Address
+                            <mat-card-subtitle
+                                style="padding: 10px 0 0 5px; margin-bottom: 0;"
+                                >Default Shipping Address
                             </mat-card-subtitle>
 
                             <mat-card-content style="padding: 5px 5px;">
@@ -66,16 +101,34 @@
                 </mat-grid-list>
 
                 <mat-card class="mat-elevation-z2" style="margin-top: 10px;">
-                    <mat-card-title matBadgePosition="before" [matBadge]="sessionService.getAnnouncements().length"
+                    <mat-card-title
+                        matBadgePosition="before"
+                        [matBadge]="sessionService.getAnnouncements().length"
                         [matBadgeHidden]="
                             !sessionService.getAnnouncements().length
-                        " style="padding: 10px 0 0 5px;">Announcements</mat-card-title>
-                    <table mat-table [dataSource]="announcements" [hidden]="!loaded" style="width: 100%;">
+                        "
+                        style="padding: 10px 0 0 5px;"
+                        >Announcements</mat-card-title
+                    >
+                    <table
+                        mat-table
+                        [dataSource]="announcements"
+                        [hidden]="!loaded"
+                        style="width: 100%;"
+                    >
                         <ng-container matColumnDef="item">
-                            <th style="text-align: left; width: 10%;" mat-header-cell *matHeaderCellDef>
+                            <th
+                                style="text-align: left; width: 10%;"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
                                 Ref No.
                             </th>
-                            <td style="text-align: center;" mat-cell *matCellDef="let announcement">
+                            <td
+                                style="text-align: center;"
+                                mat-cell
+                                *matCellDef="let announcement"
+                            >
                                 <span>
                                     {{ announcement.announcementId }}
                                 </span>
@@ -83,19 +136,35 @@
                         </ng-container>
 
                         <ng-container matColumnDef="title">
-                            <th style="text-align: center; width: 25%;" mat-header-cell *matHeaderCellDef>
+                            <th
+                                style="text-align: center; width: 25%;"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
                                 Title
                             </th>
-                            <td style="text-align: center;" mat-cell *matCellDef="let announcement">
+                            <td
+                                style="text-align: center;"
+                                mat-cell
+                                *matCellDef="let announcement"
+                            >
                                 {{ announcement.title }}
                             </td>
                         </ng-container>
 
                         <ng-container matColumnDef="date">
-                            <th style="text-align: center; width: 25%;" mat-header-cell *matHeaderCellDef>
+                            <th
+                                style="text-align: center; width: 25%;"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
                                 Posted On
                             </th>
-                            <td style="text-align: center;" mat-cell *matCellDef="let announcement">
+                            <td
+                                style="text-align: center;"
+                                mat-cell
+                                *matCellDef="let announcement"
+                            >
                                 <div>
                                     {{ announcement.postedDate | date }}
                                 </div>
@@ -103,35 +172,71 @@
                         </ng-container>
 
                         <ng-container matColumnDef="action">
-                            <th style="text-align: center; width: 15%;" mat-header-cell *matHeaderCellDef>
+                            <th
+                                style="text-align: center; width: 15%;"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
                                 View
                             </th>
-                            <td style="text-align: center;" mat-cell *matCellDef="let announcement; let i = index">
+                            <td
+                                style="text-align: center;"
+                                mat-cell
+                                *matCellDef="let announcement; let i = index"
+                            >
                                 <button (click)="openDialog(i)" mat-icon-button>
                                     <mat-icon>search</mat-icon>
                                 </button>
                             </td>
                         </ng-container>
 
-                        <tr mat-header-row *matHeaderRowDef="announcementDisplayedColumns"></tr>
-                        <tr mat-row *matRowDef="
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="announcementDisplayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="
                                 let row;
                                 columns: announcementDisplayedColumns
-                            "></tr>
+                            "
+                        ></tr>
                     </table>
-                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                    <mat-paginator
+                        [pageSizeOptions]="[5, 10, 20]"
+                        showFirstLastButtons
+                    ></mat-paginator>
                 </mat-card>
 
                 <mat-card class="mat-elevation-z2" style="margin-top: 10px;">
-                    <mat-card-title style="padding: 10px 0 0 5px;">My Orders</mat-card-title>
-                    <mat-tab-group (selectedTabChange)="filterTransactions($event)">
-                        <mat-tab *ngFor="let tab of tabs; let index = index" [label]="tab">
-                            <table mat-table [dataSource]="transactions" style="width: 100%;">
+                    <mat-card-title style="padding: 10px 0 0 5px;"
+                        >My Orders</mat-card-title
+                    >
+                    <mat-tab-group
+                        (selectedTabChange)="filterTransactions($event)"
+                    >
+                        <mat-tab
+                            *ngFor="let tab of tabs; let index = index"
+                            [label]="tab"
+                        >
+                            <table
+                                mat-table
+                                [dataSource]="transactions"
+                                style="width: 100%;"
+                            >
                                 <ng-container matColumnDef="item">
-                                    <th style="text-align: left; width: 10%;" mat-header-cell *matHeaderCellDef>
+                                    <th
+                                        style="text-align: left; width: 10%;"
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                    >
                                         Ref No.
                                     </th>
-                                    <td style="text-align: center;" mat-cell *matCellDef="let transaction">
+                                    <td
+                                        style="text-align: center;"
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                    >
                                         <span>
                                             {{ transaction.transactionId }}
                                         </span>
@@ -139,10 +244,18 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="date">
-                                    <th style="text-align: center; width: 25%;" mat-header-cell *matHeaderCellDef>
+                                    <th
+                                        style="text-align: center; width: 25%;"
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                    >
                                         Placed On
                                     </th>
-                                    <td style="text-align: center;" mat-cell *matCellDef="let transactionLineItem">
+                                    <td
+                                        style="text-align: center;"
+                                        mat-cell
+                                        *matCellDef="let transactionLineItem"
+                                    >
                                         <div>
                                             {{
                                                 transactionLineItem.transactionDateTime
@@ -153,48 +266,84 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="status">
-                                    <th style="text-align: center; width: 25%;" mat-header-cell *matHeaderCellDef>
+                                    <th
+                                        style="text-align: center; width: 25%;"
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                    >
                                         Status
                                     </th>
-                                    <td style="text-align: center;" mat-cell *matCellDef="
+                                    <td
+                                        style="text-align: center;"
+                                        mat-cell
+                                        *matCellDef="
                                             let transaction;
                                             let i = index
-                                        ">
+                                        "
+                                    >
                                         {{ transaction.transactionStatusEnum }}
                                     </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="price">
-                                    <th style="text-align: center; width: 25%;" mat-header-cell *matHeaderCellDef>
+                                    <th
+                                        style="text-align: center; width: 25%;"
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                    >
                                         Price
                                     </th>
-                                    <td style="text-align: center;" mat-cell *matCellDef="let transaction">
+                                    <td
+                                        style="text-align: center;"
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                    >
                                         ${{ transaction.totalPrice.toFixed(2) }}
                                     </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="action">
-                                    <th style="text-align: center; width: 15%;" mat-header-cell *matHeaderCellDef>
+                                    <th
+                                        style="text-align: center; width: 15%;"
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                    >
                                         Manage
                                     </th>
-                                    <td style="text-align: center;" mat-cell *matCellDef="let transaction">
-                                        <button mat-icon-button (click)="
+                                    <td
+                                        style="text-align: center;"
+                                        mat-cell
+                                        *matCellDef="let transaction"
+                                    >
+                                        <button
+                                            mat-icon-button
+                                            (click)="
                                                 manageTransaction(
                                                     transaction.transactionId
                                                 )
-                                            ">
+                                            "
+                                        >
                                             <mat-icon>launch</mat-icon>
                                         </button>
                                     </td>
                                 </ng-container>
 
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumns"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
                                         let row;
                                         columns: displayedColumns
-                                    "></tr>
+                                    "
+                                ></tr>
                             </table>
-                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                            <mat-paginator
+                                [pageSizeOptions]="[5, 10, 20]"
+                                showFirstLastButtons
+                            ></mat-paginator>
                         </mat-tab>
                     </mat-tab-group>
                 </mat-card>

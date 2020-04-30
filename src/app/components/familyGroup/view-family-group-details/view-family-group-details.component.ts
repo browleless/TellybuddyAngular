@@ -21,60 +21,10 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
     familyGroup: FamilyGroup;
     customer: Customer;
     subscriptions: Subscription[];
-    // selectedSubscription: Subscription = {
-    //     subscriptionId: undefined,
-    //     dataUnits: {
-    //         allocated: 0,
-    //         nextMonth: 0,
-    //         donated: 0,
-    //         addOn: 0,
-    //         familyGroup: 0,
-    //         quizExtraUnits: 0,
-    //     },
-    //     talkTimeUnits: {
-    //         allocated: 0,
-    //         nextMonth: 0,
-    //         donated: 0,
-    //         addOn: 0,
-    //         familyGroup: 0,
-    //         quizExtraUnits: 0,
-    //     },
-    //     smsUnits: {
-    //         allocated: 0,
-    //         nextMonth: 0,
-    //         donated: 0,
-    //         addOn: 0,
-    //         familyGroup: 0,
-    //         quizExtraUnits: 0,
-    //     },
-    //     subscriptionStatusEnum: undefined,
-    //     isActive: undefined,
-    //     subscriptionStartDate: undefined,
-    //     subscriptionEndDate: undefined,
-    //     customer: undefined,
-    //     usageDetails: undefined,
-    //     plan: undefined,
-    //     phoneNumber: undefined,
-    // };
-    //++++++++++++++++++++++++++++++++++++++++++++++
-    @ViewChild('dataSlider', { static: false }) dataSlider;
-    @ViewChild('smsSlider', { static: false }) smsSlider;
-    @ViewChild('talktimeSlider', { static: false }) talktimeSlider;
-
-    donateSMSValue = 0;
-    donateDataValue = 0;
-    donateTalkTimeValue = 0;
-
-    smsUnitsLeft: number;
-    dataUnitsLeft: number;
-    talkTimeUnitsLeft: number;
-
     //++++++++++++++++++++++++++++++++++++++++++++++
     retrieveFamilyGroupError: boolean;
     loaded: boolean;
     panelOpenState: boolean;
-
-    ownerOfFamilyGroup: boolean;
 
     constructor(
         private router: Router,
@@ -106,37 +56,21 @@ export class ViewFamilyGroupDetailsComponent implements OnInit {
             }
         );
 
-        this.customerService.retrieveCurrentCustomer().subscribe(
-            (response) => {
-                this.customer = response.customer;
-                this.subscriptionService
-                    .retrieveActiveSubscriptionUnderCustomer(
-                        this.customer.customerId
-                    )
-                    .subscribe(
-                        (response) => {
-                            this.subscriptions = response.activeSubscriptions;
-                            // this.selectedSubscription = this.subscriptions[0];
-                        },
-                        (error) => {
-                            console.log(
-                                '********** ViewFamilyGroupDetailsComponent.ts: ' +
-                                    error
-                            );
-                        }
+        this.customer = this.sessionService.getCurrentCustomer();
+        this.subscriptionService
+            .retrieveActiveSubscriptionUnderCustomer(this.customer.customerId)
+            .subscribe(
+                (response) => {
+                    this.subscriptions = response.activeSubscriptions;
+                    // this.selectedSubscription = this.subscriptions[0];
+                },
+                (error) => {
+                    console.log(
+                        '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                            error
                     );
-                if (this.customer.ownerOfFamilyGroup) {
-                    this.ownerOfFamilyGroup = true;
-                } else {
-                    this.ownerOfFamilyGroup = false;
                 }
-            },
-            (error) => {
-                console.log(
-                    '********** ViewFamilyGroupDetailsComponent.ts: ' + error
-                );
-            }
-        );
+            );
     }
     openDonateDialog(): void {
         this.dialog.open(DialogDonateUnitsComponent, {

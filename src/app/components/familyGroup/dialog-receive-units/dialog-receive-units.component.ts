@@ -110,54 +110,6 @@ export class DialogReceiveUnitsComponent implements OnInit {
         );
     }
 
-    handleDataSliderChange(value: number): void {
-        // if (
-        //     value - this.receivedData <= this.getRemainingUnits() ||
-        //     value <= this.receivedData
-        // ) {
-        //     this.receivedData = value;
-        // } else {
-        //     this.dataSlider.value = this.receivedData;
-        // }
-        this.receivedData = value;
-        this.changeRemainingUnits(
-            this.data.currentFamilyGroup.donatedDataUnits,
-            value
-        );
-    }
-
-    handleSMSSliderChange(value: number): void {
-        // if (
-        //     value - this.receivedSMS <= this.getRemainingUnits() ||
-        //     value <= this.receivedSMS
-        // ) {
-        //     this.receivedSMS = value;
-        // } else {
-        //     this.smsSlider.value = this.receivedSMS;
-        // }
-        this.receivedSMS = value;
-        this.changeRemainingUnits(
-            this.data.currentFamilyGroup.donatedSMSUnits,
-            value
-        );
-    }
-
-    handleTalkTimeSliderChange(value: number): void {
-        // if (
-        //     value - this.receivedTalkTime <= this.getRemainingUnits() ||
-        //     value <= this.receivedTalkTime
-        // ) {
-        //     this.receivedTalkTime = value;
-        // } else {
-        //     this.talktimeSlider.value = this.receivedTalkTime;
-        // }
-        this.receivedTalkTime = value;
-        this.changeRemainingUnits(
-            this.data.currentFamilyGroup.donatedTalkTimeUnits,
-            value
-        );
-    }
-
     changeRemainingUnits(left: number, value: number): void {
         this.remainingUnits = left - value;
     }

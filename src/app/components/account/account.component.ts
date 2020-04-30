@@ -71,15 +71,10 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         //this.currentCustomer = this.sessionService.getCurrentCustomer();
 
-        this.customerService
-            .customerLogin(
-                this.sessionService.getUsername(),
-                this.sessionService.getPassword()
-            )
-            .subscribe((response) => {
-                let customer: Customer = response.customer;
-                this.currentCustomer = customer;
-            });
+        this.customerService.retrieveCurrentCustomer().subscribe((response) => {
+            this.sessionService.setCurrentCustomer(response.customer);
+            this.currentCustomer = this.sessionService.getCurrentCustomer();
+        });
         this.announcementService.retrieveAllAnnouncements().subscribe(
             (response) => {
                 response.announcements.forEach((announcement) => {
