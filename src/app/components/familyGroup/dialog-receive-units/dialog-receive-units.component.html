@@ -15,14 +15,17 @@
             0
         "
     >
-        <h2>No units left in the family group</h2>
+        No units left in the family group
+    </div>
+    <div *ngIf="!currentCustomerSubscription.length">
+        No active subscriptions to receive units
     </div>
     <div
         *ngIf="
             data.currentFamilyGroup.donatedDataUnits +
                 data.currentFamilyGroup.donatedSMSUnits +
                 data.currentFamilyGroup.donatedTalkTimeUnits !=
-            0
+                0 && currentCustomerSubscription.length
         "
     >
         <mat-form-field>
@@ -38,10 +41,10 @@
                 >
             </mat-select>
         </mat-form-field>
-        <div *ngIf="dataLeft == null">
+        <div *ngIf="allowedData == null">
             Please choose a subscription to receive
         </div>
-        <div *ngIf="dataLeft != null">
+        <div *ngIf="allowedData != null">
             <p>
                 Allocate the units you want to receive:
             </p>
@@ -50,6 +53,7 @@
                 <mat-slider
                     #dataSlider
                     [max]="data.currentFamilyGroup.donatedDataUnits"
+                    [disabled]="!data.currentFamilyGroup.donatedDataUnits"
                     thumbLabel
                     (input)="receivedData = $event.value"
                 >
@@ -62,7 +66,7 @@
                 }}
                 /
                 {{
-                    ((receivedData + dataLeft) *
+                    ((receivedData + allowedData) *
                         selectedSubscription.plan.dataConversionRate) /
                         1000
                 }}
@@ -73,6 +77,7 @@
                 <mat-slider
                     #smsSlider
                     [max]="data.currentFamilyGroup.donatedSMSUnits"
+                    [disabled]="!data.currentFamilyGroup.donatedSMSUnits"
                     thumbLabel
                     (input)="receivedSMS = $event.value"
                 >
@@ -85,7 +90,7 @@
                 }}
                 /
                 {{
-                    (receivedSMS + smsLeft) *
+                    (receivedSMS + allowedSms) *
                         selectedSubscription.plan.smsConversionRate
                 }}
                 SMS
@@ -95,6 +100,7 @@
                 <mat-slider
                     #talktimeSlider
                     [max]="data.currentFamilyGroup.donatedTalkTimeUnits"
+                    [disabled]="!data.currentFamilyGroup.donatedTalkTimeUnits"
                     thumbLabel
                     (input)="receivedTalkTime = $event.value"
                 >
@@ -107,7 +113,7 @@
                 }}
                 /
                 {{
-                    (receivedTalkTime + talkTimeLeft) *
+                    (receivedTalkTime + allowedTalktime) *
                         selectedSubscription.plan.talktimeConversionRate
                 }}
                 mins
@@ -207,7 +213,7 @@
         </div>
         <div style="text-align: center; padding-top: 10px;">
             <button
-                [disabled]="dataLeft == null"
+                [disabled]="allowedData == null"
                 mat-raised-button
                 color="primary"
                 (click)="receive()"
