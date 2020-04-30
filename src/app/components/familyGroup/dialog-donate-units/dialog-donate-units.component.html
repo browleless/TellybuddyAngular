@@ -35,13 +35,15 @@
             </mat-slider>
             Remaining:
             {{
-                ((dataLeft - donatedData) *
-                    selectedSubscription.plan.dataConversionRate) /
-                    1000
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].dataUsage
             }}
             /
             {{
-                (dataLeft * selectedSubscription.plan.dataConversionRate) / 1000
+                ((dataLeft - donatedData) *
+                    selectedSubscription.plan.dataConversionRate) /
+                    1000
             }}
             GBs
         </div>
@@ -57,11 +59,15 @@
             </mat-slider>
             Remaining:
             {{
-                (smsLeft - donatedSMS) *
-                    selectedSubscription.plan.smsConversionRate
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].smsUsage
             }}
             /
-            {{ smsLeft * selectedSubscription.plan.talktimeConversionRate }}
+            {{
+                (smsLeft - donatedSMS) *
+                    selectedSubscription.plan.talktimeConversionRate
+            }}
             SMS
         </div>
         <div>
@@ -76,12 +82,14 @@
             </mat-slider>
             Remaining:
             {{
-                (talkTimeLeft - donatedTalkTime) *
-                    selectedSubscription.plan.talktimeConversionRate
+                selectedSubscription.usageDetails[
+                    selectedSubscription.usageDetails.length - 1
+                ].talktimeUsage
             }}
             /
             {{
-                talkTimeLeft * selectedSubscription.plan.talktimeConversionRate
+                (talkTimeLeft - donatedTalkTime) *
+                    selectedSubscription.plan.talktimeConversionRate
             }}
             mins
         </div>
