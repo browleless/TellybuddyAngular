@@ -78,6 +78,22 @@ export class ProductService {
             .pipe(catchError(this.handleError));
     }
 
+    filterProductsByMultipleCategories(
+        selectedCategoryIds: number[]
+    ): Observable<any> {
+        let retrieveProductsByMultipleCategories = {
+            categoryIds: selectedCategoryIds,
+        };
+
+        return this.httpClient
+            .post<any>(
+                this.baseUrl + '/filterProductsByMultipleCategories',
+                retrieveProductsByMultipleCategories,
+                httpOptions
+            )
+            .pipe(catchError(this.handleError));
+    }
+
     filterProductsByTags(
         selectedTagIds: number[],
         selectedCondition: string

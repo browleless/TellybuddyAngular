@@ -88,7 +88,7 @@
                             *ngFor="let cat of categories; let i = index"
                             style="padding-top: 2%; line-height: 1.6;"
                         >
-                            <mat-checkbox (change)="filterByCategory(i)">
+                            <mat-checkbox (change)="selectCategory(i)">
                                 {{ cat.name }}
                             </mat-checkbox>
                         </div>
@@ -103,6 +103,18 @@
                 <div>
                     <h1>View All Products</h1>
                 </div>
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="filterByCategories()"
+                        >
+                            Show me the filtered results!
+                        </button>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-drawer>
+
+            <mat-drawer-content style="padding-left: 2%; padding-right: 2%;">
                 <mat-grid-list
                     [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
                     rowHeight="500px"

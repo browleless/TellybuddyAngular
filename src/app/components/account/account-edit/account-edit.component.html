@@ -4,104 +4,206 @@
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 25%; padding: 3% 2% 0 5%;" mode="side" opened>
-                <div style="
+            <mat-drawer style="width: 25%; padding: 3% 2%;" mode="side" opened>
+                <div
+                    style="
                         font-size: x-large;
                         margin-bottom: 35px;
                         font-weight: 600;
                         width: 100%;
                         text-align: center;
-                    ">
+                    "
+                >
                     My Account
-                    <mat-divider></mat-divider>
+                    <mat-divider style="margin-top: 10px;"></mat-divider>
 
-                    <button mat-button routerLink="/subscriptions">
+                    <button
+                        style="width: 100%;"
+                        mat-button
+                        routerLink="/subscriptions"
+                    >
                         My Subscriptions
                     </button>
                     <br />
-                    <button mat-button routerLink="/bills">My Bills</button>
+                    <button style="width: 100%;" mat-button routerLink="/bills">
+                        My Bills
+                    </button>
                 </div>
             </mat-drawer>
             <mat-drawer-content style="height: 100vh; padding: 3% 17.5% 0 2%;">
-
                 <form class="registration-form">
-
-
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>First name</mat-label>
-                        <input name="firstName" type="text" matInput placeholder="First Name"
-                            [(ngModel)]="customerToUpdate.firstName" />
+                        <input
+                            name="firstName"
+                            type="text"
+                            matInput
+                            placeholder="First Name"
+                            [(ngModel)]="customerToUpdate.firstName"
+                        />
                     </mat-form-field>
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>Last name</mat-label>
-                        <input name="lastName" type="text" matInput placeholder="Last Name"
-                            [(ngModel)]="customerToUpdate.lastName" />
+                        <input
+                            name="lastName"
+                            type="text"
+                            matInput
+                            placeholder="Last Name"
+                            [(ngModel)]="customerToUpdate.lastName"
+                        />
                     </mat-form-field>
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>Age</mat-label>
-                        <input name="age" type="text" matInput placeholder="Age" [(ngModel)]="customerToUpdate.age" />
+                        <input
+                            name="age"
+                            type="text"
+                            matInput
+                            placeholder="Age"
+                            [(ngModel)]="customerToUpdate.age"
+                        />
                     </mat-form-field>
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label>Address(Leave it as blank if there is no update)</mat-label>
-                        <input name="address" type="text" matInput placeholder="{{customerToUpdate.address}}"
-                            [(ngModel)]="customerToUpdate.newAddress" />
+                        <mat-label
+                            >Address(Leave it as blank if there is no
+                            update)</mat-label
+                        >
+                        <input
+                            name="address"
+                            type="text"
+                            matInput
+                            placeholder="{{ customerToUpdate.address }}"
+                            [(ngModel)]="customerToUpdate.newAddress"
+                        />
                     </mat-form-field>
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label>Postal Code(Leave it as blank if there is no update)</mat-label>
-                        <input name="postalCode" type="text" matInput placeholder="{{customerToUpdate.postalCode}}"
-                            [(ngModel)]="customerToUpdate.newPostalCode" />
+                        <mat-label
+                            >Postal Code(Leave it as blank if there is no
+                            update)</mat-label
+                        >
+                        <input
+                            name="postalCode"
+                            type="text"
+                            matInput
+                            placeholder="{{ customerToUpdate.postalCode }}"
+                            [(ngModel)]="customerToUpdate.newPostalCode"
+                        />
                     </mat-form-field>
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label>NRIC(Leave it as blank if there is no update)</mat-label>
-                        <input name="nric" type="text" matInput placeholder="{{customerToUpdate.nric}}"
-                            [(ngModel)]="customerToUpdate.newNric" />
+                        <mat-label
+                            >NRIC(Leave it as blank if there is no
+                            update)</mat-label
+                        >
+                        <input
+                            name="nric"
+                            type="text"
+                            matInput
+                            placeholder="{{ customerToUpdate.nric }}"
+                            [(ngModel)]="customerToUpdate.newNric"
+                        />
                     </mat-form-field>
 
-
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label>New Password(Leave it as blank if there is no update)</mat-label>
-                        <input name="password" type="password" matInput [(ngModel)]="password" />
+                        <mat-label
+                            >New Password(Leave it as blank if there is no
+                            update)</mat-label
+                        >
+                        <input
+                            name="password"
+                            type="password"
+                            matInput
+                            [(ngModel)]="password"
+                        />
                     </mat-form-field>
 
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label>Re-enter Password(Leave it as blank if there is no update)</mat-label>
-                        <input name="confirmedPassword" type="password" matInput [(ngModel)]="confirmedPassword" />
+                        <mat-label
+                            >Re-enter Password(Leave it as blank if there is no
+                            update)</mat-label
+                        >
+                        <input
+                            name="confirmedPassword"
+                            type="password"
+                            matInput
+                            [(ngModel)]="confirmedPassword"
+                        />
                     </mat-form-field>
-                    <div *ngIf="password != null && password != confirmedPassword" style="color: red;">
+                    <div
+                        *ngIf="
+                            password != null && password != confirmedPassword
+                        "
+                        style="color: red;"
+                    >
                         <strong>Password does not match!</strong>
                     </div>
-                    <br>
-
+                    <br />
 
                     <mat-label>Upload NRIC Front</mat-label>
-                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
-                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image">
-                    <br>
+                    <input
+                        #Image
+                        type="file"
+                        (change)="handleFileInput($event.target.files)"
+                    />
+                    <img
+                        width="100%"
+                        *ngIf="imageUrl"
+                        [src]="imageUrl"
+                        class="image"
+                    />
+                    <br />
                     <mat-label>Upload NRIC Back</mat-label>
-                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
-                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image">
-                    <br>
+                    <input
+                        #Image
+                        type="file"
+                        (change)="handleFileInput($event.target.files)"
+                    />
+                    <img
+                        width="100%"
+                        *ngIf="imageUrl"
+                        [src]="imageUrl"
+                        class="image"
+                    />
+                    <br />
                     <mat-label>Upload Profile photo</mat-label>
-                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
-                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image">
+                    <input
+                        #Image
+                        type="file"
+                        (change)="handleFileInput($event.target.files)"
+                    />
+                    <img
+                        width="100%"
+                        *ngIf="imageUrl"
+                        [src]="imageUrl"
+                        class="image"
+                    />
                     <div style="padding-top: 20px;">
-                        <button style="
+                        <button
+                            style="
                                 background: #3c4cad;
                                 color: white;
                                 width: 100%;
                                 font-size: medium;
-                            " mat-button [disabled]=" password!= null && password!= confirmedPassword"
-                            (click)="updateCustomer()">
+                            "
+                            mat-button
+                            [disabled]="
+                                password != null &&
+                                password != confirmedPassword
+                            "
+                            (click)="updateCustomer()"
+                        >
                             Update
                         </button>
                     </div>
                     <div style="padding-top: 20px;">
-                        <button style="
-                                background:white;
-                                color:#3c4cad;
+                        <button
+                            style="
+                                background: white;
+                                color: #3c4cad;
                                 width: 100%;
                                 font-size: medium;
-                            " mat-button (click)="navigateToAccount()">
+                            "
+                            mat-button
+                            (click)="navigateToAccount()"
+                        >
                             Back
                         </button>
                     </div>

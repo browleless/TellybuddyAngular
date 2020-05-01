@@ -40,7 +40,28 @@ export class AccountEditComponent implements OnInit {
             .updateCustomerDetailsForCustomer(this.customerToUpdate)
             .subscribe(
                 (response) => {
-                    this.router.navigate(['account']);
+                    this.sessionService.setCurrentCustomer(
+                        this.customerToUpdate
+                    );
+                    if (this.confirmedPassword != null) {
+                        this.customerToUpdate.password = this.confirmedPassword;
+                        this.customerService
+                            .changePassword(this.customerToUpdate)
+                            .subscribe(
+                                (response) => {
+                                    this.sessionService.setPassword(
+                                        this.confirmedPassword
+                                    );
+                                    this.router.navigate(['account']);
+                                },
+                                (error) => {
+                                    console.log(
+                                        '********** ViewFamilyGroupDetailsComponent.ts: ' +
+                                            error
+                                    );
+                                }
+                            );
+                    }
                 },
                 (error) => {
                     console.log(
@@ -49,23 +70,6 @@ export class AccountEditComponent implements OnInit {
                     );
                 }
             );
-        if (this.confirmedPassword != null) {
-            this.customerToUpdate.password = this.confirmedPassword;
-            this.customerService
-                .changePassword(this.customerToUpdate)
-                .subscribe(
-                    (response) => {
-                        this.sessionService.setPassword(this.confirmedPassword);
-                        this.router.navigate(['login']);
-                    },
-                    (error) => {
-                        console.log(
-                            '********** ViewFamilyGroupDetailsComponent.ts: ' +
-                                error
-                        );
-                    }
-                );
-        }
     }
     navigateToAccount() {
         this.router.navigate(['account']);
