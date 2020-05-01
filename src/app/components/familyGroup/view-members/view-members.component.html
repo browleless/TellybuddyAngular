@@ -6,53 +6,34 @@
     <div>
         <mat-sidenav-container fullscreen>
             <mat-sidenav mode="side" opened style="width: 25%; padding: 3% 2%;">
-                <div
-                    style="
+                <div style="
                         font-size: x-large;
                         margin-bottom: 35px;
                         font-weight: 600;
                         width: 100%;
                         text-align: center;
-                    "
-                >
+                    ">
                     My Family Group
                     <mat-divider style="margin-top: 10px;"></mat-divider>
-                    <button
-                        mat-button
-                        style="width: 100%;"
-                        routerLink="/familyGroup/viewFamilyGroupDetails"
-                    >
+                    <button mat-button style="width: 100%;" routerLink="/familyGroup/viewFamilyGroupDetails">
                         Home
                     </button>
                     <br />
-                    <button
-                        mat-button
-                        style="width: 100%;"
-                        routerLink="/familyGroup/viewMembers"
-                    >
+                    <button mat-button style="width: 100%;" routerLink="/familyGroup/viewMembers">
                         Members
                     </button>
                     <br />
-                    <button
-                        *ngIf="currentCustomer.ownerOfFamilyGroup"
-                        mat-button
-                        style="width: 100%;"
-                        routerLink="/familyGroup/viewSettings"
-                    >
+                    <button *ngIf="currentCustomer.ownerOfFamilyGroup" mat-button style="width: 100%;"
+                        routerLink="/familyGroup/viewSettings">
                         Settings
                     </button>
                 </div>
             </mat-sidenav>
             <mat-sidenav-content style="padding: 2% 7.5%;">
                 <mat-accordion>
-                    <mat-expansion-panel
-                        *ngFor="let member of familyMembers; let i = index"
-                        (opened)="retrieveActiveSubscriptions(i)"
-                        style="border-left: 5px solid #7274d6;"
-                    >
-                        <mat-expansion-panel-header
-                            style="vertical-align: baseline;"
-                        >
+                    <mat-expansion-panel *ngFor="let member of familyMembers; let i = index"
+                        (opened)="retrieveActiveSubscriptions(i)" style="border-left: 5px solid #7274d6;">
+                        <mat-expansion-panel-header style="vertical-align: baseline;">
                             <mat-panel-title>
                                 {{ member.firstName }}
                             </mat-panel-title>
@@ -65,35 +46,14 @@
                                 </div> -->
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <div *ngIf="currentCustomer.ownerOfFamilyGroup == true">
-                            <div *ngIf="member.ownerOfFamilyGroup == false">
-                                <button
-                                    mat-raised-button
-                                    color="primary"
-                                    (click)="removeMember(i)"
-                                >
-                                    Remove this memeber
-                                </button>
-                            </div>
-                        </div>
-                        <!-- </div>
-                        </div> -->
-                        <!-- <div *ngIf="activeSubscriptionsUnderThatCustomer == null">
-                            No active subscriptions under this customer now
-                        </div> -->
 
-                        <div
-                            *ngIf="activeSubscriptionsUnderThatCustomer != null"
-                        >
-                            <table
-                                mat-table
-                                [dataSource]="
+
+                        <div *ngIf="activeSubscriptionsUnderThatCustomer != null">
+                            <table mat-table [dataSource]="
                                     activeSubscriptionsUnderThatCustomer
-                                "
-                                width="100%;"
-                            >
+                                " width="100%;">
                                 <ng-container matColumnDef="Number">
-                                    <th mat-header-cell *matHeaderCellDef>
+                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
                                         Subscription Number
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
@@ -104,12 +64,11 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="SMS usage">
-                                    <th mat-header-cell *matHeaderCellDef>
+                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
                                         SMS Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -124,11 +83,8 @@
                                                         .quizExtraUnits -
                                                     subscription.smsUnits
                                                         .donated
-                                            "
-                                            style="color: red;"
-                                        >
-                                            <i
-                                                >{{
+                                            " style="color: red;">
+                                            <i>{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -147,11 +103,9 @@
                                                             .quizExtraUnits -
                                                         subscription.smsUnits
                                                             .donated
-                                                }}</i
-                                            >
+                                                }}</i>
                                         </p>
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -166,10 +120,8 @@
                                                         .quizExtraUnits -
                                                     subscription.smsUnits
                                                         .donated
-                                            "
-                                        >
-                                            <i
-                                                >{{
+                                            ">
+                                            <i>{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -195,12 +147,11 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="Talk time usage">
-                                    <th mat-header-cell *matHeaderCellDef>
+                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
                                         Talk Time Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -215,9 +166,7 @@
                                                         .quizExtraUnits -
                                                     subscription.talkTimeUnits
                                                         .donated
-                                            "
-                                            style="color: red;"
-                                        >
+                                            " style="color: red;">
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -245,8 +194,7 @@
                                                 }}
                                             </i>
                                         </p>
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -261,10 +209,8 @@
                                                         .quizExtraUnits -
                                                     subscription.talkTimeUnits
                                                         .donated
-                                            "
-                                        >
-                                            <i
-                                                >{{
+                                            ">
+                                            <i>{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -294,12 +240,11 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="Data usage">
-                                    <th mat-header-cell *matHeaderCellDef>
+                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
                                         Data Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -314,9 +259,7 @@
                                                         .quizExtraUnits -
                                                     subscription.dataUnits
                                                         .donated
-                                            "
-                                            style="color: red;"
-                                        >
+                                            " style="color: red;">
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -340,8 +283,7 @@
                                                 }}
                                             </i>
                                         </p>
-                                        <p
-                                            *ngIf="
+                                        <p *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
@@ -356,8 +298,7 @@
                                                         .quizExtraUnits -
                                                     subscription.dataUnits
                                                         .donated
-                                            "
-                                        >
+                                            ">
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -384,18 +325,21 @@
                                     </td>
                                 </ng-container>
 
-                                <tr
-                                    mat-header-row
-                                    *matHeaderRowDef="displayedColumns"
-                                ></tr>
-                                <tr
-                                    mat-row
-                                    *matRowDef="
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="
                                         let row;
                                         columns: displayedColumns
-                                    "
-                                ></tr>
+                                    "></tr>
                             </table>
+                        </div>
+                        <br>
+
+                        <div *ngIf="currentCustomer.ownerOfFamilyGroup == true">
+                            <div *ngIf="member.ownerOfFamilyGroup == false">
+                                <button mat-raised-button color="warn" (click)="removeMember(i)">
+                                    <mat-icon>delete</mat-icon> Remove member
+                                </button>
+                            </div>
                         </div>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -407,12 +351,7 @@
                     </mat-nav-list>
                 </div> -->
                 <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true"> -->
-                <button
-                    mat-raised-button
-                    style="margin-top: 20px;"
-                    color="primary"
-                    (click)="openDialog()"
-                >
+                <button mat-raised-button style="margin-top: 20px;" color="primary" (click)="openDialog()">
                     Add new family member
                 </button>
                 <!-- </div> -->

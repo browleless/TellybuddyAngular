@@ -27,11 +27,6 @@ export class DialogAddNewFamilyMemberComponent implements OnInit {
     private newCustomer: Customer;
     loaded: boolean = false;
     shakeIt = false;
-    emailFormControl = new FormControl('', [
-        Validators.required,
-        Validators.email,
-    ]);
-    matcher = new MyErrorStateMatcher();
 
     constructor(
         public dialogRef: MatDialogRef<DialogAddNewFamilyMemberComponent>,
@@ -67,7 +62,6 @@ export class DialogAddNewFamilyMemberComponent implements OnInit {
         );
     }
     addFamilyGroupMember() {
-
         this.familyGroupService
             .addFamilyGroupMember(
                 this.newCustomer,

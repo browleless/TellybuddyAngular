@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionService } from 'src/app/service/session.service';
 import { Announcement } from 'src/app/classes/announcement';
 import { Bill } from 'src/app/classes/bill';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, ErrorStateMatcher } from '@angular/material';
 
 import {
     ValidatorFn,
@@ -15,6 +15,8 @@ import {
     Validators,
     FormControl,
     AbstractControl,
+    FormGroupDirective,
+    NgForm,
 } from '@angular/forms';
 
 @Component({
@@ -35,8 +37,10 @@ export class RegistrationComponent implements OnInit {
     firstName: string;
     lastName: string;
     confirmedPassword: string;
-    //formGroup: FormGroup;
+
     registerForm: FormGroup;
+    titleAlert: string = 'This field is required';
+    post: any = '';
 
     constructor(
         private customerService: CustomerService,
@@ -45,26 +49,20 @@ export class RegistrationComponent implements OnInit {
         public sessionService: SessionService,
         private snackBar: MatSnackBar,
         private formBuilder: FormBuilder
-    ) {}
-
-    ngOnInit() {
-        // this.registerForm = new FormGroup(
-        //     {
-        //         password: new FormControl(null, [
-        //             Validators.required,
-        //             Validators.maxLength(32),
-        //         ]),
-        //         confirmPassword: new FormControl(null, [Validators.required]),
-        //     },
-        //     { validators: this.passwordConfirming }
-        // );
+    ) {
+        this.registerForm = this.formBuilder.group({
+            age: [
+                null,
+                [
+                    Validators.required,
+                    NumberValidatorsService.max(99),
+                    NumberValidatorsService.min(16),
+                ],
+            ],
+        });
     }
 
-    // passwordConfirming(c: AbstractControl): { invalid: boolean } {
-    //     if (c.get('password').value !== c.get('confirmPassword').value) {
-    //         return { invalid: true };
-    //     }
-    // }
+    ngOnInit() {}
 
     registration(): void {
         let newCustomer: Customer = {
@@ -112,6 +110,9 @@ export class RegistrationComponent implements OnInit {
                 this.router.navigate(['/login']);
             },
             (error) => {
+                const snackBarRef = this.snackBar.open(error, '', {
+                    duration: 4500,
+                });
                 console.log(error);
             }
         );
@@ -130,9 +131,3 @@ export class RegistrationComponent implements OnInit {
         reader.readAsDataURL(this.fileToUpload);
     }
 }
-// export const passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {
-//     if (formGroup.get('password').value === formGroup.get('password2').value)
-//       return null;
-//     else
-//       return {passwordMismatch: true};
-//   };

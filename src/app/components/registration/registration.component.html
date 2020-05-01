@@ -8,62 +8,139 @@
             <mat-form-field style="width: 100%; ">
                 <mat-label>First name</mat-label>
                 <input name="firstName" type="text" matInput placeholder="First Name" [(ngModel)]="firstName"
-                    required />
+                    required="true" #fn="ngModel" minlength="2" maxlength="24" />
+                <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched || submitted)" class="errorText">
+                    <div *ngIf="fn.errors.required">
+                        First name is required.
+                    </div>
+                    <div *ngIf="fn.errors.minlength || fn.errors.maxlength">
+                        First name need to be > 2 and < 24 characters. </div>
+                </mat-error>
             </mat-form-field>
 
 
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Last name</mat-label>
-                <input name="lastName" type="text" matInput placeholder="Last Name" [(ngModel)]="lastName" required />
+                <input name="lastName" type="text" matInput placeholder="Last Name" [(ngModel)]="lastName" #ln="ngModel"
+                    required="true" minlength="2" maxlength="24" />
+                <mat-error *ngIf="ln.invalid && (ln.dirty || ln.touched || submitted)" class="errorText">
+                    <div *ngIf="ln.errors.required">
+                        Last name is required.
+                    </div>
+                    <div *ngIf="ln.errors.minlength || ln.errors.maxlength">
+                        Last name need to be > 2 and < 24 characters. </div>
+                </mat-error>
             </mat-form-field>
 
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Age</mat-label>
-                <input name="age" type="text" matInput placeholder="Age" [(ngModel)]="age" required />
+                <input name="age" type="number" matInput placeholder="Age" [(ngModel)]="age" #a="ngModel"
+                    required="true" max="99" />
+
+                <mat-error *ngIf="a.invalid && (a.dirty || a.touched || submitted)" class="errorText">
+                    <div *ngIf="a.errors.required">
+                        Age is required.
+                    </div>
+
+                </mat-error>
+
             </mat-form-field>
 
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Address</mat-label>
-                <input name="address" type="text" matInput placeholder="Address" [(ngModel)]="newAddress" required />
+                <input name="address" type="text" matInput placeholder="Address" #add="ngModel" [(ngModel)]="newAddress"
+                    required="true" minlength="10" maxlength="64" />
+                <mat-error *ngIf="add.invalid && (add.dirty || add.touched || submitted)" class="errorText">
+                    <div *ngIf="add.errors.required">
+                        Address is required.
+                    </div>
+                    <div *ngIf="add.errors.minlength || add.errors.maxlength">
+                        Address need to be > 10 and < 64 characters. </div>
+                </mat-error>
             </mat-form-field>
 
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Postal Code</mat-label>
                 <input name="postalCode" type="text" matInput placeholder="Postal Code" [(ngModel)]="newPostalCode"
-                    required />
+                    #pc_="ngModel" required="true" pattern="^[0-9]{6}$" />
+                <mat-error *ngIf="pc_.invalid && (pc_.dirty || pc_.touched || submitted)" class="errorText">
+                    <div *ngIf="pc_.errors.required">
+                        Postal code is required.
+                    </div>
+                    <div *ngIf="pc_.errors.pattern">
+                        Please enter a valid postal code.
+                    </div>
+                </mat-error>
             </mat-form-field>
-
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>NRIC</mat-label>
-                <input name="nric" type="text" matInput placeholder="NRIC" [(ngModel)]="newNric" required />
+                <input style="text-transform: uppercase;" name="nric" type="text" matInput placeholder="NRIC"
+                    [(ngModel)]="newNric" #nric_="ngModel" required="true" pattern="^[STFG]\d{7}[A-JZ]$" />
+                <mat-error *ngIf=" nric_.invalid && (nric_.dirty || nric_.touched || submitted)" class="errorText">
+                    <div *ngIf="nric_.errors.required">
+                        NRIC is required.
+                    </div>
+                    <div *ngIf="nric_.errors.pattern">
+                        Please enter a valid NRIC.
+                    </div>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field style="width: 100%;">
                 <mat-label>Username</mat-label>
-                <input name="username" type="text" matInput placeholder="Username" [(ngModel)]="username" required />
+                <input name="username" type="text" matInput placeholder="Username" #username_="ngModel"
+                    [(ngModel)]="username" required="true" minlength="4" maxlength="32" />
+                <mat-error *ngIf="username_.invalid && (username_.dirty || username_.touched || submitted)"
+                    class="errorText">
+                    <div *ngIf="username_.errors.required">
+                        Username is required.
+                    </div>
+                    <div *ngIf="username_.errors.minlength || username_.errors.maxlength">
+                        Username need to be > 4 and < 32 characters. </div>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Email</mat-label>
-                <input name="email" type="text" matInput placeholder="Email" [(ngModel)]="email" required />
+                <input class="input" id="email" matInput name="email" #email_="ngModel" type="text" placeholder="Email"
+                    [(ngModel)]="email" required="true"
+                    pattern="^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$" />
+                <mat-error *ngIf="email_.invalid && (email_.dirty || email_.touched || submitted)" class="errorText">
+                    <div *ngIf="email_.errors.required">
+                        Email is required.
+                    </div>
+                    <div *ngIf="email_.errors.pattern">
+                        Please enter a valid email address.
+                    </div>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Password</mat-label>
                 <input name="password" type="password" matInput placeholder="Password" [(ngModel)]="password"
-                    class="form-control" required />
+                    class="form-control" required="true" #p="ngModel" />
+                <mat-error *ngIf="p.invalid && (p.dirty || p.touched || submitted)" class="errorText">
+                    <div *ngIf="p.errors.required">
+                        Password is required.
+                    </div>
+                </mat-error>
 
             </mat-form-field>
 
             <mat-form-field style="width: 100%; padding-bottom: 0;" class="form-group">
                 <mat-label>Re-enter password</mat-label>
                 <input name="password" type="password" matInput placeholder="Re-Enter Password"
-                    [(ngModel)]="confirmedPassword" class="form-control" required />
+                    [(ngModel)]="confirmedPassword" class="form-control" required="true" #p="ngModel" />
+                <mat-error *ngIf="p.invalid && (p.dirty || p.touched || submitted)" class="errorText">
+                    <div *ngIf="p.errors.required">
+                        Confirmed Password is required.
+                    </div>
+                </mat-error>
             </mat-form-field>
 
             <div *ngIf="password != null && password != confirmedPassword" style="color: red;">
