@@ -1,6 +1,5 @@
 <div
     style="text-align: center; padding: 0 17.5% 0 17.5%; margin-top: 3%;"
-    *ngIf="subscriptions.length !== 0"
 >
     <h1>My Subscriptions</h1>
     <p style="margin-bottom: 30px;">
@@ -221,7 +220,7 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
-    <div style="text-align: center;" *ngIf="subscriptions.length === 0">
+    <div style="text-align: center;" *ngIf="subscriptions == undefined || subscriptions.length === 0">
         <h1>
             No subscriptions found!
         </h1>

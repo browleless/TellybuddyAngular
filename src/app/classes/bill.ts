@@ -8,6 +8,7 @@ export class Bill {
     familyDiscountRate: number;
     addOnPrice: number;
     exceedPenaltyPrice: number;
+    earlyTerminationFee?: number;
     date: Date;
     paid: boolean;
     payment: Payment;
@@ -19,6 +20,7 @@ export class Bill {
         familyDiscountRate?: number,
         addOnPrice?: number,
         exceedPenaltyPrice?: number,
+        earlyTerminationFee?: number,
         date?: Date,
         paid?: boolean,
         payment?: Payment,
@@ -30,6 +32,7 @@ export class Bill {
         this.addOnPrice = addOnPrice;
         this.exceedPenaltyPrice = exceedPenaltyPrice;
         this.familyDiscountRate = familyDiscountRate;
+        this.earlyTerminationFee = earlyTerminationFee;
         this.billId = billId;
         this.paid = paid;
         this.payment = payment;

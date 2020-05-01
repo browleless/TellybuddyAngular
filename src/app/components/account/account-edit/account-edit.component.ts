@@ -112,7 +112,4 @@ export class AccountEditComponent implements OnInit {
             }
         );
     }
-    navigateToAccount() {
-        this.router.navigate(['account']);
-    }
 }

@@ -154,11 +154,11 @@
                                     </mat-grid-tile>
                                 </mat-grid-list>
                             </div>
-                            <div style="margin: 20px 0;">
+                            <div style="margin: 20px 0 0 0;">
                                 <mat-grid-list rowHeight="30" cols="2">
                                     <mat-grid-tile
                                         style="font-size: large;"
-                                        rowspan="3"
+                                        rowspan="4"
                                     >
                                         <span style="font-weight: bold;">
                                             Plan:&nbsp;
@@ -176,6 +176,12 @@
                                             Exceeded:&nbsp;
                                         </span>
                                         {{ bill.exceedPenaltyPrice | currency }}
+                                    </mat-grid-tile>
+                                    <mat-grid-tile *ngIf="bill.earlyTerminationFee">
+                                        <span style="font-weight: bold;">
+                                            Penalty:&nbsp;
+                                        </span>
+                                        {{ bill.earlyTerminationFee | currency }}
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         <span style="font-weight: bold;">
@@ -196,7 +202,7 @@
                                     </mat-grid-tile>
                                 </mat-grid-list>
                             </div>
-                            <div
+                            <div *ngIf="!bill.earlyTerminationFee"
                                 style="
                                     font-size: x-large;
                                     font-weight: 500;
@@ -210,6 +216,24 @@
                                         bill.addOnPrice +
                                         bill.exceedPenaltyPrice) *
                                         ((100 - bill.familyDiscountRate) / 100)
+                                        | currency
+                                }}
+                            </div>
+                            <div *ngIf="bill.earlyTerminationFee"
+                                style="
+                                    font-size: x-large;
+                                    font-weight: 500;
+                                    border-top: 2.5px solid #3c4cad;
+                                    border-bottom: 2.5px solid #3c4cad;
+                                    padding: 10px 0;
+                                "
+                            >
+                                {{
+                                    (bill.price +
+                                        bill.addOnPrice +
+                                        bill.exceedPenaltyPrice) *
+                                        ((100 - bill.familyDiscountRate) / 100)  +
+                                        bill.earlyTerminationFee
                                         | currency
                                 }}
                             </div>
