@@ -45,6 +45,7 @@ export class AccountEditComponent implements OnInit {
             .updateCustomerDetailsForCustomer(this.customerToUpdate)
             .subscribe(
                 (response) => {
+                    this.router.navigate(['account']);
                     this.sessionService.setCurrentCustomer(
                         this.customerToUpdate
                     );
@@ -79,6 +80,13 @@ export class AccountEditComponent implements OnInit {
                     );
                 },
                 (error) => {
+                    const snackBarRef = this.snackBar.open(
+                        '',
+                        'Age must be between 16 to 99',
+                        {
+                            duration: 4500,
+                        }
+                    );
                     console.log(
                         '********** ViewFamilyGroupDetailsComponent.ts: ' +
                             error

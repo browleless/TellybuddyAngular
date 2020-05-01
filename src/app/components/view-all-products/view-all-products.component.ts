@@ -35,13 +35,11 @@ export class ViewAllProductsComponent implements OnInit {
 
     // user input
     selectedTags: number[];
-    condition: string;
+    condition: string = 'AND';
     selectedCategories: number[];
     searchInput: string;
     displayProducts: Product[];
     selectedProduct: Product;
-    // filterProductsByTags: Product[];
-    // filterProductsByCategory: Product[];
 
     constructor(
         private router: Router,
@@ -161,11 +159,11 @@ export class ViewAllProductsComponent implements OnInit {
         let categoryId = this.categories[index].categoryId;
         let removed: boolean = false;
 
-        for (let selected of this.selectedCategories) {
-            if (selected == categoryId) {
+        for (var i = 0; i < this.selectedCategories.length; i++) {
+            if (this.selectedCategories[i] == categoryId) {
                 //remove it from selection
                 console.log('removed ' + this.categories[index].name);
-                this.selectedCategories.splice(selected, 1);
+                this.selectedCategories.splice(i, 1);
                 removed = true;
             }
         }
@@ -175,6 +173,9 @@ export class ViewAllProductsComponent implements OnInit {
             this.selectedCategories.push(categoryId);
             console.log('console: added ' + this.categories[index].name);
         }
+
+        //trigger the restful method
+        this.filterByCategories();
     }
 
     filterByCategories(): void {
@@ -192,11 +193,6 @@ export class ViewAllProductsComponent implements OnInit {
                 }
             );
         } else {
-            // console.log(
-            //     'console: total selected categories: ' +
-            //         this.selectedCategories.length
-            // );
-
             this.productService
                 .filterProductsByMultipleCategories(this.selectedCategories)
                 .subscribe(
@@ -204,24 +200,26 @@ export class ViewAllProductsComponent implements OnInit {
                         this.displayProducts = response.products;
                         this.displayProducts.sort((a, b) => a.price - b.price);
                         this.loaded = true;
+                        console.log(
+                            'num of products: ' + this.displayProducts.length
+                        );
                     },
                     (error) => {
                         console.log(error);
                     }
                 );
         }
-
-        console.log('num of products: ' + this.displayProducts.length);
     }
 
     selectTag(index: number): void {
         let tagId = this.tags[index].tagId;
         let removed: boolean = false;
 
-        for (let selected of this.selectedTags) {
-            if (selected == tagId) {
+        for (var i = 0; i < this.selectedTags.length; i++) {
+            if (this.selectedTags[i] == tagId) {
                 //remove it from selection
-                this.selectedTags.splice(selected, 1);
+                console.log('removed ' + this.tags[index].name);
+                this.selectedTags.splice(i, 1);
                 removed = true;
             }
         }
@@ -233,13 +231,11 @@ export class ViewAllProductsComponent implements OnInit {
                 'console: added ' + this.tags[index].name + ' to selected'
             );
         }
+
+        this.filterByTags();
     }
 
     filterByTags(): void {
-        // console.log('string condition is: ' + this.condition);
-        // console.log('num of tags selected: ' + this.selectedTags.length);
-        // console.log('submit filter');
-
         if (this.selectedTags.length == 0) {
             this.productService.retrieveAllProducts().subscribe(
                 (response) => {
@@ -261,6 +257,9 @@ export class ViewAllProductsComponent implements OnInit {
                         this.displayProducts = response.products;
                         this.displayProducts.sort((a, b) => a.price - b.price);
                         this.loaded = true;
+                        console.log(
+                            'num of products: ' + this.displayProducts.length
+                        );
                     },
                     (error) => {
                         console.log(error);

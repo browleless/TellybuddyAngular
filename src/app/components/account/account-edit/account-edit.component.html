@@ -44,170 +44,143 @@
         </mat-drawer>
             <mat-drawer-content style="height: 100vh; padding: 3% 17.5% 0 2%;">
                 <form class="registration-form">
-                    <mat-form-field style="width: 100%; padding-bottom: 0;">
+
+                    <!-- <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>First name</mat-label>
-                        <input
-                            name="firstName"
-                            type="text"
-                            matInput
-                            placeholder="First Name"
-                            [(ngModel)]="customerToUpdate.firstName"
-                        />
+                        <input name="firstName" type="text" matInput placeholder="First Name"
+                            [(ngModel)]="customerToUpdate.firstName" />
+                    </mat-form-field> -->
+
+                    <mat-form-field style="width: 100%; ">
+                        <mat-label>First name</mat-label>
+                        <input name="firstName" type="text" matInput placeholder="First Name"
+                            [(ngModel)]="customerToUpdate.firstName" required="true" #fn="ngModel" minlength="2"
+                            maxlength="24" />
+                        <mat-error *ngIf="fn.invalid && (fn.dirty || fn.touched || submitted)" class="errorText">
+                            <div *ngIf="fn.errors.required">
+                                First name is required.
+                            </div>
+                            <div *ngIf="fn.errors.minlength || fn.errors.maxlength">
+                                First name need to be > 2 and < 24 characters. </div>
+                        </mat-error>
                     </mat-form-field>
+
+
+
+
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>Last name</mat-label>
-                        <input
-                            name="lastName"
-                            type="text"
-                            matInput
-                            placeholder="Last Name"
-                            [(ngModel)]="customerToUpdate.lastName"
-                        />
+                        <input name="lastName" type="text" matInput placeholder="Last Name"
+                            [(ngModel)]="customerToUpdate.lastName" #ln="ngModel" required="true" minlength="2"
+                            maxlength="24" />
+                        <mat-error *ngIf="ln.invalid && (ln.dirty || ln.touched || submitted)" class="errorText">
+                            <div *ngIf="ln.errors.required">
+                                Last name is required.
+                            </div>
+                            <div *ngIf="ln.errors.minlength || ln.errors.maxlength">
+                                Last name need to be > 2 and < 24 characters. </div>
+                        </mat-error>
                     </mat-form-field>
+
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
                         <mat-label>Age</mat-label>
-                        <input
-                            name="age"
-                            type="text"
-                            matInput
-                            placeholder="Age"
-                            [(ngModel)]="customerToUpdate.age"
-                        />
+                        <input name="age" type="number" matInput placeholder="Age" [(ngModel)]="customerToUpdate.age"
+                            #a="ngModel" required="true" max="99" />
+                        <mat-error *ngIf="a.invalid && (a.dirty || a.touched || submitted)" class="errorText">
+                            <div *ngIf="a.errors.required">
+                                Age is required.
+                            </div>
+                        </mat-error>
                     </mat-form-field>
+
+
+
+
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label
-                            >Address(Leave it as blank if there is no
-                            update)</mat-label
-                        >
-                        <input
-                            name="address"
-                            type="text"
-                            matInput
-                            placeholder="{{ customerToUpdate.address }}"
-                            [(ngModel)]="customerToUpdate.newAddress"
-                        />
+                        <mat-label>Address (Leave it as blank if there is no
+                            update)</mat-label>
+                        <input name="address" type="text" matInput placeholder="Address" #add="ngModel"
+                            [(ngModel)]="customerToUpdate.newAddress" minlength="10" maxlength="64" />
+                        <mat-error *ngIf="add.invalid && (add.dirty || add.touched || submitted)" class="errorText">
+                            <div *ngIf="add.errors.minlength || add.errors.maxlength">
+                                Address need to be > 10 and < 64 characters. </div>
+                        </mat-error>
                     </mat-form-field>
+
+
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label
-                            >Postal Code(Leave it as blank if there is no
-                            update)</mat-label
-                        >
-                        <input
-                            name="postalCode"
-                            type="text"
-                            matInput
-                            placeholder="{{ customerToUpdate.postalCode }}"
-                            [(ngModel)]="customerToUpdate.newPostalCode"
-                        />
-                    </mat-form-field>
-                    <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label
-                            >NRIC(Leave it as blank if there is no
-                            update)</mat-label
-                        >
-                        <input
-                            name="nric"
-                            type="text"
-                            matInput
-                            placeholder="{{ customerToUpdate.nric }}"
-                            [(ngModel)]="customerToUpdate.newNric"
-                        />
+                        <mat-label>Postal Code (Leave it as blank if there is no
+                            update)</mat-label>
+                        <input name="postalCode" type="text" matInput placeholder="Postal Code"
+                            [(ngModel)]="customerToUpdate.newPostalCode" #pc_="ngModel" required="true"
+                            pattern="^[0-9]{6}$" />
+                        <mat-error *ngIf="pc_.invalid && (pc_.dirty || pc_.touched || submitted)" class="errorText">
+                            <div *ngIf="pc_.errors.pattern">
+                                Please enter a valid postal code.
+                            </div>
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label
-                            >New Password(Leave it as blank if there is no
-                            update)</mat-label
-                        >
-                        <input
-                            name="password"
-                            type="password"
-                            matInput
-                            [(ngModel)]="password"
-                        />
+                        <mat-label>NRIC (Leave it as blank if there is no
+                            update)</mat-label>
+                        <input style="text-transform: uppercase;" name="nric" type="text" matInput placeholder="NRIC"
+                            [(ngModel)]="customerToUpdate.newNric" #nric_="ngModel" pattern="^[STFG]\d{7}[A-JZ]$" />
+                        <mat-error *ngIf=" nric_.invalid && (nric_.dirty || nric_.touched || submitted)"
+                            class="errorText">
+
+                            <div *ngIf="nric_.errors.pattern">
+                                Please enter a valid NRIC.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+
+
+                    <mat-form-field style="width: 100%; padding-bottom: 0;">
+                        <mat-label>New Password(Leave it as blank if there is no
+                            update)</mat-label>
+                        <input name="password" type="password" matInput [(ngModel)]="password" />
                     </mat-form-field>
 
                     <mat-form-field style="width: 100%; padding-bottom: 0;">
-                        <mat-label
-                            >Re-enter Password(Leave it as blank if there is no
-                            update)</mat-label
-                        >
-                        <input
-                            name="confirmedPassword"
-                            type="password"
-                            matInput
-                            [(ngModel)]="confirmedPassword"
-                        />
+                        <mat-label>Re-enter Password(Leave it as blank if there is no
+                            update)</mat-label>
+                        <input name="confirmedPassword" type="password" matInput [(ngModel)]="confirmedPassword" />
                     </mat-form-field>
-                    <div
-                        *ngIf="
+                    <div *ngIf="
                             password != null && password != confirmedPassword
-                        "
-                        style="color: red;"
-                    >
+                        " style="color: red;">
                         <strong>Password does not match!</strong>
                     </div>
                     <br />
 
                     <mat-label>Upload NRIC Front</mat-label>
-                    <input
-                        #Image
-                        type="file"
-                        (change)="handleFileInput($event.target.files)"
-                    />
-                    <img
-                        width="100%"
-                        *ngIf="imageUrl"
-                        [src]="imageUrl"
-                        class="image"
-                    />
+                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
+                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
                     <br />
                     <mat-label>Upload NRIC Back</mat-label>
-                    <input
-                        #Image
-                        type="file"
-                        (change)="handleFileInput($event.target.files)"
-                    />
-                    <img
-                        width="100%"
-                        *ngIf="imageUrl"
-                        [src]="imageUrl"
-                        class="image"
-                    />
+                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
+                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
                     <br />
                     <mat-label>Upload Profile photo</mat-label>
-                    <input
-                        #Image
-                        type="file"
-                        (change)="handleFileInput($event.target.files)"
-                    />
-                    <img
-                        width="100%"
-                        *ngIf="imageUrl"
-                        [src]="imageUrl"
-                        class="image"
-                    />
+                    <input #Image type="file" (change)="handleFileInput($event.target.files)" />
+                    <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
                     <div style="padding-top: 20px;">
-                        <button
-                            style="
+                        <button style="
                                 background: #3c4cad;
                                 color: white;
                                 width: 100%;
                                 font-size: medium;
-                            "
-                            mat-button
-                            [disabled]="
+                            " mat-button [disabled]="
                                 password != null &&
                                 password != confirmedPassword
-                            "
-                            (click)="updateCustomer()"
-                        >
+                            " (click)="updateCustomer()">
                             Update
                         </button>
                     </div>
                     <div style="padding-top: 20px;">
-                        <button
-                            style="
+                        <button style="
                                 background: white;
                                 color: #3c4cad;
                                 width: 100%;
