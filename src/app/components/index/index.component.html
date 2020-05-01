@@ -30,7 +30,10 @@
                 </mat-carousel-slide>
             </mat-carousel>
         </section>
-        <section style="background-color: #f6f6f6;">
+        <section
+            *ngIf="availableDiscountCodes.length"
+            style="background-color: #f6f6f6;"
+        >
             <div style="padding-top: 2.25%; text-align: center;">
                 <h2 style="margin: 0;">
                     Grab the latest discount codes while they last!

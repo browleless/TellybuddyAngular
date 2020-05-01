@@ -9,7 +9,6 @@
 
         <mat-drawer-container>
             <mat-drawer style="width: 22%; height: 100%;" mode="side" opened>
-
                 <h3 style="margin-bottom: 15px;">
                     Search Our Products By Name!
                 </h3>
@@ -17,13 +16,18 @@
                 <form style="margin-bottom: 30px;">
                     <input type="text" (keyup)="searchProducts($event)" />
                     &nbsp;&nbsp;
-                    <button mat-raised-button color="primary" (submit)="searchProducts($event)">Search</button>
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        (submit)="searchProducts($event)"
+                    >
+                        Search
+                    </button>
                 </form>
                 <mat-divider></mat-divider>
 
                 <mat-tab-group>
                     <mat-tab label="Filter By Tag(s)">
-
                         <br />
                         <mat-form-field>
                             <mat-label>Select Filter Condition: </mat-label>
@@ -34,30 +38,51 @@
                         </mat-form-field>
                         <br />
 
-                        <div *ngFor="let tag of tags, let i = index" style="padding-top: 2%; line-height: 1.6;">
-                            <mat-checkbox (change)="selectTag(i)" [checked]="tag.checked">
-                                {{tag.name}}
+                        <div
+                            *ngFor="let tag of tags; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
+                            <mat-checkbox
+                                (change)="selectTag(i)"
+                                [checked]="tag.checked"
+                            >
+                                {{ tag.name }}
                             </mat-checkbox>
                         </div>
                         <br />
 
-                        <p *ngIf="condition == undefined" style="color: red; font-size: small;"><i>*Please select a
-                                filter condition first!</i></p>
+                        <p
+                            *ngIf="condition == undefined"
+                            style="color: red; font-size: small;"
+                        >
+                            <i>*Please select a filter condition first!</i>
+                        </p>
 
-                        <button mat-raised-button color="primary" (click)="filterByTags()"
-                            [disabled]="condition == undefined">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="filterByTags()"
+                            [disabled]="condition == undefined"
+                        >
                             Show me the filtered results!
                         </button>
                         <br /><br />
                     </mat-tab>
                     <mat-tab label="Filter By Brand(s)">
-                        <div *ngFor="let cat of categories, let i = index" style="padding-top: 2%; line-height: 1.6;">
+                        <div
+                            *ngFor="let cat of categories; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
                             <mat-checkbox (change)="selectCategory(i)">
-                                {{cat.name}}
+                                {{ cat.name }}
                             </mat-checkbox>
                         </div>
                         <br /><br />
-                        <button mat-raised-button color="primary" (click)="filterByCategories()">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            (click)="filterByCategories()"
+                        >
                             Show me the filtered results!
                         </button>
                     </mat-tab>
@@ -65,41 +90,62 @@
             </mat-drawer>
 
             <mat-drawer-content style="padding-left: 2%; padding-right: 2%;">
-
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="500px"
-                    gutterSize="24px" [(ngModel)]="displayProducts">
-
-                    <div *ngIf="displayProducts.length == 0" style="text-align: center;">
-                        <h3>We couldn't find any products matching to your search results!</h3>
-                        <img src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
-                            style="height: 348px; width: 464px;" />
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="500px"
+                    gutterSize="24px"
+                >
+                    <div
+                        *ngIf="displayProducts.length == 0"
+                        style="text-align: center;"
+                    >
+                        <h3>
+                            We couldn't find any products matching to your
+                            search results!
+                        </h3>
+                        <img
+                            src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
+                            style="height: 348px; width: 464px;"
+                        />
                     </div>
 
-                    <mat-grid-tile *ngFor="let product of displayProducts, let i = index">
-                        <mat-card mat-ripple matTooltip="I want this!" class="mat-elevation-z8"
-                            (click)="selectProduct(i)">
+                    <mat-grid-tile
+                        *ngFor="let product of displayProducts; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            matTooltip="I want this!"
+                            class="mat-elevation-z8"
+                            (click)="selectProduct(i)"
+                        >
                             <mat-card-title>
-                                <div style="text-align:center;">
+                                <div style="text-align: center;">
                                     {{ product.name }}
                                 </div>
                             </mat-card-title>
-                            <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
+                            <mat-card-subtitle
+                                style="
+                                    text-align: center;
+                                    padding: 10px 0 10px 0;
+                                "
+                            >
                                 Price: ${{ product.price }}
                             </mat-card-subtitle>
-                            <img mat-card-image src="assets/productImages/{{ product.productImagePath }}">
+                            <img
+                                mat-card-image
+                                src="assets/productImages/{{
+                                    product.productImagePath
+                                }}"
+                            />
                             <mat-card-content>
                                 <div style="margin-top: 10px;">
                                     Description: {{ product.description }}
                                 </div>
                             </mat-card-content>
-
                         </mat-card>
                     </mat-grid-tile>
                 </mat-grid-list>
-
             </mat-drawer-content>
-
         </mat-drawer-container>
-
     </div>
 </div>
