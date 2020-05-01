@@ -6,3 +6,39 @@
 ::ng-deep button.mat-button .mat-button-base {
     padding: 0;
 }
+
+::ng-deep .mat-card:hover .overlay{
+    /* -color: rgba(0,0,0,0.02);
+    opacity: 0.5; */
+    width: 100%;
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0.8;
+    background-color: cornflowerblue;
+    overflow: hidden;
+    width: 0;
+    height: 100%;
+    transition: .5s ease;
+    display: flex;
+    vertical-align: middle;
+    line-height: 90px;
+    object-fit: cover;
+    
+  }
+  .text {
+    color: white;
+    font-size:  2em;
+    font-family: Verdana;
+    font-weight: bold;
+    text-align: center;
+    padding: 25% 25%;
+    position: relative;
+    width: 100%;
+    margin: auto;
+    /* white-space: nowrap; */
+  }

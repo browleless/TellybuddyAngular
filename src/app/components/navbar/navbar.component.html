@@ -8,6 +8,7 @@
             #buttonOne
             #buttonOneTrigger="matMenuTrigger"
             mat-button
+            routerLink="/viewallproducts"
             [matMenuTriggerFor]="firstMenu"
             (mouseenter)="buttonEnter(buttonOneTrigger)"
             (mouseleave)="buttonLeave(buttonOneTrigger, buttonOne)"
@@ -19,9 +20,6 @@
                 (mouseenter)="menuenter()"
                 (mouseleave)="menuLeave(buttonOneTrigger, buttonOne)"
             >
-                <button mat-menu-item routerLink="/viewallproducts">
-                    All Products
-                </button>
                 <button mat-menu-item routerLink="/luxuryproducts">
                     Mobile Devices
                 </button>
