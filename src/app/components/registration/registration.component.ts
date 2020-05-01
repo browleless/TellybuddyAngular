@@ -6,7 +6,7 @@ import { SessionService } from 'src/app/service/session.service';
 import { Announcement } from 'src/app/classes/announcement';
 import { Bill } from 'src/app/classes/bill';
 import { MatSnackBar } from '@angular/material';
-import { RxwebValidators } from '@rxweb/reactive-form-validators';
+
 import {
     ValidatorFn,
     FormGroup,

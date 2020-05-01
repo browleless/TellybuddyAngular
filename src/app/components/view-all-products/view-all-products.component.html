@@ -25,7 +25,6 @@
                 </div>
                 <mat-divider></mat-divider>
 
-                <!-- <mat-tab-group> -->
                 <mat-accordion multi="true" togglePosition = 'before'>
                     <mat-expansion-panel class="mat-elevation-z0">
                         <mat-expansion-panel-header>
@@ -34,7 +33,6 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
-                        <!-- <mat-tab label="Filter By Tag(s)"> -->
                         <br />
                         <mat-form-field>
                             <mat-label>Select Filter Condition: </mat-label>
@@ -75,8 +73,6 @@
                             Show me the filtered results!
                         </button>
                         <br /><br />
-                        <!-- </mat-tab> -->
-                        <!-- <mat-tab label="Filter By Brand(s)"> -->
                     </mat-expansion-panel>
                     <mat-expansion-panel class="mat-elevation-z0">
                         <mat-expansion-panel-header>
@@ -93,28 +89,14 @@
                             </mat-checkbox>
                         </div>
                         <br /><br />
-                        <!-- </mat-tab> -->
                     </mat-expansion-panel>
                 </mat-accordion>
-                <!-- </mat-tab-group> -->
             </mat-drawer>
 
             <mat-drawer-content style="padding: 2% 2% 0 2%;">
                 <div>
                     <h1>View All Products</h1>
                 </div>
-                        <button
-                            mat-raised-button
-                            color="primary"
-                            (click)="filterByCategories()"
-                        >
-                            Show me the filtered results!
-                        </button>
-                    </mat-tab>
-                </mat-tab-group>
-            </mat-drawer>
-
-            <mat-drawer-content style="padding-left: 2%; padding-right: 2%;">
                 <mat-grid-list
                     [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
                     rowHeight="500px"
@@ -136,30 +118,6 @@
                             style="height: 348px; width: 464px;"
                         />
                     </div>
-
-                    <!-- <div *ngIf="filterProductsByCategory != undefined">
-                        <mat-grid-tile *ngFor="let product of filterProductsByCategory, let i = index">
-                            <mat-card mat-ripple class="mat-elevation-z8" (click)="addProductToCart(i)"
-                                style="width: 285px;">
-                                <mat-card-title>
-                                    <div style="text-align:center;">
-                                        {{ product.name }}
-                                    </div>
-                                </mat-card-title>
-                                <mat-card-subtitle style="text-align: center; padding: 10px 0 10px 0;">
-                                    Price: ${{ product.price }}
-                                </mat-card-subtitle>
-                                <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
-                                    style="width: 285px; height: 285px;">
-                                <mat-card-content>
-                                    <div style="height: 58px">
-                                        Description: {{ product.description }}
-                                    </div>
-                                </mat-card-content>
-
-                            </mat-card>
-                        </mat-grid-tile>
-                    </div> -->
 
                     <mat-grid-tile
                         *ngFor="let product of displayProducts; let i = index"
