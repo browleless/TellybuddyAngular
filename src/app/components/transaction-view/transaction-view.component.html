@@ -4,31 +4,27 @@
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 25%; padding: 3% 2%;" mode="side" opened>
+            <mat-drawer
+                style="width: 20%; padding: 3% 2%; text-align: center;"
+                mode="side"
+                opened
+            >
+                <mat-divider style="margin: 15px 0;"></mat-divider>
                 <div
                     style="
                         font-size: x-large;
-                        margin-bottom: 35px;
-                        font-weight: 600;
-                        width: 100%;
                         text-align: center;
+                        font-weight: 600;
                     "
                 >
                     My Account
-                    <mat-divider style="margin-top: 10px;"></mat-divider>
-
-                    <button
-                        style="width: 100%;"
-                        mat-button
-                        routerLink="/subscriptions"
-                    >
-                        My Subscriptions
-                    </button>
-                    <br />
-                    <button style="width: 100%;" mat-button routerLink="/bills">
-                        My Bills
-                    </button>
                 </div>
+                <mat-divider style="margin: 15px 0;"></mat-divider>
+                <button mat-button routerLink="/subscriptions">
+                    My Subscriptions
+                </button>
+                <br />
+                <button mat-button routerLink="/bills">My Bills</button>
             </mat-drawer>
             <mat-drawer-content style="height: 100vh; padding: 3% 17.5% 0 2%;">
                 <mat-card

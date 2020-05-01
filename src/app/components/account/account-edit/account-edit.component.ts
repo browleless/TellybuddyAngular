@@ -3,6 +3,7 @@ import { Customer } from 'src/app/classes/customer';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/service/customer.service';
 import { SessionService } from 'src/app/service/session.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-account-edit',
@@ -14,11 +15,14 @@ export class AccountEditComponent implements OnInit {
     loaded: boolean;
     password: string;
     confirmedPassword: string;
+    imageLoading: boolean;
+    profilePicture: any;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private customerService: CustomerService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
@@ -32,6 +36,7 @@ export class AccountEditComponent implements OnInit {
                 );
             }
         );
+        this.getProfilePicture();
         this.loaded = true;
     }
 
@@ -52,7 +57,7 @@ export class AccountEditComponent implements OnInit {
                                     this.sessionService.setPassword(
                                         this.confirmedPassword
                                     );
-                                    this.router.navigate(['account']);
+                                    
                                 },
                                 (error) => {
                                     console.log(
@@ -62,6 +67,16 @@ export class AccountEditComponent implements OnInit {
                                 }
                             );
                     }
+                    let updateSnackbar = this.snackBar.open(
+                        'Your details have been updated!',
+                        'Close',
+                        {
+                            duration: 4500,
+                        }
+                    );
+                    updateSnackbar.afterDismissed().subscribe( () =>
+                        this.router.navigate(['account'])
+                    );
                 },
                 (error) => {
                     console.log(
@@ -70,6 +85,32 @@ export class AccountEditComponent implements OnInit {
                     );
                 }
             );
+    }
+    createImageFromBlob(image: Blob) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.profilePicture = reader.result;
+            },
+            false
+        );
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
+    getProfilePicture() {
+        this.customerService.retrieveProfilePicture().subscribe(
+            (data) => {
+                this.createImageFromBlob(data);
+                this.imageLoading = false;
+            },
+            (error) => {
+                this.imageLoading = true;
+                console.log(error);
+            }
+        );
     }
     navigateToAccount() {
         this.router.navigate(['account']);
