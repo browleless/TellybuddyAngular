@@ -49,18 +49,7 @@ export class RegistrationComponent implements OnInit {
         public sessionService: SessionService,
         private snackBar: MatSnackBar,
         private formBuilder: FormBuilder
-    ) {
-        this.registerForm = this.formBuilder.group({
-            age: [
-                null,
-                [
-                    Validators.required,
-                    NumberValidatorsService.max(99),
-                    NumberValidatorsService.min(16),
-                ],
-            ],
-        });
-    }
+    ) {}
 
     ngOnInit() {}
 
