@@ -3,6 +3,7 @@ import { Customer } from 'src/app/classes/customer';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from 'src/app/service/customer.service';
 import { SessionService } from 'src/app/service/session.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     selector: 'app-account-edit',
@@ -14,11 +15,13 @@ export class AccountEditComponent implements OnInit {
     loaded: boolean;
     password: string;
     confirmedPassword: string;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private customerService: CustomerService,
-        private sessionService: SessionService
+        private sessionService: SessionService,
+        private snackBar: MatSnackBar
     ) {}
 
     ngOnInit() {
@@ -40,6 +43,7 @@ export class AccountEditComponent implements OnInit {
             .updateCustomerDetailsForCustomer(this.customerToUpdate)
             .subscribe(
                 (response) => {
+                    this.router.navigate(['account']);
                     this.sessionService.setCurrentCustomer(
                         this.customerToUpdate
                     );
@@ -64,6 +68,13 @@ export class AccountEditComponent implements OnInit {
                     }
                 },
                 (error) => {
+                    const snackBarRef = this.snackBar.open(
+                        '',
+                        'Age must be between 16 to 99',
+                        {
+                            duration: 4500,
+                        }
+                    );
                     console.log(
                         '********** ViewFamilyGroupDetailsComponent.ts: ' +
                             error
