@@ -27,7 +27,7 @@
 
                 <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="420px">
                     <mat-grid-tile *ngFor="let plan of flashPlans; let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" (click)="openDialogPlan(i)"
+                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 70%;" (click)="openDialogPlan(i)"
                             matTooltip="I want this!">
                             <mat-card-title style="text-align: center;">
                                 {{ plan.name }}
@@ -35,7 +35,7 @@
                             <mat-card-subtitle style="text-align: center;">
                                 <p style="color: red;">Promotional Price: ${{ plan.price }}</p>
                             </mat-card-subtitle>
-                            <mat-card-content>
+                            <mat-card-content style="text-align: center;">
                                 <div style="
                                     margin: 15px 0 25px 0;
                                     display: inline-block;
@@ -87,10 +87,10 @@
                         src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg" height="130px" width="130px" />
                 </div>
 
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="472px"
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="530px"
                     gutterSize="20px">
                     <mat-grid-tile *ngFor="let luxury of flashLuxury, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" (click)="addLuxuryProductToCart(i)">
+                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 80%; height: 80%" (click)="addLuxuryProductToCart(i)">
                             <mat-card-title>
                                 <div style="text-align:center;">
                                     {{ luxury.name }}
@@ -100,9 +100,9 @@
                                 <s>Original Price: ${{ luxury.price }}</s>
                                 <p style="color: red;">Promotional Price: ${{ luxury.discountPrice }}</p>
                             </mat-card-subtitle>
-                            <img mat-card-image src="assets/productImages/{{ luxury.productImagePath }}">
+                            <img mat-card-image src="{{flashLuxuryImages[i]}}">
                             <mat-card-content>
-                                <div style="height: 40px">
+                                <div style="height: 40px; text-align: center;">
                                     Description: {{ luxury.description }}
                                 </div>
                             </mat-card-content>
@@ -123,11 +123,11 @@
                         src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg" height="130px" width="130px" />
                 </div>
 
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="510px"
-                    gutterSize="24px">
+                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="530px"
+                    gutterSize="20px">
                     <mat-grid-tile *ngFor="let product of flashNormal, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" (click)="addNormalProductToCart(i)"
-                            style="width: 285px;">
+                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 80%; height: 80%" (click)="addNormalProductToCart(i)"
+                            >
                             <mat-card-title>
                                 <div style="text-align:center;">
                                     {{ product.name }}
@@ -137,9 +137,9 @@
                                 <s>Original Price: ${{ product.price }}</s>
                                 <p style="color: red;">Promotional Price: ${{ product.discountPrice }}</p>
                             </mat-card-subtitle>
-                            <img mat-card-image src="assets/productImages/{{ product.productImagePath }}"
-                                style="width: 300px; height: 300px">
-                            <mat-card-content>
+                            <img mat-card-image src="{{flashNormalImages[i]}}"
+                                style="width: 250px; height: 250px; text-align: center;">
+                            <mat-card-content style="text-align: center;">
                                 <div style="height: 58px">
                                     Description: {{ product.description }}
                                 </div>

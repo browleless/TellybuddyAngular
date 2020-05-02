@@ -26,6 +26,8 @@ import { DialogConfigureNewPlanComponent } from '../dialog-configure-new-plan/di
     styleUrls: ['./promotions.component.css'],
 })
 export class PromotionsComponent implements OnInit {
+    flashNormalImages: any[] = [];
+    flashLuxuryImages: any[] = [];
     flashPlans: Plan[];
     flashNormal: Product[];
     flashLuxury: Product[];
@@ -90,36 +92,84 @@ export class PromotionsComponent implements OnInit {
             (response) => {
                 this.flashPlans = response.plans;
                 this.flashPlans.sort((a, b) => a.price - b.price);
-                this.loaded = true;
             },
             (error) => {
                 console.log(error);
             }
         );
 
-        this.loaded = false;
         this.productService.retrieveAllDiscountedNormalProducts().subscribe(
             (response) => {
                 this.flashNormal = response.products;
                 this.flashNormal.sort((a, b) => a.price - b.price);
-                this.loaded = true;
+                for (var i = 0; i < this.flashNormal.length; i++) {
+                    this.productService
+                        .retrieveProductImage(
+                            this.flashNormal[i].productId
+                        )
+                        .subscribe(
+                            (data) => {
+                                let reader = new FileReader();
+                                reader.addEventListener(
+                                    'load',
+                                    () => {
+                                        this.flashNormalImages.push(reader.result);
+                                    },
+                                    false
+                                );
+
+                                if (data) {
+                                    reader.readAsDataURL(data);
+                                }
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                }
             },
             (error) => {
                 console.log(error);
             }
         );
 
-        this.loaded = false;
         this.productService.retrieveAllDiscountedLuxuryProducts().subscribe(
             (response) => {
                 this.flashLuxury = response.products;
                 this.flashLuxury.sort((a, b) => a.price - b.price);
-                this.loaded = true;
+                for (var i = 0; i < this.flashLuxury.length; i++) {
+                    this.productService
+                        .retrieveProductImage(
+                            this.flashLuxury[i].productId
+                        )
+                        .subscribe(
+                            (data) => {
+                                let reader = new FileReader();
+                                reader.addEventListener(
+                                    'load',
+                                    () => {
+                                        this.flashLuxuryImages.push(reader.result);
+                                    },
+                                    false
+                                );
+
+                                if (data) {
+                                    reader.readAsDataURL(data);
+                                }
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                }
             },
             (error) => {
                 console.log(error);
             }
         );
+        setTimeout(() => {
+            this.loaded = true;
+        }, 1000);
     }
 
     openDialogPlan(index: number): void {
@@ -164,7 +214,8 @@ export class PromotionsComponent implements OnInit {
                     price: this.selectedLuxuryProduct.price,
                     quantityOnHand: this.selectedLuxuryProduct.quantityOnHand,
                     reorderQuantity: this.selectedLuxuryProduct.reorderQuantity,
-                    productImagePath: this.selectedLuxuryProduct.productImagePath,
+                    productImagePath: this.selectedLuxuryProduct
+                        .productImagePath,
                     tags: this.selectedLuxuryProduct.tags,
                     category: this.selectedLuxuryProduct.category,
                     dealStartTime: this.selectedLuxuryProduct.dealStartTime,
@@ -176,19 +227,19 @@ export class PromotionsComponent implements OnInit {
 
         this.sessionService.addToCart(newLineItem);
 
-            const snackBarRef = this.snackBar.open(
-                'Successfully added Product: "' +
-                    this.selectedLuxuryProduct.name +
-                    '" to the cart!',
-                'Undo',
-                {
-                    duration: 4500,
-                }
-            );
+        const snackBarRef = this.snackBar.open(
+            'Successfully added Product: "' +
+                this.selectedLuxuryProduct.name +
+                '" to the cart!',
+            'Undo',
+            {
+                duration: 4500,
+            }
+        );
 
-            snackBarRef.onAction().subscribe(() => {
-                this.sessionService.undoAddToCart();
-            });
+        snackBarRef.onAction().subscribe(() => {
+            this.sessionService.undoAddToCart();
+        });
     }
 
     addNormalProductToCart(index: number): void {
@@ -235,7 +286,7 @@ export class PromotionsComponent implements OnInit {
         });
 
         if (added == false) {
-          //create a new line item with discountPrice set as price
+            //create a new line item with discountPrice set as price
             let newLineItem: TransactionLineItem = {
                 product: {
                     productId: this.selectedNormalProduct.productId,
@@ -245,7 +296,8 @@ export class PromotionsComponent implements OnInit {
                     price: this.selectedNormalProduct.price,
                     quantityOnHand: this.selectedNormalProduct.quantityOnHand,
                     reorderQuantity: this.selectedNormalProduct.reorderQuantity,
-                    productImagePath: this.selectedNormalProduct.productImagePath,
+                    productImagePath: this.selectedNormalProduct
+                        .productImagePath,
                     tags: this.selectedNormalProduct.tags,
                     category: this.selectedNormalProduct.category,
                     dealStartTime: this.selectedNormalProduct.dealStartTime,
