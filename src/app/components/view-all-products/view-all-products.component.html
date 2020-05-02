@@ -4,9 +4,8 @@
     </div>
     <div *ngIf="loaded">
         <mat-drawer-container>
-            <mat-drawer style="width: 22%; height: 100%;" mode="side" opened>
-                <div style="margin: 15% 10% 5% ;">
-
+            <mat-drawer style="width: 20%; height: 100%;" mode="side" opened>
+                <div style="margin: 15% 10% 5%;">
                     <h3 style="margin-bottom: 10px;">
                         Search Our Products:
                     </h3>
@@ -14,15 +13,19 @@
                     <form>
                         <input type="text" (keyup)="searchProducts($event)" />
                         &nbsp;&nbsp;
-                        <button style="padding-left:0" mat-button color="rgba(0,0,0,0)"
-                            (submit)="searchProducts($event)">
+                        <button
+                            style="padding-left: 0;"
+                            mat-button
+                            color="rgba(0,0,0,0)"
+                            (submit)="searchProducts($event)"
+                        >
                             <mat-icon>search</mat-icon>
                         </button>
                     </form>
                 </div>
                 <mat-divider></mat-divider>
 
-                <mat-accordion multi="true" togglePosition='before'>
+                <mat-accordion multi="true" togglePosition="before">
                     <mat-expansion-panel class="mat-elevation-z0">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -30,20 +33,35 @@
                             </mat-panel-title>
                         </mat-expansion-panel-header>
 
-                        <p style="font-weight: bold;">Select Filter Condition: </p>
-                        <mat-radio-group [(ngModel)]="condition" style='display:flex;
-                        flex-flow: column nowrap; line-height: 2.2;
-                        ' (change)="filterByTags()">
-                            <mat-radio-button value="AND" checked>AND</mat-radio-button>
+                        <p style="font-weight: bold;">
+                            Select Filter Condition:
+                        </p>
+                        <mat-radio-group
+                            [(ngModel)]="condition"
+                            style="
+                                display: flex;
+                                flex-flow: column nowrap;
+                                line-height: 2.2;
+                            "
+                            (change)="filterByTags()"
+                        >
+                            <mat-radio-button value="AND" checked
+                                >AND</mat-radio-button
+                            >
                             <mat-radio-button value="OR">OR</mat-radio-button>
                         </mat-radio-group>
                         <br />
                         <mat-divider></mat-divider>
                         <br />
 
-
-                        <div *ngFor="let tag of tags; let i = index" style="padding-top: 2%; line-height: 1.6;">
-                            <mat-checkbox style="border: 1px;" (change)="selectTag(i)" [checked]="tag.checked">
+                        <div
+                            *ngFor="let tag of tags; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
+                            <mat-checkbox
+                                style="border: 1px;"
+                                (change)="selectTag(i)"
+                            >
                                 {{ tag.name }}
                             </mat-checkbox>
                         </div>
@@ -55,8 +73,14 @@
                                 Filter By Brand(s)
                             </mat-panel-title>
                         </mat-expansion-panel-header>
-                        <div *ngFor="let cat of categories; let i = index" style="padding-top: 2%; line-height: 1.6;">
-                            <mat-checkbox style="border: 1px;" (change)="selectCategory(i)" [checked]="cat.checked">
+                        <div
+                            *ngFor="let cat of categories; let i = index"
+                            style="padding-top: 2%; line-height: 1.6;"
+                        >
+                            <mat-checkbox
+                                style="border: 1px;"
+                                (change)="selectCategory(i)"
+                            >
                                 {{ cat.name }}
                             </mat-checkbox>
                         </div>
@@ -69,37 +93,58 @@
                 <div>
                     <h1>View All Products</h1>
                 </div>
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="500px"
-                    gutterSize="24px" [(ngModel)]="displayProducts" name="view_products" ngDefaultControl>
-                    <div *ngIf="displayProducts.length == 0" style="text-align: center;">
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="500px"
+                    gutterSize="24px"
+                    [(ngModel)]="displayProducts"
+                    name="view_products"
+                    ngDefaultControl
+                >
+                    <div
+                        *ngIf="displayProducts.length == 0"
+                        style="text-align: center;"
+                    >
                         <h3>
                             We couldn't find any products matching to your
                             search results!
                         </h3>
-                        <img src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
-                            style="height: 348px; width: 464px;" />
+                        <img
+                            src="https://cdn.dribbble.com/users/760295/screenshots/4433975/no-search-result.png"
+                            style="height: 348px; width: 464px;"
+                        />
                     </div>
 
-                    <mat-grid-tile *ngFor="let product of displayProducts; let i = index">
-
-
-                        <mat-card mat-ripple (click)="selectProduct(i)" style="height: 100%;">
-                            <div class="overlay">
-                            </div>
-                            <mat-card-title style="text-align: center; margin-top: 10%;">
+                    <mat-grid-tile
+                        *ngFor="let product of displayProducts; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            (click)="selectProduct(i)"
+                            style="height: 100%;"
+                        >
+                            <div class="overlay"></div>
+                            <mat-card-title
+                                style="text-align: center; margin-top: 10%;"
+                            >
                                 {{ product.name }}
                             </mat-card-title>
-                            <mat-card-subtitle style="
+                            <mat-card-subtitle
+                                style="
                                     text-align: center;
                                     padding: 10px 0 10px 0;
                                     margin-bottom: 10px;
-                                ">
+                                "
+                            >
                                 Price: ${{ product.price }}
                             </mat-card-subtitle>
                             <div style="width: 80%; margin: 0 auto;">
-                                <img mat-card-image src="assets/productImages/{{
+                                <img
+                                    mat-card-image
+                                    src="assets/productImages/{{
                                         product.productImagePath
-                                    }}" />
+                                    }}"
+                                />
                             </div>
                             <mat-card-content style="text-align: center;">
                                 Description: {{ product.description }}
