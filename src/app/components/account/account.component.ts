@@ -77,6 +77,7 @@ export class AccountComponent implements OnInit {
         this.customerService.retrieveCurrentCustomer().subscribe((response) => {
             this.sessionService.setCurrentCustomer(response.customer);
             this.currentCustomer = this.sessionService.getCurrentCustomer();
+            this.getProfilePicture();
         });
         this.announcementService.retrieveAllAnnouncements().subscribe(
             (response) => {
@@ -158,7 +159,7 @@ export class AccountComponent implements OnInit {
                 console.log(error);
             }
         );
-        this.getProfilePicture();
+        
     }
 
     createImageFromBlob(image: Blob) {

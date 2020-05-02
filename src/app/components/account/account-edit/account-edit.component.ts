@@ -29,6 +29,8 @@ export class AccountEditComponent implements OnInit {
         this.customerService.retrieveCurrentCustomer().subscribe(
             (response) => {
                 this.customerToUpdate = response.customer;
+                this.getProfilePicture();
+                this.loaded = true;
             },
             (error) => {
                 console.log(
@@ -36,8 +38,6 @@ export class AccountEditComponent implements OnInit {
                 );
             }
         );
-        this.getProfilePicture();
-        this.loaded = true;
     }
 
     updateCustomer() {

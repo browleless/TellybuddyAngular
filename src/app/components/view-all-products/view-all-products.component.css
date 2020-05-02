@@ -19,7 +19,7 @@
     left: 0;
     right: 0;
     opacity: 0.8;
-    background-color: cornflowerblue;
+    background-color: #ffffff;
     overflow: hidden;
     width: 0;
     height: 100%;
@@ -28,9 +28,12 @@
     vertical-align: middle;
     line-height: 90px;
     object-fit: cover;
-    
+    background-image: url("../../../assets/buyItToday.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center; 
   }
-  .text {
+  /* .text {
     color: white;
     font-size:  2em;
     font-family: Verdana;
@@ -40,5 +43,5 @@
     position: relative;
     width: 100%;
     margin: auto;
-    /* white-space: nowrap; */
-  }
+    white-space: nowrap; 
+  } */

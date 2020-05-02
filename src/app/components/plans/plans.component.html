@@ -27,6 +27,9 @@
                         <div style="padding: 10px 0 10px 0;">
                             Known as the "{{ plan.name }}"
                         </div>
+                        <div style="padding-bottom: 5px; font-weight: 700;">
+                            Add-on Price: {{plan.addOnPrice | currency}}
+                        </div>
                         <div
                             style="
                                 margin: 15px 0 25px 0;
@@ -50,18 +53,20 @@
                                 Units
                             </div>
                         </div>
-                        <div style="padding-bottom: 10px;">
+                        <div style="padding-bottom: 10px; font-weight: 700;">
                             Plan Conversion Rates:
                         </div>
-                        <div style="padding: 10px 0 10px 0;">
+                        <div style="padding: 5px 0 5px 0;">
                             Data: {{ plan.dataConversionRate / 1000 }} GB / unit
                         </div>
-                        <div style="padding: 10px 0 10px 0;">
+                        <div style="padding: 5px 0 5px 0;">
                             SMS: {{ plan.talktimeConversionRate }} min / unit
                         </div>
-                        <div style="padding: 10px 0 10px 0;">
+                        <div style="padding: 5px 0 5px 0;">
                             Talktime: {{ plan.smsConversionRate }} SMS / unit
                         </div>
+                        
+                        
                     </mat-card-content>
                 </mat-card>
             </mat-grid-tile>
