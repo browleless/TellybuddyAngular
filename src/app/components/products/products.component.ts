@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ProductsComponent implements OnInit {
     products: Product[];
+    productImages: any[] = [];
     loaded: boolean = false;
     isMobile: boolean = false;
     isTablet: boolean = false;
@@ -57,14 +58,42 @@ export class ProductsComponent implements OnInit {
             (response) => {
                 this.products = response.products;
                 this.products.sort((a, b) => a.price - b.price);
-                this.loaded = true;
+                for (var i = 0; i < this.products.length; i++) {
+                    this.productService
+                        .retrieveProductImage(this.products[i].productId)
+                        .subscribe(
+                            (data) => {
+                                this.createImageFromBlob(data, i);
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                }
             },
             (error) => {
                 console.log(error);
             }
         );
+        setTimeout(() => {
+            this.loaded = true;
+        }, 1000);
     }
+    createImageFromBlob(image: Blob, i: number) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.productImages.push(reader.result);
+            },
+            false
+        );
 
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
+    
     addProductToCart(i: number): void {
         let added: boolean = false;
         this.selectedProduct = this.products[i];

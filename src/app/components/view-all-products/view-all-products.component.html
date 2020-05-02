@@ -1,5 +1,5 @@
 <div style="padding: 0 0 0 1%;">
-    <div *ngIf="!loaded">
+    <div *ngIf="!loaded" style="padding-top:20px">
         <mat-spinner style="margin: 0 auto;"></mat-spinner>
     </div>
     <div *ngIf="loaded">
@@ -97,9 +97,7 @@
                                 Price: ${{ product.price }}
                             </mat-card-subtitle>
                             <div style="width: 80%; margin: 0 auto;">
-                                <img mat-card-image src="assets/productImages/{{
-                                        product.productImagePath
-                                    }}" />
+                                <img mat-card-image src="{{productImages[i]}}" />
                             </div>
                             <mat-card-content style="text-align: center;">
                                 Description: {{ product.description }}

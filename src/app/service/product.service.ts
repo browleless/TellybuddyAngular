@@ -111,6 +111,14 @@ export class ProductService {
             )
             .pipe(catchError(this.handleError));
     }
+    retrieveProductImage(productId: number): Observable<Blob> {
+        return this.httpClient.get(
+            this.baseUrl +
+            '/retrieveProductImage/' +
+            productId,
+            { responseType: 'blob' }
+            ).pipe(catchError(this.handleError));
+    }
 
     private handleError(error: HttpErrorResponse) {
         let errorMessage: string = '';

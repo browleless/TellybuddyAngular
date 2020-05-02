@@ -25,6 +25,7 @@ import { DialogRecommendPlansComponent } from '../dialog-recommend-plans/dialog-
 })
 export class LuxuryproductsComponent implements OnInit {
     luxuryProducts: Product[];
+    productImages: any[] = [];
     loaded: boolean = false;
     isMobile: boolean = false;
     isTablet: boolean = false;
@@ -66,14 +67,42 @@ export class LuxuryproductsComponent implements OnInit {
             (response) => {
                 this.luxuryProducts = response.products;
                 this.luxuryProducts.sort((a, b) => a.price - b.price);
-                this.loaded = true;
+                for (var i = 0; i < this.luxuryProducts.length; i++) {
+                    this.productService
+                        .retrieveProductImage(this.luxuryProducts[i].productId)
+                        .subscribe(
+                            (data) => {
+                                this.createImageFromBlob(data, i);
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                }
+                
             },
             (error) => {
                 console.log(error);
             }
         );
+        setTimeout(() => {
+            this.loaded = true;
+        }, 1000);
     }
+    createImageFromBlob(image: Blob, i: number) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.productImages.push(reader.result);
+            },
+            false
+        );
 
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
     addLuxuryProductToCart(index: number): void {
         this.selectedLuxury = this.luxuryProducts[index];
 

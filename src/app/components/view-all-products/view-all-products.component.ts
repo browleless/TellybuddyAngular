@@ -25,6 +25,7 @@ import { LuxuryProduct } from 'src/app/classes/luxury-product';
 })
 export class ViewAllProductsComponent implements OnInit {
     products: Product[];
+    productImages: any[] = [];
     luxuryProducts: Product[];
     categories: Category[];
     tags: Tag[];
@@ -80,51 +81,73 @@ export class ViewAllProductsComponent implements OnInit {
                 this.displayProducts = response.products;
                 this.products.sort((a, b) => a.price - b.price);
                 this.displayProducts.sort((a, b) => a.price - b.price);
-                this.loaded = true;
+
+                for (var i = 0; i < this.products.length; i++) {
+                    this.productService
+                        .retrieveProductImage(this.products[i].productId)
+                        .subscribe(
+                            (data) => {
+                                this.createImageFromBlob(data, i);
+                            },
+                            (error) => {
+                                console.log(error);
+                            }
+                        );
+                }
             },
             (error) => {
                 console.log(error);
             }
         );
 
-        this.loaded = false;
         this.productService.retrieveAllLuxuryProducts().subscribe(
             (response) => {
                 this.luxuryProducts = response.products;
                 this.luxuryProducts.sort((a, b) => a.price - b.price);
-                this.loaded = true;
             },
             (error) => {
                 console.log(error);
             }
         );
 
-        this.loaded = false;
         this.categoryService.retrieveAllCategories().subscribe(
             (response) => {
                 this.categories = response.categories;
-                this.loaded = true;
             },
             (error) => {
                 console.log(error);
             }
         );
 
-        this.loaded = false;
         this.tagService.retrieveAllTags().subscribe(
             (response) => {
                 this.tags = response.tags;
-                this.loaded = true;
             },
             (error) => {
                 console.log(error);
             }
         );
+        setTimeout(() => {
+            this.loaded = true;
+        }, 1000);
 
         this.selectedTags = new Array<number>();
         this.selectedCategories = new Array<number>();
     }
+    createImageFromBlob(image: Blob, i: number) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.productImages.push(reader.result);
+            },
+            false
+        );
 
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
     searchProducts(event: any): void {
         this.searchInput = event.target.value;
         console.log(this.searchInput);
