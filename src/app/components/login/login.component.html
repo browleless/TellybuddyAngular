@@ -5,40 +5,66 @@
         <form class="login-form">
             <mat-form-field style="width: 100%;">
                 <mat-label>Username</mat-label>
-                <input name="username" type="text" matInput placeholder="Username" [(ngModel)]="username" required />
+                <input
+                    name="username"
+                    type="text"
+                    matInput
+                    placeholder="Username"
+                    [(ngModel)]="username"
+                    required
+                />
             </mat-form-field>
             <br />
             <mat-form-field style="width: 100%; padding-bottom: 0;">
                 <mat-label>Password</mat-label>
-                <input name="password" type="password" matInput placeholder="Password" [(ngModel)]="password"
-                    required />
+                <input
+                    name="password"
+                    type="password"
+                    matInput
+                    placeholder="Password"
+                    [(ngModel)]="password"
+                    required
+                />
             </mat-form-field>
             <br />
-            <div style="
+            <div
+                style="
                     text-decoration: none;
                     font-size: small;
                     cursor: pointer;
                     color: #0000ee;
-                " (click)="openDialog()">
+                    display: inline-block;
+                "
+                (click)="openDialog()"
+            >
                 Forgot Password?
             </div>
-            <br>
-            <div style="
+            <br />
+            <div
+                style="
                     text-decoration: none;
                     font-size: small;
                     cursor: pointer;
                     color: #0000ee;
-                " (click)="navigateToRegistration()">
+                    display: inline-block;
+                    margin-top: 10px;
+                "
+                (click)="navigateToRegistration()"
+            >
                 Register
             </div>
             <br />
             <div style="padding-top: 20px;">
-                <button style="
+                <button
+                    style="
                         background: #3c4cad;
                         color: white;
                         width: 100%;
                         font-size: medium;
-                    " mat-button (click)="customerLogin()">
+                    "
+                    mat-button
+                    (click)="customerLogin()"
+                >
                     Login
                 </button>
             </div>

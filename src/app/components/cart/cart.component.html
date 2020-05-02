@@ -12,7 +12,7 @@
                 src="https://cdn.dribbble.com/users/44167/screenshots/4199208/empty-cart-rappi.png"
             />
             <p>
-                Add some shit now
+                Add some items today!
             </p>
         </div>
     </div>
@@ -93,30 +93,53 @@
                     {{ transactionLineItem.price | currency }}
                     &nbsp;
 
-                    <p *ngIf="transactionLineItem.subscription != undefined && 
-                    transactionLineItem.productItem != undefined" style="color: blue;">
+                    <p
+                        *ngIf="
+                            transactionLineItem.subscription != undefined &&
+                            transactionLineItem.productItem != undefined
+                        "
+                        style="color: blue;"
+                    >
                         <i>(*Bundle Price)</i>
                     </p>
 
-                    <p *ngIf="transactionLineItem.product != undefined && 
-                    transactionLineItem.productItem == undefined && 
-                    transactionLineItem.subscription == undefined &&
-                    transactionLineItem.product.discountPrice == transactionLineItem.price" style="color: red;">
+                    <p
+                        *ngIf="
+                            transactionLineItem.product != undefined &&
+                            transactionLineItem.productItem == undefined &&
+                            transactionLineItem.subscription == undefined &&
+                            transactionLineItem.product.discountPrice ==
+                                transactionLineItem.price
+                        "
+                        style="color: red;"
+                    >
                         <i>(*Discounted Price)</i>
                     </p>
 
-                    <p *ngIf="transactionLineItem.productItem != undefined && 
-                    transactionLineItem.product == undefined && 
-                    transactionLineItem.subscription == undefined && 
-                    transactionLineItem.price == transactionLineItem.productItem.luxuryProduct.discountPrice"
-                        style="color: red;">
+                    <p
+                        *ngIf="
+                            transactionLineItem.productItem != undefined &&
+                            transactionLineItem.product == undefined &&
+                            transactionLineItem.subscription == undefined &&
+                            transactionLineItem.price ==
+                                transactionLineItem.productItem.luxuryProduct
+                                    .discountPrice
+                        "
+                        style="color: red;"
+                    >
                         <i>(*Discounted Price)</i>
                     </p>
 
-                    <p *ngIf="transactionLineItem.subscription != undefined && 
-                    transactionLineItem.product == undefined &&
-                    transactionLineItem.productItem == undefined &&
-                    transactionLineItem.subscription.plan.startTime != undefined" style="color: red;">
+                    <p
+                        *ngIf="
+                            transactionLineItem.subscription != undefined &&
+                            transactionLineItem.product == undefined &&
+                            transactionLineItem.productItem == undefined &&
+                            transactionLineItem.subscription.plan.startTime !=
+                                undefined
+                        "
+                        style="color: red;"
+                    >
                         <i>(*Discounted Price)</i>
                     </p>
                 </td>

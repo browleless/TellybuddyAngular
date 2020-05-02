@@ -16,7 +16,12 @@
                 />
 
                 <img
-                    style="width: 200px; height: 200px; border-radius: 50%; border-width: 5px;"
+                    style="
+                        width: 200px;
+                        height: 200px;
+                        border-radius: 50%;
+                        border-width: 5px;
+                    "
                     [src]="profilePicture"
                     *ngIf="!imageLoading"
                 />
@@ -26,17 +31,22 @@
                         font-size: x-large;
                         text-align: center;
                         font-weight: 600;
-                        
                     "
                 >
                     My Account
                 </div>
                 <mat-divider style="margin: 15px 0;"></mat-divider>
-                <button mat-button routerLink="/subscriptions">
+                <button
+                    style="width: 100%;"
+                    mat-button
+                    routerLink="/subscriptions"
+                >
                     My Subscriptions
                 </button>
                 <br />
-                <button mat-button routerLink="/bills">My Bills</button>
+                <button style="width: 100%;" mat-button routerLink="/bills">
+                    My Bills
+                </button>
             </mat-drawer>
 
             <mat-drawer-content
