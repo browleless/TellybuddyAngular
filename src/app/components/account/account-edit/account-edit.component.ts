@@ -58,7 +58,6 @@ export class AccountEditComponent implements OnInit {
                                     this.sessionService.setPassword(
                                         this.confirmedPassword
                                     );
-                                    
                                 },
                                 (error) => {
                                     console.log(
@@ -75,9 +74,9 @@ export class AccountEditComponent implements OnInit {
                             duration: 4500,
                         }
                     );
-                    updateSnackbar.afterDismissed().subscribe( () =>
-                        this.router.navigate(['account'])
-                    );
+                    updateSnackbar
+                        .afterDismissed()
+                        .subscribe(() => this.router.navigate(['account']));
                 },
                 (error) => {
                     const snackBarRef = this.snackBar.open(
@@ -119,5 +118,9 @@ export class AccountEditComponent implements OnInit {
                 console.log(error);
             }
         );
+    }
+
+    handleNricChange(event: any) {
+        this.customerToUpdate.newNric = this.customerToUpdate.newNric.toUpperCase();
     }
 }
