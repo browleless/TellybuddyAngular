@@ -53,10 +53,20 @@
                 <mat-sidenav-content style="padding: 2% 7.5%;">
                     <div *ngIf="!retrieveFamilyGroupError">
                         <h1>Tellybuddy FamilyGroup</h1>
-                        <h2>
+                        <div style="font-size: larger; margin: 20px 0;">
                             Home to the
-                            {{ familyGroup.description }}!
-                        </h2>
+                            {{ familyGroup.description }}, where everyone's
+                            mobile subscriptions are entitled to
+                            <span
+                                style="
+                                    font-size: x-large;
+                                    text-decoration: underline;
+                                    font-weight: 500;
+                                "
+                            >
+                                {{ familyGroup.discountRate }}% discount!
+                            </span>
+                        </div>
                         <div>
                             <mat-divider></mat-divider>
                         </div>

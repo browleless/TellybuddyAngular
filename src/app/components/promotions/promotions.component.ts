@@ -104,16 +104,16 @@ export class PromotionsComponent implements OnInit {
                 this.flashNormal.sort((a, b) => a.price - b.price);
                 for (var i = 0; i < this.flashNormal.length; i++) {
                     this.productService
-                        .retrieveProductImage(
-                            this.flashNormal[i].productId
-                        )
+                        .retrieveProductImage(this.flashNormal[i].productId)
                         .subscribe(
                             (data) => {
                                 let reader = new FileReader();
                                 reader.addEventListener(
                                     'load',
                                     () => {
-                                        this.flashNormalImages.push(reader.result);
+                                        this.flashNormalImages.push(
+                                            reader.result
+                                        );
                                     },
                                     false
                                 );
@@ -139,16 +139,16 @@ export class PromotionsComponent implements OnInit {
                 this.flashLuxury.sort((a, b) => a.price - b.price);
                 for (var i = 0; i < this.flashLuxury.length; i++) {
                     this.productService
-                        .retrieveProductImage(
-                            this.flashLuxury[i].productId
-                        )
+                        .retrieveProductImage(this.flashLuxury[i].productId)
                         .subscribe(
                             (data) => {
                                 let reader = new FileReader();
                                 reader.addEventListener(
                                     'load',
                                     () => {
-                                        this.flashLuxuryImages.push(reader.result);
+                                        this.flashLuxuryImages.push(
+                                            reader.result
+                                        );
                                     },
                                     false
                                 );
@@ -252,17 +252,20 @@ export class PromotionsComponent implements OnInit {
             currentTransaction.transactionLineItems;
         for (let index = 0; index < currentLineItems.length; index++) {
             let li: TransactionLineItem = currentLineItems[index];
-            if (
-                li.productItem == undefined &&
-                li.product.productId == this.selectedNormalProduct.productId &&
-                li.price == this.selectedNormalProduct.discountPrice
-            ) {
-                currentLineItems[index].quantity =
-                    currentLineItems[index].quantity + 1;
-                currentLineItems[index].subtotal =
-                    currentLineItems[index].quantity *
-                    currentLineItems[index].price;
-                added = true;
+            if (li.product) {
+                if (
+                    li.productItem == undefined &&
+                    li.product.productId ==
+                        this.selectedNormalProduct.productId &&
+                    li.price == this.selectedNormalProduct.discountPrice
+                ) {
+                    currentLineItems[index].quantity =
+                        currentLineItems[index].quantity + 1;
+                    currentLineItems[index].subtotal =
+                        currentLineItems[index].quantity *
+                        currentLineItems[index].price;
+                    added = true;
+                }
             }
         }
         currentTransaction.transactionLineItems = currentLineItems;

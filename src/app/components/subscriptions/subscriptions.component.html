@@ -216,6 +216,7 @@
                             labelPosition="before"
                             (change)="toggleEdit(i)"
                             [checked]="editMode"
+                            [disabled]="!subscription.isActive"
                             >Edit
                         </mat-slide-toggle>
                     </div>
@@ -224,6 +225,7 @@
                             labelPosition="before"
                             (change)="subscribeAddon(i)"
                             [checked]="addon"
+                            [disabled]="!subscription.isActive"
                             >Top-up</mat-slide-toggle
                         >
                     </div>

@@ -17,6 +17,7 @@ export class AccountEditComponent implements OnInit {
     confirmedPassword: string;
     imageLoading: boolean;
     profilePicture: any;
+    imageUrl: boolean = false;
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -58,6 +59,7 @@ export class AccountEditComponent implements OnInit {
                                     this.sessionService.setPassword(
                                         this.confirmedPassword
                                     );
+                                    this.loaded = true;
                                 },
                                 (error) => {
                                     console.log(
@@ -79,13 +81,9 @@ export class AccountEditComponent implements OnInit {
                         .subscribe(() => this.router.navigate(['account']));
                 },
                 (error) => {
-                    const snackBarRef = this.snackBar.open(
-                        '',
-                        'Age must be between 16 to 99',
-                        {
-                            duration: 4500,
-                        }
-                    );
+                    const snackBarRef = this.snackBar.open(error, 'close', {
+                        duration: 4500,
+                    });
                     console.log(
                         '********** ViewFamilyGroupDetailsComponent.ts: ' +
                             error
@@ -122,5 +120,9 @@ export class AccountEditComponent implements OnInit {
 
     handleNricChange(event: any) {
         this.customerToUpdate.newNric = this.customerToUpdate.newNric.toUpperCase();
+    }
+
+    handleFileInput(event: any) {
+        console.log(event);
     }
 }

@@ -3,7 +3,7 @@
         <button style="font-size: large;" mat-button routerLink="/index">
             Tellybuddy
         </button>
-        
+
         <button mat-button routerLink="/plans">Plans</button>
 
         <button
@@ -35,6 +35,7 @@
             #buttonTwo
             #buttonTwoTrigger="matMenuTrigger"
             mat-button
+            routerLink="/promotions"
             [matMenuTriggerFor]="secondMenu"
             (mouseenter)="buttonEnter(buttonTwoTrigger)"
             (mouseleave)="buttonLeave(buttonTwoTrigger, buttonTwo)"
