@@ -99,6 +99,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { AccountEditComponent } from './components/account/account-edit/account-edit.component';
 import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view-announcement-details/dialog-view-announcement-details.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
     declarations: [
@@ -141,6 +142,7 @@ import { DialogViewAnnouncementDetailsComponent } from './components/dialog-view
         PromotionsComponent,
         AccountEditComponent,
         DialogViewAnnouncementDetailsComponent,
+        AboutComponent,
     ],
     imports: [
         BrowserAnimationsModule,

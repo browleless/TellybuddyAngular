@@ -40,7 +40,7 @@
         <div *ngIf="outstandingBills.length">
             <mat-grid-list
                 [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
-                rowHeight="522.5px"
+                rowHeight="532.5px"
             >
                 <mat-grid-tile
                     *ngFor="let bill of outstandingBills; let i = index"
@@ -177,11 +177,15 @@
                                         </span>
                                         {{ bill.exceedPenaltyPrice | currency }}
                                     </mat-grid-tile>
-                                    <mat-grid-tile *ngIf="bill.earlyTerminationFee">
+                                    <mat-grid-tile
+                                        *ngIf="bill.earlyTerminationFee"
+                                    >
                                         <span style="font-weight: bold;">
                                             Penalty:&nbsp;
                                         </span>
-                                        {{ bill.earlyTerminationFee | currency }}
+                                        {{
+                                            bill.earlyTerminationFee | currency
+                                        }}
                                     </mat-grid-tile>
                                     <mat-grid-tile>
                                         <span style="font-weight: bold;">
@@ -202,7 +206,8 @@
                                     </mat-grid-tile>
                                 </mat-grid-list>
                             </div>
-                            <div *ngIf="!bill.earlyTerminationFee"
+                            <div
+                                *ngIf="!bill.earlyTerminationFee"
                                 style="
                                     font-size: x-large;
                                     font-weight: 500;
@@ -219,7 +224,8 @@
                                         | currency
                                 }}
                             </div>
-                            <div *ngIf="bill.earlyTerminationFee"
+                            <div
+                                *ngIf="bill.earlyTerminationFee"
                                 style="
                                     font-size: x-large;
                                     font-weight: 500;
@@ -232,9 +238,9 @@
                                     (bill.price +
                                         bill.addOnPrice +
                                         bill.exceedPenaltyPrice) *
-                                        ((100 - bill.familyDiscountRate) / 100)  +
-                                        bill.earlyTerminationFee
-                                        | currency
+                                        ((100 - bill.familyDiscountRate) /
+                                            100) +
+                                        bill.earlyTerminationFee | currency
                                 }}
                             </div>
                         </mat-card-content>

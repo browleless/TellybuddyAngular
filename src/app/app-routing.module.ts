@@ -23,6 +23,7 @@ import { ViewAllProductsComponent } from './components/view-all-products/view-al
 import { RegistrationComponent } from './components/registration/registration.component';
 import { PromotionsComponent } from './components/promotions/promotions.component';
 import { AccountEditComponent } from './components/account/account-edit/account-edit.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
     {
@@ -68,6 +69,7 @@ const routes: Routes = [
     { path: 'bundlePlans/:productId', component: BundlePlansComponent },
     { path: 'viewallproducts', component: ViewAllProductsComponent },
     { path: 'promotions', component: PromotionsComponent },
+    { path: 'about', component: AboutComponent },
 ];
 
 @NgModule({
