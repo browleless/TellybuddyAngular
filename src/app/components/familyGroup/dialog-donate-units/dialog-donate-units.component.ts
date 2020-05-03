@@ -52,6 +52,7 @@ export class DialogDonateUnitsComponent implements OnInit {
         plan: undefined,
         phoneNumber: undefined,
         outstandingBills: undefined,
+        contractEndDate: undefined,
     };
     donatedSMS: number = 0;
     donatedData: number = 0;

@@ -84,6 +84,31 @@ export class SubscriptionsComponent implements OnInit {
                             sub.subscriptionEndDate.toString().substring(0, 19)
                         );
                     }
+                    if (sub.contractEndDate != null) {
+                        sub.contractEndDate = new Date(
+                            sub.contractEndDate.toString().substring(0, 19)
+                        );
+                    }
+                    if (sub.isActive) {
+                        sub.usageDetails[
+                            sub.usageDetails.length - 1
+                        ].startDate = new Date(
+                            sub.usageDetails[
+                                sub.usageDetails.length - 1
+                            ].startDate
+                                .toString()
+                                .substring(0, 19)
+                        );
+                        sub.usageDetails[
+                            sub.usageDetails.length - 1
+                        ].endDate = new Date(
+                            sub.usageDetails[
+                                sub.usageDetails.length - 1
+                            ].endDate
+                                .toString()
+                                .substring(0, 19)
+                        );
+                    }
                 }
                 this.loaded = true;
             },
@@ -251,17 +276,20 @@ export class SubscriptionsComponent implements OnInit {
                     this.dataUnits =
                         this.subscriptions[i].dataUnits['allocated'] +
                         this.subscriptions[i].dataUnits['familyGroup'] +
-                        this.subscriptions[i].dataUnits['addOn'] -
+                        this.subscriptions[i].dataUnits['addOn'] +
+                        this.subscriptions[i].dataUnits['quizExtraUnits'] -
                         this.subscriptions[i].dataUnits['donated'];
                     this.smsUnits =
                         this.subscriptions[i].smsUnits['allocated'] +
                         this.subscriptions[i].smsUnits['familyGroup'] +
-                        this.subscriptions[i].smsUnits['addOn'] -
+                        this.subscriptions[i].smsUnits['addOn'] +
+                        this.subscriptions[i].smsUnits['quizExtraUnits'] -
                         this.subscriptions[i].smsUnits['donated'];
                     this.talktimeUnits =
                         this.subscriptions[i].talkTimeUnits['allocated'] +
                         this.subscriptions[i].talkTimeUnits['familyGroup'] +
-                        this.subscriptions[i].talkTimeUnits['addOn'] -
+                        this.subscriptions[i].talkTimeUnits['addOn'] +
+                        this.subscriptions[i].talkTimeUnits['quizExtraUnits'] -
                         this.subscriptions[i].talkTimeUnits['donated'];
                     this.totalUnits = this.subscriptions[
                         i

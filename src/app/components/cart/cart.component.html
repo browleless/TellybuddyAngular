@@ -170,6 +170,14 @@
                             matInput
                             style="text-align: center;"
                             min="1"
+                            max="{{
+                                transactionLineItem.product
+                                    ? transactionLineItem.product.quantityOnHand
+                                    : transactionLineItem.luxuryProduct
+                                    ? transactionLineItem.luxuryProduct
+                                          .quantityOnHand
+                                    : 1
+                            }}"
                             [disabled]="
                                 transactionLineItem.subscription ||
                                 transactionLineItem.productItem
@@ -265,7 +273,7 @@
                 style="border-radius: 50px; width: 150.95px;"
                 mat-raised-button
                 color="primary"
-                routerLink="/index"
+                routerLink="/products"
             >
                 Continue Shopping
             </a>

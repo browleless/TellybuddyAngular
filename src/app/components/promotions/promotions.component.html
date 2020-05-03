@@ -10,65 +10,115 @@
                 Check out our promotions now!
             </p>
             <p style="color: red; font-size: small;">
-                <i>*Note that Promotional Plans/Products are not eligible for Bundle Plans!
+                <i
+                    >*Note that Promotional Plans/Products are not eligible for
+                    Bundle Plans!
                 </i>
             </p>
-
         </div>
 
         <mat-tab-group mat-stretch-tabs>
             <mat-tab label="Flash Plans">
-
                 <div *ngIf="flashPlans == undefined || flashPlans.length == 0">
-                    <h2 style="text-align: center;">No Flash Plans offered now. Check back again next time!</h2>
-                    <img style="display: block; margin-left: auto; margin-right: auto;"
-                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg" height="130px" width="130px" />
+                    <h2 style="text-align: center;">
+                        No Flash Plans offered now. Check back again next time!
+                    </h2>
+                    <img
+                        style="
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                        "
+                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg"
+                        height="130px"
+                        width="130px"
+                    />
                 </div>
 
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="420px">
-                    <mat-grid-tile *ngFor="let plan of flashPlans; let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 70%;" (click)="openDialogPlan(i)"
-                            matTooltip="I want this!">
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="420px"
+                >
+                    <mat-grid-tile
+                        *ngFor="let plan of flashPlans; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            class="mat-elevation-z8 plan-card"
+                            (click)="openDialogPlan(i)"
+                            matTooltip="I want this!"
+                        >
                             <mat-card-title style="text-align: center;">
                                 {{ plan.name }}
                             </mat-card-title>
                             <mat-card-subtitle style="text-align: center;">
-                                <p style="color: red;">Promotional Price: ${{ plan.price }}</p>
+                                <p style="color: red;">
+                                    Promotional Price: ${{ plan.price }}
+                                </p>
                             </mat-card-subtitle>
                             <mat-card-content style="text-align: center;">
-                                <div style="
-                                    margin: 15px 0 25px 0;
-                                    display: inline-block;
-                                    font-size: 350%;
-                                    font-weight: bold;
-                                    border-radius: 50%;
-                                    padding: 15px 25px 15px 25px;
-                                    background-color: #f04393;
-                                    color: white;
-                                    align-content: center;
-                                    vertical-align: middle;
-                                ">
+                                <div
+                                    style="
+                                        margin: 15px 0 25px 0;
+                                        display: inline-block;
+                                        font-size: 350%;
+                                        font-weight: bold;
+                                        border-radius: 50%;
+                                        padding: 15px 25px 15px 25px;
+                                        background-color: #f04393;
+                                        color: white;
+                                        align-content: center;
+                                        vertical-align: middle;
+                                    "
+                                >
                                     {{ plan.totalBasicUnits }}
-                                    <div style="
-                                        padding: 0;
-                                        font-size: initial;
-                                        font-weight: normal;
-                                        text-align: center;
-                                    ">
+                                    <div
+                                        style="
+                                            padding: 0;
+                                            font-size: initial;
+                                            font-weight: normal;
+                                            text-align: center;
+                                        "
+                                    >
                                         Units
                                     </div>
                                 </div>
-                                <div style="padding-bottom: 10px; text-align: center; font-size: medium;">
+                                <div
+                                    style="
+                                        padding-bottom: 10px;
+                                        text-align: center;
+                                        font-size: medium;
+                                    "
+                                >
                                     Plan Conversion Rates:
                                 </div>
-                                <div style="padding: 10px 0 10px 0; text-align: center;">
-                                    Data: {{ plan.dataConversionRate / 1000 }} GB / unit
+                                <div
+                                    style="
+                                        padding: 10px 0 10px 0;
+                                        text-align: center;
+                                    "
+                                >
+                                    Data:
+                                    {{ plan.dataConversionRate / 1000 }} GB /
+                                    unit
                                 </div>
-                                <div style="padding: 10px 0 10px 0; text-align: center;">
-                                    SMS: {{ plan.talktimeConversionRate }} min / unit
+                                <div
+                                    style="
+                                        padding: 10px 0 10px 0;
+                                        text-align: center;
+                                    "
+                                >
+                                    SMS: {{ plan.talktimeConversionRate }} min /
+                                    unit
                                 </div>
-                                <div style="padding: 10px 0 10px 0; text-align: center;">
-                                    Talktime: {{ plan.smsConversionRate }} SMS / unit
+                                <div
+                                    style="
+                                        padding: 10px 0 10px 0;
+                                        text-align: center;
+                                    "
+                                >
+                                    Talktime: {{ plan.smsConversionRate }} SMS /
+                                    unit
                                 </div>
                             </mat-card-content>
                         </mat-card>
@@ -76,71 +126,127 @@
                 </mat-grid-list>
             </mat-tab>
 
-
-
             <mat-tab label="Flash Deals (Mobile Devices)">
-
-                <div *ngIf="flashLuxury == undefined || flashLuxury.length == 0">
-                    <h2 style="text-align: center;">No Discounted Mobile Devices offered now. Check back again next
-                        time!</h2>
-                    <img style="display: block; margin-left: auto; margin-right: auto;"
-                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg" height="130px" width="130px" />
+                <div
+                    *ngIf="flashLuxury == undefined || flashLuxury.length == 0"
+                >
+                    <h2 style="text-align: center;">
+                        No Discounted Mobile Devices offered now. Check back
+                        again next time!
+                    </h2>
+                    <img
+                        style="
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                        "
+                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg"
+                        height="130px"
+                        width="130px"
+                    />
                 </div>
 
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="530px"
-                    gutterSize="20px">
-                    <mat-grid-tile *ngFor="let luxury of flashLuxury, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 80%; height: 80%" (click)="addLuxuryProductToCart(i)">
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="530px"
+                    gutterSize="20px"
+                >
+                    <mat-grid-tile
+                        *ngFor="let luxury of flashLuxury; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            class="mat-elevation-z8"
+                            style="width: 80%; height: 80%;"
+                            matTooltip="I want this!"
+                            (click)="addLuxuryProductToCart(i)"
+                        >
                             <mat-card-title>
-                                <div style="text-align:center;">
+                                <div style="text-align: center;">
                                     {{ luxury.name }}
                                 </div>
                             </mat-card-title>
                             <mat-card-subtitle style="text-align: center;">
                                 <s>Original Price: ${{ luxury.price }}</s>
-                                <p style="color: red;">Promotional Price: ${{ luxury.discountPrice }}</p>
+                                <p style="color: red;">
+                                    Promotional Price: ${{
+                                        luxury.discountPrice
+                                    }}
+                                </p>
                             </mat-card-subtitle>
-                            <img mat-card-image src="{{flashLuxuryImages[i]}}">
+                            <img
+                                mat-card-image
+                                src="{{ flashLuxuryImages[i] }}"
+                            />
                             <mat-card-content>
                                 <div style="height: 40px; text-align: center;">
                                     Description: {{ luxury.description }}
                                 </div>
                             </mat-card-content>
-
                         </mat-card>
                     </mat-grid-tile>
                 </mat-grid-list>
             </mat-tab>
 
-
-
             <mat-tab label="Flash Deals (Accessories)">
-
-                <div *ngIf="flashNormal == undefined || flashNormal.length == 0">
-                    <h2 style="text-align: center;">No Discounted Accessories offered now. Check back again next time!
+                <div
+                    *ngIf="flashNormal == undefined || flashNormal.length == 0"
+                >
+                    <h2 style="text-align: center;">
+                        No Discounted Accessories offered now. Check back again
+                        next time!
                     </h2>
-                    <img style="display: block; margin-left: auto; margin-right: auto;"
-                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg" height="130px" width="130px" />
+                    <img
+                        style="
+                            display: block;
+                            margin-left: auto;
+                            margin-right: auto;
+                        "
+                        src="https://cdn.worldvectorlogo.com/logos/facebook-sad.svg"
+                        height="130px"
+                        width="130px"
+                    />
                 </div>
 
-                <mat-grid-list [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4" rowHeight="530px"
-                    gutterSize="20px">
-                    <mat-grid-tile *ngFor="let product of flashNormal, let i = index">
-                        <mat-card mat-ripple class="mat-elevation-z8" style="width: 80%; height: 80%" (click)="addNormalProductToCart(i)"
-                            >
+                <mat-grid-list
+                    [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
+                    rowHeight="530px"
+                    gutterSize="20px"
+                >
+                    <mat-grid-tile
+                        *ngFor="let product of flashNormal; let i = index"
+                    >
+                        <mat-card
+                            mat-ripple
+                            class="mat-elevation-z8"
+                            style="width: 80%; height: 80%;"
+                            matTooltip="I want this!"
+                            (click)="addNormalProductToCart(i)"
+                        >
                             <mat-card-title>
-                                <div style="text-align:center;">
+                                <div style="text-align: center;">
                                     {{ product.name }}
                                 </div>
                             </mat-card-title>
                             <mat-card-subtitle style="text-align: center;">
                                 <s>Original Price: ${{ product.price }}</s>
-                                <p style="color: red;">Promotional Price: ${{ product.discountPrice }}</p>
+                                <p style="color: red;">
+                                    Promotional Price: ${{
+                                        product.discountPrice
+                                    }}
+                                </p>
                             </mat-card-subtitle>
-                            <img mat-card-image src="{{flashNormalImages[i]}}"
-                                style="width: 250px; height: 250px; text-align: center;">
+                            <img
+                                mat-card-image
+                                src="{{ flashNormalImages[i] }}"
+                                style="
+                                    width: 250px;
+                                    height: 250px;
+                                    text-align: center;
+                                "
+                            />
                             <mat-card-content style="text-align: center;">
-                                <div style="height: 58px">
+                                <div style="height: 58px;">
                                     Description: {{ product.description }}
                                 </div>
                             </mat-card-content>

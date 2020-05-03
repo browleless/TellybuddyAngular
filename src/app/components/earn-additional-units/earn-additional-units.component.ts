@@ -4,6 +4,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 import { QuizService } from 'src/app/service/quiz.service';
 import { SubscriptionService } from 'src/app/service/subscription.service';
+import { FamilyGroupService } from 'src/app/service/family-group.service';
 
 import { Quiz } from 'src/app/classes/quiz';
 import { Subscription } from 'src/app/classes/subscription';
@@ -25,12 +26,15 @@ export class EarnAdditionalUnitsComponent implements OnInit {
 
     observables = [];
 
+    customerHasFamilyGroup: boolean = false;
+
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private breakpointObserver: BreakpointObserver,
         private quizService: QuizService,
-        private subscriptionService: SubscriptionService
+        private subscriptionService: SubscriptionService,
+        private familyGroupService: FamilyGroupService
     ) {
         this.breakpointObserver
             .observe([
@@ -81,20 +85,37 @@ export class EarnAdditionalUnitsComponent implements OnInit {
             (response) => {
                 this.quizzes = response.quizzes;
                 if (this.quizzes.length) {
-                    this.quizzes.forEach((quiz) => {
-                        this.observables.push(
-                            this.quizService.retrieveQuizUnattemptedFamilyMembers(
-                                quiz
-                            )
+                    this.familyGroupService
+                        .getFamilyGroupUnderThisCustomer()
+                        .subscribe(
+                            (response) => {
+                                this.customerHasFamilyGroup = true;
+                                this.quizzes.forEach((quiz) => {
+                                    this.observables.push(
+                                        this.quizService.retrieveQuizUnattemptedFamilyMembers(
+                                            quiz
+                                        )
+                                    );
+                                });
+                                forkJoin(this.observables).subscribe(
+                                    (result) => {
+                                        for (
+                                            let i = 0;
+                                            i < result.length;
+                                            i++
+                                        ) {
+                                            this.quizzes[i].familyGroupMembers =
+                                                result[i].familyGroupMembers;
+                                        }
+                                        this.loaded = true;
+                                    }
+                                );
+                            },
+                            (error) => {
+                                this.loaded = true;
+                                this.customerHasFamilyGroup = false;
+                            }
                         );
-                    });
-                    forkJoin(this.observables).subscribe((result) => {
-                        for (let i = 0; i < result.length; i++) {
-                            this.quizzes[i].familyGroupMembers =
-                                result[i].familyGroupMembers;
-                        }
-                        this.loaded = true;
-                    });
                 } else {
                     this.loaded = true;
                 }

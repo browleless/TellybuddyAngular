@@ -161,6 +161,7 @@ export class CheckoutComponent implements OnInit {
         );
         this.discountRate = 0;
         this.enteredDiscountCode = undefined;
+        this.selectedDiscountCode = undefined;
     }
 
     chosenYearHandler(normalizedYear: Moment) {

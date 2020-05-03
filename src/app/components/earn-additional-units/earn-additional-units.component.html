@@ -14,7 +14,7 @@
             </p>
             <mat-grid-list
                 [cols]="isMobile ? 1 : isTablet ? 2 : isLaptop ? 3 : 4"
-                rowHeight="420px"
+                [rowHeight]="customerHasFamilyGroup ? '420px' : '280px'"
             >
                 <mat-grid-tile *ngFor="let quiz of quizzes; let i = index">
                     <mat-card
@@ -51,37 +51,39 @@
                                     Units
                                 </div>
                             </div>
-                            <div *ngIf="quiz.familyGroupMembers.length">
+                            <div *ngIf="customerHasFamilyGroup">
+                                <div *ngIf="quiz.familyGroupMembers.length">
+                                    <div
+                                        style="
+                                            margin-top: 5px;
+                                            margin-bottom: 10px;
+                                        "
+                                    >
+                                        Unattempted:
+                                    </div>
+                                    <div
+                                        *ngFor="
+                                            let member of quiz.familyGroupMembers
+                                        "
+                                        style="font-style: italic;"
+                                    >
+                                        {{ member.firstName }}
+                                    </div>
+
+                                    <div style="margin-top: 20px;">
+                                        Notify them today!
+                                    </div>
+                                </div>
                                 <div
+                                    *ngIf="!quiz.familyGroupMembers.length"
                                     style="
                                         margin-top: 5px;
                                         margin-bottom: 10px;
+                                        font-style: italic;
                                     "
                                 >
-                                    Unattempted:
+                                    All family members attempted
                                 </div>
-                                <div
-                                    *ngFor="
-                                        let member of quiz.familyGroupMembers
-                                    "
-                                    style="font-style: italic;"
-                                >
-                                    {{ member.firstName }}
-                                </div>
-
-                                <div style="margin-top: 20px;">
-                                    Notify them today!
-                                </div>
-                            </div>
-                            <div
-                                *ngIf="!quiz.familyGroupMembers.length"
-                                style="
-                                    margin-top: 5px;
-                                    margin-bottom: 10px;
-                                    font-style: italic;
-                                "
-                            >
-                                All family members attempted
                             </div>
                         </mat-card-content>
                     </mat-card>
