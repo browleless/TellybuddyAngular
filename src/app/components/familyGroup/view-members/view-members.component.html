@@ -6,34 +6,53 @@
     <div>
         <mat-sidenav-container fullscreen>
             <mat-sidenav mode="side" opened style="width: 25%; padding: 3% 2%;">
-                <div style="
+                <div
+                    style="
                         font-size: x-large;
                         margin-bottom: 35px;
                         font-weight: 600;
                         width: 100%;
                         text-align: center;
-                    ">
+                    "
+                >
                     My Family Group
                     <mat-divider style="margin-top: 10px;"></mat-divider>
-                    <button mat-button style="width: 100%;" routerLink="/familyGroup/viewFamilyGroupDetails">
+                    <button
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewFamilyGroupDetails"
+                    >
                         Home
                     </button>
                     <br />
-                    <button mat-button style="width: 100%;" routerLink="/familyGroup/viewMembers">
+                    <button
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewMembers"
+                    >
                         Members
                     </button>
                     <br />
-                    <button *ngIf="currentCustomer.ownerOfFamilyGroup" mat-button style="width: 100%;"
-                        routerLink="/familyGroup/viewSettings">
+                    <button
+                        *ngIf="currentCustomer.ownerOfFamilyGroup"
+                        mat-button
+                        style="width: 100%;"
+                        routerLink="/familyGroup/viewSettings"
+                    >
                         Settings
                     </button>
                 </div>
             </mat-sidenav>
             <mat-sidenav-content style="padding: 2% 7.5%;">
                 <mat-accordion>
-                    <mat-expansion-panel *ngFor="let member of familyMembers; let i = index"
-                        (opened)="retrieveActiveSubscriptions(i)" style="border-left: 5px solid #7274d6;">
-                        <mat-expansion-panel-header style="vertical-align: baseline;">
+                    <mat-expansion-panel
+                        *ngFor="let member of familyMembers; let i = index"
+                        (opened)="retrieveActiveSubscriptions(i)"
+                        style="border-left: 5px solid #7274d6;"
+                    >
+                        <mat-expansion-panel-header
+                            style="vertical-align: baseline;"
+                        >
                             <mat-panel-title>
                                 {{ member.firstName }}
                             </mat-panel-title>
@@ -47,13 +66,22 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
 
-
-                        <div *ngIf="activeSubscriptionsUnderThatCustomer != null">
-                            <table mat-table [dataSource]="
+                        <div
+                            *ngIf="activeSubscriptionsUnderThatCustomer != null"
+                        >
+                            <table
+                                mat-table
+                                [dataSource]="
                                     activeSubscriptionsUnderThatCustomer
-                                " width="100%;">
+                                "
+                                width="100%;"
+                            >
                                 <ng-container matColumnDef="Number">
-                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        style="text-align: center;"
+                                    >
                                         Subscription Number
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
@@ -64,16 +92,21 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="SMS usage">
-                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        style="text-align: center;"
+                                    >
                                         SMS Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].smsUsage >=
-                                                subscription.smsUnits
+                                                (subscription.smsUnits
                                                     .allocated +
                                                     subscription.smsUnits
                                                         .addOn +
@@ -82,9 +115,14 @@
                                                     subscription.smsUnits
                                                         .quizExtraUnits -
                                                     subscription.smsUnits
-                                                        .donated
-                                            " style="color: red;">
-                                            <i>{{
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .smsConversionRate
+                                            "
+                                            style="color: red;"
+                                        >
+                                            <i
+                                                >{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -93,7 +131,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.smsUnits
+                                                    (subscription.smsUnits
                                                         .allocated +
                                                         subscription.smsUnits
                                                             .addOn +
@@ -102,15 +140,19 @@
                                                         subscription.smsUnits
                                                             .quizExtraUnits -
                                                         subscription.smsUnits
-                                                            .donated
-                                                }}</i>
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .smsConversionRate
+                                                }}</i
+                                            >
                                         </p>
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].smsUsage <
-                                                subscription.smsUnits
+                                                (subscription.smsUnits
                                                     .allocated +
                                                     subscription.smsUnits
                                                         .addOn +
@@ -119,9 +161,13 @@
                                                     subscription.smsUnits
                                                         .quizExtraUnits -
                                                     subscription.smsUnits
-                                                        .donated
-                                            ">
-                                            <i>{{
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .smsConversionRate
+                                            "
+                                        >
+                                            <i
+                                                >{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -130,7 +176,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.smsUnits
+                                                    (subscription.smsUnits
                                                         .allocated +
                                                         subscription.smsUnits
                                                             .addOn +
@@ -139,7 +185,9 @@
                                                         subscription.smsUnits
                                                             .quizExtraUnits -
                                                         subscription.smsUnits
-                                                            .donated
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .smsConversionRate
                                                 }}
                                             </i>
                                         </p>
@@ -147,16 +195,21 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="Talk time usage">
-                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        style="text-align: center;"
+                                    >
                                         Talk Time Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].talktimeUsage >=
-                                                subscription.talkTimeUnits
+                                                (subscription.talkTimeUnits
                                                     .allocated +
                                                     subscription.talkTimeUnits
                                                         .addOn +
@@ -165,8 +218,12 @@
                                                     subscription.talkTimeUnits
                                                         .quizExtraUnits -
                                                     subscription.talkTimeUnits
-                                                        .donated
-                                            " style="color: red;">
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .talktimeConversionRate
+                                            "
+                                            style="color: red;"
+                                        >
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -177,7 +234,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.talkTimeUnits
+                                                    (subscription.talkTimeUnits
                                                         .allocated +
                                                         subscription
                                                             .talkTimeUnits
@@ -190,16 +247,19 @@
                                                             .quizExtraUnits -
                                                         subscription
                                                             .talkTimeUnits
-                                                            .donated
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .talktimeConversionRate
                                                 }}
                                             </i>
                                         </p>
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].talktimeUsage <
-                                                subscription.talkTimeUnits
+                                                (subscription.talkTimeUnits
                                                     .allocated +
                                                     subscription.talkTimeUnits
                                                         .addOn +
@@ -208,9 +268,13 @@
                                                     subscription.talkTimeUnits
                                                         .quizExtraUnits -
                                                     subscription.talkTimeUnits
-                                                        .donated
-                                            ">
-                                            <i>{{
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .talktimeConversionRate
+                                            "
+                                        >
+                                            <i
+                                                >{{
                                                     subscription.usageDetails[
                                                         subscription
                                                             .usageDetails
@@ -219,7 +283,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.talkTimeUnits
+                                                    (subscription.talkTimeUnits
                                                         .allocated +
                                                         subscription
                                                             .talkTimeUnits
@@ -232,7 +296,9 @@
                                                             .quizExtraUnits -
                                                         subscription
                                                             .talkTimeUnits
-                                                            .donated
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .talktimeConversionRate
                                                 }}
                                             </i>
                                         </p>
@@ -240,16 +306,21 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="Data usage">
-                                    <th mat-header-cell *matHeaderCellDef style="text-align:center">
+                                    <th
+                                        mat-header-cell
+                                        *matHeaderCellDef
+                                        style="text-align: center;"
+                                    >
                                         Data Usage
                                     </th>
                                     <td mat-cell *matCellDef="let subscription">
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].dataUsage >=
-                                                subscription.dataUnits
+                                                ((subscription.dataUnits
                                                     .allocated +
                                                     subscription.dataUnits
                                                         .addOn +
@@ -258,8 +329,13 @@
                                                     subscription.dataUnits
                                                         .quizExtraUnits -
                                                     subscription.dataUnits
-                                                        .donated
-                                            " style="color: red;">
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .dataConversionRate) /
+                                                    1000
+                                            "
+                                            style="color: red;"
+                                        >
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -270,7 +346,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.dataUnits
+                                                    ((subscription.dataUnits
                                                         .allocated +
                                                         subscription.dataUnits
                                                             .addOn +
@@ -279,16 +355,20 @@
                                                         subscription.dataUnits
                                                             .quizExtraUnits -
                                                         subscription.dataUnits
-                                                            .donated
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .dataConversionRate) /
+                                                        1000
                                                 }}
                                             </i>
                                         </p>
-                                        <p *ngIf="
+                                        <p
+                                            *ngIf="
                                                 subscription.usageDetails[
                                                     subscription.usageDetails
                                                         .length - 1
                                                 ].dataUsage <
-                                                subscription.dataUnits
+                                                ((subscription.dataUnits
                                                     .allocated +
                                                     subscription.dataUnits
                                                         .addOn +
@@ -297,8 +377,12 @@
                                                     subscription.dataUnits
                                                         .quizExtraUnits -
                                                     subscription.dataUnits
-                                                        .donated
-                                            ">
+                                                        .donated) *
+                                                    subscription.plan
+                                                        .dataConversionRate) /
+                                                    1000
+                                            "
+                                        >
                                             <i>
                                                 {{
                                                     subscription.usageDetails[
@@ -309,7 +393,7 @@
                                                 }}
                                                 Out Of
                                                 {{
-                                                    subscription.dataUnits
+                                                    ((subscription.dataUnits
                                                         .allocated +
                                                         subscription.dataUnits
                                                             .addOn +
@@ -318,25 +402,38 @@
                                                         subscription.dataUnits
                                                             .quizExtraUnits -
                                                         subscription.dataUnits
-                                                            .donated
+                                                            .donated) *
+                                                        subscription.plan
+                                                            .dataConversionRate) /
+                                                        1000
                                                 }}
                                             </i>
                                         </p>
                                     </td>
                                 </ng-container>
 
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="
+                                <tr
+                                    mat-header-row
+                                    *matHeaderRowDef="displayedColumns"
+                                ></tr>
+                                <tr
+                                    mat-row
+                                    *matRowDef="
                                         let row;
                                         columns: displayedColumns
-                                    "></tr>
+                                    "
+                                ></tr>
                             </table>
                         </div>
-                        <br>
+                        <br />
 
                         <div *ngIf="currentCustomer.ownerOfFamilyGroup == true">
                             <div *ngIf="member.ownerOfFamilyGroup == false">
-                                <button mat-raised-button color="warn" (click)="removeMember(i)">
+                                <button
+                                    mat-raised-button
+                                    color="warn"
+                                    (click)="removeMember(i)"
+                                >
                                     <mat-icon>delete</mat-icon> Remove member
                                 </button>
                             </div>
@@ -351,7 +448,12 @@
                     </mat-nav-list>
                 </div> -->
                 <!-- <div *ngIf="currentCustomer.ownerOfFamilyGroup == true"> -->
-                <button mat-raised-button style="margin-top: 20px;" color="primary" (click)="openDialog()">
+                <button
+                    mat-raised-button
+                    style="margin-top: 20px;"
+                    color="primary"
+                    (click)="openDialog()"
+                >
                     Add new family member
                 </button>
                 <!-- </div> -->

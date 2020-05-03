@@ -1,6 +1,6 @@
 <div
     style="text-align: center; padding: 0 17.5% 0 17.5%; margin-top: 3%;"
-    *ngIf="subscriptions.length"
+    *ngIf="loaded && subscriptions.length"
 >
     <h1>My Subscriptions</h1>
     <p style="margin-bottom: 30px;">
@@ -39,16 +39,33 @@
                 >{{ subscription.phoneNumber.phoneNumber }}
                 <div
                     style="float: right; padding-right: 5px;"
-                    *ngIf="subscription.subscriptionStartDate != null"
+                    *ngIf="subscription.isActive"
                 >
                     <strong>Usage Period:</strong>
-                    {{ subscription.subscriptionStartDate | date: 'd' }}
-                    {{ monthAgo | date: 'MMM' }} -
-                    {{ currentDate | date: 'd MMM' }}
+                    {{
+                        subscription.usageDetails[
+                            subscription.usageDetails.length - 1
+                        ].startDate | date: 'd MMM'
+                    }}
+                    -
+                    {{
+                        subscription.usageDetails[
+                            subscription.usageDetails.length - 1
+                        ].endDate | date: 'd MMM'
+                    }}
                 </div>
                 <br />
-                <strong>Contract Start Date:</strong>
-                {{ subscription.subscriptionStartDate | date }}
+                <div *ngIf="subscription.isContract && subscription.isActive">
+                    <strong>Contract Start Date:</strong>
+                    {{ subscription.subscriptionStartDate | date }}
+                    <br />
+                    <strong>Contract End Date:</strong>
+                    {{ subscription.contractEndDate | date }}
+                </div>
+                <div *ngIf="!subscription.isContract && subscription.isActive">
+                    <strong>Subscription Start Date:</strong>
+                    {{ subscription.subscriptionStartDate | date }}
+                </div>
 
                 <mat-grid-list cols="5" rowHeight="40vh">
                     <mat-grid-tile colspan="2">
@@ -224,10 +241,7 @@
             </mat-expansion-panel>
         </mat-accordion>
     </div>
-    <div
-        style="text-align: center;"
-        *ngIf="subscriptions == undefined || subscriptions.length === 0"
-    >
+    <div style="text-align: center;" *ngIf="loaded && !subscriptions.length">
         <h1>
             No subscriptions found!
         </h1>

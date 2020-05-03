@@ -84,6 +84,31 @@ export class SubscriptionsComponent implements OnInit {
                             sub.subscriptionEndDate.toString().substring(0, 19)
                         );
                     }
+                    if (sub.contractEndDate != null) {
+                        sub.contractEndDate = new Date(
+                            sub.contractEndDate.toString().substring(0, 19)
+                        );
+                    }
+                    if (sub.isActive) {
+                        sub.usageDetails[
+                            sub.usageDetails.length - 1
+                        ].startDate = new Date(
+                            sub.usageDetails[
+                                sub.usageDetails.length - 1
+                            ].startDate
+                                .toString()
+                                .substring(0, 19)
+                        );
+                        sub.usageDetails[
+                            sub.usageDetails.length - 1
+                        ].endDate = new Date(
+                            sub.usageDetails[
+                                sub.usageDetails.length - 1
+                            ].endDate
+                                .toString()
+                                .substring(0, 19)
+                        );
+                    }
                 }
                 this.loaded = true;
             },

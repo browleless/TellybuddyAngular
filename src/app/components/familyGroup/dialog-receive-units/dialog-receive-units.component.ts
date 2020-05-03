@@ -53,6 +53,7 @@ export class DialogReceiveUnitsComponent implements OnInit {
         plan: undefined,
         phoneNumber: undefined,
         outstandingBills: undefined,
+        contractEndDate: undefined,
     };
     allowedSms: number;
     allowedData: number;

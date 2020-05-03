@@ -36,6 +36,7 @@ export class Subscription {
     isContract: boolean;
     subscriptionStartDate: Date;
     subscriptionEndDate: Date;
+    contractEndDate: Date;
     customer: Customer;
     usageDetails: UsageDetail[];
     plan: Plan;
@@ -51,6 +52,7 @@ export class Subscription {
         isContract?: boolean,
         subscriptionStartDate?: Date,
         subscriptionEndDate?: Date,
+        contractEndDate?: Date,
         customer?: Customer,
         usageDetails?: UsageDetail[],
         plan?: Plan,
@@ -62,6 +64,7 @@ export class Subscription {
         this.talkTimeUnits = talkTimeUnits;
         this.smsUnits = smsUnits;
         this.subscriptionEndDate = subscriptionEndDate;
+        this.contractEndDate = contractEndDate;
         this.subscriptionStatusEnum = subscriptionStatusEnum;
         this.isActive = isActive;
         this.isContract = isContract;

@@ -1,9 +1,13 @@
-<div [ngClass]="{'shake': shakeIt, 'dialog-class': true}">
+<div [ngClass]="{ shake: shakeIt, 'dialog-class': true }">
     <div mat-dialog-title>
         <div>
-            Add New Member To 
-            <strong>{{ data.selectedFamilyGroup.description}}</strong>
-            <button style="float: right;" mat-icon-button (click)="onExitClick()">
+            Add New Member To
+            <strong>{{ data.selectedFamilyGroup.description }}</strong>
+            <button
+                style="float: right;"
+                mat-icon-button
+                (click)="onExitClick()"
+            >
                 <mat-icon>close</mat-icon>
             </button>
         </div>
@@ -14,19 +18,23 @@
     <div *ngIf="loaded">
         <p>
             <mat-form-field>
-                <input matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
-                    placeholder="Ex. pat@example.com" [(ngModel)]="email">
+                <input
+                    matInput
+                    placeholder="Ex. pat@example.com"
+                    [(ngModel)]="email"
+                />
                 <mat-hint>Valid email form</mat-hint>
-                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                <mat-error>
                     Please enter a valid email address
                 </mat-error>
-                <mat-error *ngIf="emailFormControl.hasError('required')">
-                    Email is <strong>required</strong>
-                </mat-error>
-
+                <mat-error> Email is <strong>required</strong> </mat-error>
             </mat-form-field>
         </p>
-        <button mat-raised-button color="primary" (click)="retrieveCustomerByEmail()">
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="retrieveCustomerByEmail()"
+        >
             Invite
         </button>
     </div>
