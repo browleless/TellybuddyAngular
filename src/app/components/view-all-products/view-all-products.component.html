@@ -139,7 +139,8 @@
                                 Price: ${{ product.price }}
                             </mat-card-subtitle>
                             <div style="width: 80%; margin: 0 auto;">
-                                <img mat-card-image src="{{productImages[i]}}" />
+                                <img mat-card-image src="../../../assets/productImages/{{product.productImagePath}}" />
+                                <!-- <img mat-card-image src="../../../assets/productImages/Poster.jpg" /> -->
                             </div>
                             <mat-card-content style="text-align: center;">
                                 Description: {{ product.description }}
