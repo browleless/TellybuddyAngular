@@ -145,6 +145,7 @@
                     matInput
                     placeholder="NRIC"
                     [(ngModel)]="newNric"
+                    (ngModelChange)="handleNricChange($event)"
                     #nric_="ngModel"
                     required="true"
                     pattern="^[STFG]\d{7}[A-JZ]$"
@@ -320,7 +321,8 @@
                             nric_.valid &&
                             username_.valid &&
                             email_.valid &&
-                            p.valid
+                            password === confirmedPassword &&
+                            password
                         )
                     "
                     (click)="registration()"

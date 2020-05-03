@@ -184,6 +184,7 @@
                             matInput
                             placeholder="NRIC"
                             [(ngModel)]="customerToUpdate.newNric"
+                            (ngModelChange)="handleNricChange($event)"
                             #nric_="ngModel"
                             pattern="^[STFG]\d{7}[A-JZ]$"
                             maxlength="9"

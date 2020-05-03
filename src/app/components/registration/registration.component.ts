@@ -119,4 +119,8 @@ export class RegistrationComponent implements OnInit {
         };
         reader.readAsDataURL(this.fileToUpload);
     }
+
+    handleNricChange(event: any) {
+        this.newNric = this.newNric.toUpperCase();
+    }
 }
