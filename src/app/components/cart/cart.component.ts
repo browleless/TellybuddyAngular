@@ -63,7 +63,12 @@ export class CartComponent implements OnInit {
     incrementLineItemQuantity(lineItemIndex: number): void {
         this.sessionService.updateLineItemQuantity(
             lineItemIndex,
-            ++this.transaction.transactionLineItems[lineItemIndex].quantity
+            ++this.transaction.transactionLineItems[lineItemIndex].quantity <=
+                this.transaction.transactionLineItems[lineItemIndex].product
+                    .quantityOnHand
+                ? this.transaction.transactionLineItems[lineItemIndex].quantity
+                : this.transaction.transactionLineItems[lineItemIndex].product
+                      .quantityOnHand
         );
         this.transaction = this.sessionService.getCart();
     }
@@ -99,7 +104,10 @@ export class CartComponent implements OnInit {
         let lineItemToDelete: TransactionLineItem = lineItems[lineItemIndex];
         // console.log(lineItemIndex);
         // console.log(lineItemToDelete.subscription.isContract);
-        if (lineItemToDelete.subscription != undefined && lineItemToDelete.subscription.isContract) {
+        if (
+            lineItemToDelete.subscription != undefined &&
+            lineItemToDelete.subscription.isContract
+        ) {
             if (lineItemToDelete.price == lineItemToDelete.productItem.price) {
                 this.sessionService.removeBundleFromCart(
                     lineItemIndex,
