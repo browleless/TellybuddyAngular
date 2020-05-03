@@ -11,6 +11,7 @@ import { Subscription } from 'src/app/classes/subscription';
 import { Transaction } from 'src/app/classes/transaction';
 import * as Chart from 'chart.js';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { CustomerService } from 'src/app/service/customer.service';
 
 @Component({
     selector: 'app-transaction-view',
@@ -26,19 +27,25 @@ export class ViewTransactionComponent implements OnInit {
     transactionStatus: number;
     displayedColumns: string[] = ['item', 'price', 'quantity', 'subtotal'];
     lineItems = new MatTableDataSource([]);
+
+    profilePicture: any;
+    imageLoading: boolean = true;
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private transactionService: TransactionService,
         private breakpointObserver: BreakpointObserver,
         public dialog: MatDialog,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private customerService: CustomerService
     ) {}
 
     ngOnInit() {
         this.transactionId = parseInt(
             this.activatedRoute.snapshot.paramMap.get('transactionId')
         );
+
+        this.getProfilePicture();
 
         this.transactionService
             .retrieveTransactionById(this.transactionId)
@@ -92,5 +99,31 @@ export class ViewTransactionComponent implements OnInit {
                     this.snackBar.open(error, 'Close', { duration: 4500 });
                 }
             );
+    }
+    createImageFromBlob(image: Blob) {
+        let reader = new FileReader();
+        reader.addEventListener(
+            'load',
+            () => {
+                this.profilePicture = reader.result;
+            },
+            false
+        );
+
+        if (image) {
+            reader.readAsDataURL(image);
+        }
+    }
+    getProfilePicture() {
+        this.customerService.retrieveProfilePicture().subscribe(
+            (data) => {
+                this.createImageFromBlob(data);
+                this.imageLoading = false;
+            },
+            (error) => {
+                this.imageLoading = true;
+                console.log(error);
+            }
+        );
     }
 }

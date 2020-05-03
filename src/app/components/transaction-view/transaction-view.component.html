@@ -9,6 +9,22 @@
                 mode="side"
                 opened
             >
+                <img
+                    style="width: 200px; height: 200px; border-radius: 50%;"
+                    *ngIf="imageLoading"
+                    src="../../../assets/account/noprofile2.jpg"
+                />
+
+                <img
+                    style="
+                        width: 200px;
+                        height: 200px;
+                        border-radius: 50%;
+                        border-width: 5px;
+                    "
+                    [src]="profilePicture"
+                    *ngIf="!imageLoading"
+                />
                 <mat-divider style="margin: 15px 0;"></mat-divider>
                 <div
                     style="
@@ -62,7 +78,7 @@
                             margin-bottom: 0px;
                             background-color: rgba(0, 0, 0, 0);
                         "
-                        selectedIndex="transactionStatus"
+                        selectedIndex="{{ transactionStatus }}"
                     >
                         <mat-step completed="false">
                             <ng-template matStepLabel>Processing</ng-template>
