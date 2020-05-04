@@ -239,7 +239,7 @@
                     <input
                         #Image
                         type="file"
-                        (change)="handleFileInput($event.target.files)"
+                        (change)="handleNricFrontFileInput($event.target.files)"
                     />
                     <img
                         width="100%"
@@ -252,7 +252,7 @@
                     <input
                         #Image
                         type="file"
-                        (change)="handleFileInput($event.target.files)"
+                        (change)="handleNricBackFileInput($event.target.files)"
                     />
                     <img
                         width="100%"
@@ -265,7 +265,9 @@
                     <input
                         #Image
                         type="file"
-                        (change)="handleFileInput($event.target.files)"
+                        (change)="
+                            handleProfilePicFileInput($event.target.files)
+                        "
                     />
                     <img
                         width="100%"
@@ -279,8 +281,12 @@
                             color="primary"
                             mat-raised-button
                             [disabled]="
-                                password != null &&
-                                password != confirmedPassword
+                                (password != null &&
+                                    password != confirmedPassword) ||
+                                ((customerToUpdate.newAddress ||
+                                    customerToUpdate.newPostalCode ||
+                                    customerToUpdate.newNric) &&
+                                    (!nricFrontToUpload || !nricBackToUpload))
                             "
                             (click)="updateCustomer()"
                         >

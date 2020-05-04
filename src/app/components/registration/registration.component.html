@@ -285,7 +285,7 @@
             <input
                 #Image
                 type="file"
-                (change)="handleFileInput($event.target.files)"
+                (change)="handleNricFrontFileInput($event.target.files)"
                 required
             />
             <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
@@ -294,7 +294,7 @@
             <input
                 #Image
                 type="file"
-                (change)="handleFileInput($event.target.files)"
+                (change)="handleNricBackFileInput($event.target.files)"
                 required
             />
             <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
@@ -303,7 +303,7 @@
             <input
                 #Image
                 type="file"
-                (change)="handleFileInput($event.target.files)"
+                (change)="handleProfilePicFileInput($event.target.files)"
             />
             <img width="100%" *ngIf="imageUrl" [src]="imageUrl" class="image" />
             <div style="padding-top: 20px;">
@@ -322,7 +322,9 @@
                             username_.valid &&
                             email_.valid &&
                             password === confirmedPassword &&
-                            password
+                            password &&
+                            nricFrontToUpload &&
+                            nricBackToUpload
                         )
                     "
                     (click)="registration()"

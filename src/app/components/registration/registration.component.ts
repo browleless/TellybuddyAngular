@@ -25,7 +25,6 @@ import {
     styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
-    fileToUpload: any;
     imageUrl: any;
     username: string;
     password: string;
@@ -42,6 +41,10 @@ export class RegistrationComponent implements OnInit {
     titleAlert: string = 'This field is required';
     post: any = '';
 
+    nricFrontToUpload: File;
+    nricBackToUpload: File;
+    profilePicToUpload: File;
+
     constructor(
         private customerService: CustomerService,
         private router: Router,
@@ -54,6 +57,7 @@ export class RegistrationComponent implements OnInit {
     ngOnInit() {}
 
     registration(): void {
+        console.log(this.profilePicToUpload);
         let newCustomer: Customer = {
             announcements: undefined,
             bills: undefined,
@@ -65,7 +69,9 @@ export class RegistrationComponent implements OnInit {
             joinDate: undefined,
             loyaltyPoints: 0,
             ownerOfFamilyGroup: false,
-            profilePhoto: undefined,
+            profilePhoto: this.profilePicToUpload
+                ? this.profilePicToUpload.name
+                : undefined,
             quizAttempts: undefined,
             subscriptions: undefined,
             transactions: undefined,
@@ -75,8 +81,12 @@ export class RegistrationComponent implements OnInit {
             newAddress: this.newAddress,
             newPostalCode: this.newPostalCode,
             newNric: this.newNric,
-            newNricBackImagePath: undefined,
-            newNricFrontImagePath: undefined,
+            newNricBackImagePath: this.nricBackToUpload
+                ? this.nricBackToUpload.name
+                : undefined,
+            newNricFrontImagePath: this.nricFrontToUpload
+                ? this.nricFrontToUpload.name
+                : undefined,
             address: undefined,
             postalCode: undefined,
             nric: undefined,
@@ -90,6 +100,8 @@ export class RegistrationComponent implements OnInit {
             creditCardNumber: undefined,
             familyGroup: undefined,
         };
+
+        this.uploadFiles();
 
         this.customerService.customerRegistration(newCustomer).subscribe(
             (response) => {
@@ -109,18 +121,65 @@ export class RegistrationComponent implements OnInit {
     navigateToLogin(): void {
         this.router.navigate(['/login']);
     }
-    handleFileInput(file: FileList) {
-        this.fileToUpload = file.item(0);
+    handleNricFrontFileInput(file: FileList) {
+        this.nricFrontToUpload = file.item(0);
 
         //Show image preview
-        let reader = new FileReader();
-        reader.onload = (event: any) => {
-            this.imageUrl = event.target.result;
-        };
-        reader.readAsDataURL(this.fileToUpload);
+        // let reader = new FileReader();
+        // reader.onload = (event: any) => {
+        //     this.imageUrl = event.target.result;
+        // };
+        // reader.readAsDataURL(this.fileToUpload);
+    }
+
+    handleNricBackFileInput(file: FileList) {
+        this.nricBackToUpload = file.item(0);
+    }
+
+    handleProfilePicFileInput(file: FileList) {
+        this.profilePicToUpload = file.item(0);
     }
 
     handleNricChange(event: any) {
         this.newNric = this.newNric.toUpperCase();
+    }
+
+    uploadFiles() {
+        if (this.nricFrontToUpload) {
+            this.customerService
+                .postToNricFolder(this.nricFrontToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
+        if (this.nricBackToUpload) {
+            this.customerService
+                .postToNricFolder(this.nricBackToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
+        if (this.profilePicToUpload) {
+            this.customerService
+                .postToProfileFolder(this.profilePicToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
     }
 }

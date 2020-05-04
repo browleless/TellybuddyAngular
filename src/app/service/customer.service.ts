@@ -120,15 +120,33 @@ export class CustomerService {
     }
 
     retrieveProfilePicture(): Observable<Blob> {
-        return this.httpClient.get(
-            this.baseUrl +
-            '/retrieveProfilePicture' +
-            '?username=' +
-            this.sessionService.getUsername() +
-            '&password=' +
-            this.sessionService.getPassword(),
-            { responseType: 'blob' }
-            ).pipe(catchError(this.handleError));
+        return this.httpClient
+            .get(
+                this.baseUrl +
+                    '/retrieveProfilePicture' +
+                    '?username=' +
+                    this.sessionService.getUsername() +
+                    '&password=' +
+                    this.sessionService.getPassword(),
+                { responseType: 'blob' }
+            )
+            .pipe(catchError(this.handleError));
+    }
+
+    postToNricFolder(fileToUpload: File): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('fileKey', fileToUpload, fileToUpload.name);
+        return this.httpClient
+            .post(this.baseUrl + '/uploadToNricFolder', formData)
+            .pipe(catchError(this.handleError));
+    }
+
+    postToProfileFolder(fileToUpload: File): Observable<any> {
+        const formData: FormData = new FormData();
+        formData.append('fileKey', fileToUpload, fileToUpload.name);
+        return this.httpClient
+            .post(this.baseUrl + '/uploadToProfileFolder', formData)
+            .pipe(catchError(this.handleError));
     }
 
     private handleError(error: HttpErrorResponse) {

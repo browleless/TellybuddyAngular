@@ -18,6 +18,11 @@ export class AccountEditComponent implements OnInit {
     imageLoading: boolean;
     profilePicture: any;
     imageUrl: boolean = false;
+
+    nricFrontToUpload: File;
+    nricBackToUpload: File;
+    profilePicToUpload: File;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -42,6 +47,7 @@ export class AccountEditComponent implements OnInit {
     }
 
     updateCustomer() {
+        this.uploadFiles();
         this.customerService
             .updateCustomerDetailsForCustomer(this.customerToUpdate)
             .subscribe(
@@ -122,7 +128,57 @@ export class AccountEditComponent implements OnInit {
         this.customerToUpdate.newNric = this.customerToUpdate.newNric.toUpperCase();
     }
 
-    handleFileInput(event: any) {
-        console.log(event);
+    handleNricFrontFileInput(file: FileList) {
+        this.nricFrontToUpload = file.item(0);
+    }
+
+    handleNricBackFileInput(file: FileList) {
+        this.nricBackToUpload = file.item(0);
+    }
+
+    handleProfilePicFileInput(file: FileList) {
+        this.profilePicToUpload = file.item(0);
+    }
+
+    uploadFiles() {
+        if (this.nricFrontToUpload) {
+            this.customerToUpdate.newNricFrontImagePath = this.nricFrontToUpload.name;
+            this.customerService
+                .postToNricFolder(this.nricFrontToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
+        if (this.nricBackToUpload) {
+            this.customerToUpdate.newNricBackImagePath = this.nricBackToUpload.name;
+            this.customerService
+                .postToNricFolder(this.nricBackToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
+        if (this.profilePicToUpload) {
+            this.customerToUpdate.profilePhoto = this.profilePicToUpload.name;
+            this.customerService
+                .postToProfileFolder(this.profilePicToUpload)
+                .subscribe(
+                    (response) => {
+                        console.log(response);
+                    },
+                    (error) => {
+                        console.log(error);
+                    }
+                );
+        }
     }
 }
