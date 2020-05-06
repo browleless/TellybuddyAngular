@@ -113,10 +113,10 @@ export class DialogBillPaymentComponent implements OnInit {
         let newPayment: Payment = {
             paymentId: undefined,
             amount:
-                (this.data.selectedBill.price +
-                    this.data.selectedBill.addOnPrice +
-                    this.data.selectedBill.exceedPenaltyPrice) *
-                    ((100 - this.data.selectedBill.familyDiscountRate) / 100) -
+                this.data.selectedBill.price *
+                    ((100 - this.data.selectedBill.familyDiscountRate) / 100) +
+                this.data.selectedBill.addOnPrice +
+                this.data.selectedBill.exceedPenaltyPrice -
                 this.loyaltyPointsUsed,
             creditCardNumber: this.enteredCreditCardNumber,
             cvv: this.enteredCvv,

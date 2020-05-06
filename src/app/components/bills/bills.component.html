@@ -193,9 +193,7 @@
                                         </span>
                                         <span *ngIf="bill.familyDiscountRate">
                                             -{{
-                                                (bill.price +
-                                                    bill.addOnPrice +
-                                                    bill.exceedPenaltyPrice) *
+                                                bill.price *
                                                     (bill.familyDiscountRate /
                                                         100) | currency
                                             }}
@@ -217,11 +215,11 @@
                                 "
                             >
                                 {{
-                                    (bill.price +
+                                    bill.price *
+                                        ((100 - bill.familyDiscountRate) /
+                                            100) +
                                         bill.addOnPrice +
-                                        bill.exceedPenaltyPrice) *
-                                        ((100 - bill.familyDiscountRate) / 100)
-                                        | currency
+                                        bill.exceedPenaltyPrice | currency
                                 }}
                             </div>
                             <div
@@ -351,12 +349,13 @@
                                 <mat-cell *matCellDef="let bill">
                                     <span *ngIf="!bill.payment">
                                         {{
-                                            (bill.price +
-                                                bill.addOnPrice +
-                                                bill.exceedPenaltyPrice) *
+                                            bill.price *
                                                 ((100 -
                                                     bill.familyDiscountRate) /
-                                                    100) | currency
+                                                    100) +
+                                                bill.addOnPrice +
+                                                bill.exceedPenaltyPrice
+                                                | currency
                                         }}
                                     </span>
                                     <span *ngIf="bill.payment">{{

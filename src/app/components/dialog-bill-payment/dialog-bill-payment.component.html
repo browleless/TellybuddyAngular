@@ -111,10 +111,10 @@
             </button>
             <span style="border-bottom: 2.5px solid #3c4cad;">
                 {{
-                    (data.selectedBill.price +
+                    data.selectedBill.price *
+                        ((100 - data.selectedBill.familyDiscountRate) / 100) +
                         data.selectedBill.addOnPrice +
-                        data.selectedBill.exceedPenaltyPrice) *
-                        ((100 - data.selectedBill.familyDiscountRate) / 100) -
+                        data.selectedBill.exceedPenaltyPrice -
                         loyaltyPointsUsed | currency
                 }}
             </span>
